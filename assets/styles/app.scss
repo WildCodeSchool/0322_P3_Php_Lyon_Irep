@@ -1,2 +1,8 @@
-//start coding by removing this file and adding yours ;)
-@import "wcs";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+body {
+    background-color: coral;
+}
+
