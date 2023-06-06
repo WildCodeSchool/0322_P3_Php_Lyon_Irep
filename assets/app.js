@@ -11,20 +11,46 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 import 'flowbite';
-
-
-// Gallery Js
-
 document.addEventListener('DOMContentLoaded', function() {
-    let options = document.querySelectorAll('.option');
-  
-    options.forEach(function(option) {
-        option.addEventListener('click', function() {
-            options.forEach(function(option) {
+    let options = Array.from(document.querySelectorAll('.option'));
+    let bullets = Array.from(document.querySelectorAll('.bullet'));
+
+    const handleClick = (activeIndex) => {
+        const visibleOptions = options.filter(option => window.getComputedStyle(option).display !== 'none');
+        const activeOption = options[activeIndex];
+
+        if (window.getComputedStyle(activeOption).display === 'none') {
+            const randomVisibleIndex = visibleOptions.findIndex(option => window.getComputedStyle(option).display !== 'none');
+            visibleOptions[randomVisibleIndex].style.display = 'none';
+            activeOption.style.display = 'flex';
+        }
+
+        // Mise à jour des classes 'active' pour toutes les options et bullets
+        options.forEach((option, index) => {
+            if (option.style.display !== 'none') {
+                if (index === activeIndex) {
+                    option.classList.add('active');
+                    bullets[index].classList.add('active');
+                } else {
+                    option.classList.remove('active');
+                    bullets[index].classList.remove('active');
+                }
+            } else {
+                // Si l'option est masquée, assurez-vous que le bullet correspondant est également désactivé
                 option.classList.remove('active');
-            });
-            this.classList.add('active');
+                bullets[index].classList.remove('active');
+            }
         });
+    };
+
+    options.forEach((option, index) => {
+        option.addEventListener('click', () => handleClick(index));
     });
+
+    bullets.forEach((bullet, index) => {
+        bullet.addEventListener('click', () => handleClick(index));
+    });
+
+    handleClick(0);
 });
-  
+
