@@ -13,7 +13,6 @@ class PictureFixtures extends Fixture
     {
         $this->loadPictureCategory1($manager);
         $this->loadPictureCategory2($manager);
-        // Ajoutez d'autres méthodes de chargement si nécessaire
     }
 
     public function loadPictureCategory1(ObjectManager $manager): void
@@ -58,7 +57,7 @@ class PictureFixtures extends Fixture
         . 'deux côtés par deux côtés. Devant, un gardien, dont l\'ombre se projette sur la cheminée. '
         . 'En arrière-plan, une allée de palmiers, qui semble mener vers la maison de maître. '
         . 'La disposition des lieux correspond à celle qui existait à Bel Air. Scène d\'apparence paisible ?');
-        $picture1->setImage('build/images/UsineBelAir_40FI78.jpg');
+        $picture1->setImage('build/images/FRAD974_40FI74.jpg');
 
         $manager->persist($picture1);
 
@@ -80,7 +79,7 @@ class PictureFixtures extends Fixture
         . 'deux côtés par deux côtés. Devant, un gardien, dont l\'ombre se projette sur la cheminée. '
         . 'En arrière-plan, une allée de palmiers, qui semble mener vers la maison de maître. '
         . 'La disposition des lieux correspond à celle qui existait à Bel Air. Scène d\'apparence paisible ?');
-        $picture2->setImage('build/images/UsineBelAir_40FI78.jpg');
+        $picture2->setImage('build/images/FRAD974_40FI98.jpg');
 
         $manager->persist($picture2);
 
@@ -102,7 +101,7 @@ class PictureFixtures extends Fixture
         . 'deux côtés par deux côtés. Devant, un gardien, dont l\'ombre se projette sur la cheminée. '
         . 'En arrière-plan, une allée de palmiers, qui semble mener vers la maison de maître. '
         . 'La disposition des lieux correspond à celle qui existait à Bel Air. Scène d\'apparence paisible ?');
-        $picture3->setImage('build/images/UsineBelAir_40FI78.jpg');
+        $picture3->setImage('build/images/FRAD974_40FI80.jpg');
 
         $manager->persist($picture3);
 
@@ -129,7 +128,7 @@ class PictureFixtures extends Fixture
         . 'deux côtés par deux côtés. Devant, un gardien, dont l\'ombre se projette sur la cheminée. '
         . 'En arrière-plan, une allée de palmiers, qui semble mener vers la maison de maître. '
         . 'La disposition des lieux correspond à celle qui existait à Bel Air. Scène d\'apparence paisible ?');
-        $picture->setImage('build/images/UsineBelAir_40FI78.jpg');
+        $picture->setImage('build/images/FRAD974_40FI90.jpg');
 
         $manager->persist($picture);
 
