@@ -1,30 +1,48 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Picture Index{% endblock %}
-
-{% block body %}
+{% extends 'base.html.twig' %} {% block title %}Picture Index{% endblock %} {%
+block body %}
 <section class="galery">
-<div class="options">
-   {% for picture in pictures %}
-   <div class="option" style="--optionBackground:url({{ asset(picture.image) }}) ;">
-      <div class="shadow"></div>
-      <div class="label">
-         <div class="icon">
-         </div>
-         <div class="info">
-            <div class="main">{{ picture.title }}</div>
-            <div class="sub">{{ picture.subtitle }}</div>
-         </div>
-      </div>
-   </div>
-   {% endfor %}
-</div>
+    <div class="category-buttons">
+        {% for category in categories %}
+        <button
+            class="category-button py-2.5 px-5 mr-10 mb-4 text-sm font-light rounded-full cursor-pointer transition-colors duration-300 bg-gray-300 text-gray-900 focus:outline-none hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-amber-100 dark:hover:bg-gray-900"
+            style="
+                font-family: Montserrat, sans-serif;
+                width: 44px;
+                height: 44px;
+            "
+            data-category="{{ category }}"
+        >
+            {{ category }}
+        </button>
+        {% endfor %}
+    </div>
+    <div class="options">
+        {% for picture in pictures %}
+        <div
+            class="option"
+            data-category="{{ picture.category }}"
+            style="--optionBackground:url({{ asset(picture.image) }}) ;"
+        >
+            <div class="shadow"></div>
+            <div class="label">
+                <div class="icon"></div>
+                <div class="info">
+                    <div class="main">{{ picture.title }}</div>
+                    <div class="sub">{{ picture.subtitle }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
     <div class="bullet-navigation">
         {% for picture in pictures %}
-        <span class="bullet" data-index="{{ loop.index }}"></span>
+        <span
+            class="bullet"
+            data-index="{{ loop.index }}"
+            data-category="{{ picture.category }}"
+        ></span>
         {% endfor %}
     </div>
 </section>
-
 
 {% endblock %}
