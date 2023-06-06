@@ -3,9 +3,10 @@
 {% block title %}Picture index{% endblock %}
 
 {% block body %}
+<section class="galery">
 <div class="options">
    {% for picture in pictures %}
-   <div class="option" style="--optionBackground:url('/assets/images/UsineBelAir_40FI78.jpg');">
+   <div class="option" style="--optionBackground:url({{ asset(picture.image) }});">
       <div class="shadow"></div>
       <div class="label">
          <div class="icon">
@@ -19,4 +20,5 @@
    </div>
    {% endfor %}
 </div>
+<section>
 {% endblock %}

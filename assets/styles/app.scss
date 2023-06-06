@@ -8,7 +8,7 @@ body {
 
 $optionDefaultColours: #ED5565,#FC6E51,#FFCE54,#2ECC71,#5D9CEC,#AC92EC;
 
-body {
+.galery {
    display:flex;
    flex-direction:row;
    justify-content:center;
@@ -19,16 +19,10 @@ body {
    font-family: 'Roboto', sans-serif;
    transition:.25s;
 
-   background: #232223;
+   background: rgb(239, 237, 237);
    color:white;
 
-   .credit {
-      position: absolute;
-      bottom:20px;
-      left:20px;
-      
-      color:inherit;
-   }
+
    .options {
       display:flex;
       flex-direction:row;
@@ -40,15 +34,6 @@ body {
       width:calc(100% - 100px);
       
       height:400px;
-      
-      @for $i from 1 through 4 {
-        @media screen and (max-width: 798px - $i * 80) {
-          min-width: 600px - $i * 80;
-          .option:nth-child(#{6 - $i}) {
-            display: none;
-          }
-        }
-      }
       
       .option {
          position: relative;
