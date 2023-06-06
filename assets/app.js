@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const visibleOptions = options.filter(option => window.getComputedStyle(option).display !== 'none');
         const activeOption = options[activeIndex];
 
-// Rendre visible les images qui dépasse le breakpoint de résolution d'écran
+        // Rendre visible les images qui dépasse le breakpoint de résolution d'écran
         if (window.getComputedStyle(activeOption).display === 'none') {
             const randomVisibleIndex = visibleOptions.findIndex(option => window.getComputedStyle(option).display !== 'none');
             visibleOptions[randomVisibleIndex].style.display = 'none';
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     bullets[index].classList.remove('active');
                 }
             } else {
- // Si l'option est masquée, assure que le bullet correspondant est également désactivé
+                // Si l'option est masquée, assure que le bullet correspondant est également désactivé
                 option.classList.remove('active');
                 bullets[index].classList.remove('active');
             }
