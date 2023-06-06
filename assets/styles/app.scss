@@ -4,6 +4,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&display=swap');
+body {
+    background-color: coral;
+}
 
 // Font Var
 
@@ -17,12 +20,11 @@ $contentFont:'Hind Madurai';
 $backgroundColor : rgb(239, 237, 237);
 $optionDefaultColours: white;
 
-
 body {
-    background-color:$backgroundColor ;
+    background-color: $backgroundColor;
 }
 
-// Css for galery
+// Galery CSS
 
 @mixin media($breakpoint) {
     @media screen and (max-width: $breakpoint) {
@@ -43,7 +45,7 @@ body {
    transition:.25s;
 
    background: $backgroundColor;
-   color: $optionDefaultColours;
+   color:white;
 
 
    .options {
@@ -77,6 +79,7 @@ body {
 
          min-width:60px;
          margin:10px;
+         //border:0px solid --defaultColor;
 
          background:var(--optionBackground, var(--defaultBackground, #E6E9ED));
          background-size:auto 120%;
@@ -157,7 +160,7 @@ body {
                height:40px;
                border-radius:100%;
 
-               background-color:$optionDefaultColours;
+               background-color:white;
                color:var(--defaultBackground);
             }
             .info {
@@ -167,7 +170,7 @@ body {
                
                margin-left:10px;
                
-               color:$optionDefaultColours;
+               color:white;
                
                white-space: pre;
                >div {
@@ -196,8 +199,8 @@ body {
 }
 
 .bullet {
-    width: 12px;
-    height: 12gitpx;
+    width: 11px;
+    height: 11px;
     margin: 0 5px;
     background-color: #ccc;
     border-radius: 50%;
@@ -209,4 +212,4 @@ body {
     background-color: #333;
 }
 
-// End Css of Galery
+// End Galery Css
