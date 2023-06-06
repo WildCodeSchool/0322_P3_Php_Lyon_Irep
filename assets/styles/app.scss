@@ -30,11 +30,12 @@ $optionDefaultColours: white;
 
 .galery {
    display:flex;
-   flex-direction:row;
+   flex-direction:column;
    justify-content:center;
    align-items:center;
    overflow:hidden;
    height:100vh;
+   
    
    font-family: $subtitleFont, sans-serif;
    transition:.25s;
@@ -186,4 +187,24 @@ $optionDefaultColours: white;
    }
 }
 
+
+.bullet-navigation {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.bullet {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.bullet.active {
+    background-color: #333;
+}
 

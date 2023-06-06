@@ -6,7 +6,7 @@
 <section class="galery">
 <div class="options">
    {% for picture in pictures %}
-   <div class="option" style="--optionBackground:url({{ asset(picture.image) }});">
+   <div class="option" style="--optionBackground:url({{ asset(picture.image) }}) ;">
       <div class="shadow"></div>
       <div class="label">
          <div class="icon">
@@ -20,5 +20,12 @@
    </div>
    {% endfor %}
 </div>
+    <div class="bullet-navigation">
+        {% for picture in pictures %}
+        <span class="bullet" data-index="{{ loop.index }}"></span>
+        {% endfor %}
+    </div>
 </section>
+
+
 {% endblock %}
