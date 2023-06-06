@@ -11,7 +11,7 @@ import "./styles/app.scss";
 // start the Stimulus application
 import "./bootstrap";
 import "flowbite";
-// Utility function to simplify NodeList to Array conversion
+
 function selectAll(selector) {
     return Array.from(document.querySelectorAll(selector));
 }
@@ -23,11 +23,46 @@ document.addEventListener("DOMContentLoaded", function () {
     let bulletsContainer = document.querySelector(".bullet-navigation");
 
     const handleClick = (activeIndex) => {
+        const category = options[activeIndex].getAttribute("data-category");
+        const categoryOptions = options.filter(
+            (option) => option.getAttribute("data-category") === category
+        );
+        const startIndex = categoryOptions.indexOf(options[activeIndex]);
+
+        // hide all options
+        options.forEach((option) => {
+            option.style.display = "none";
+        });
+
+        // show selected option and next 5 options in the category
+        let imagesToDisplay = categoryOptions.slice(startIndex, startIndex + 6);
+
+        // If there are less than 6 images, add from the start of the list
+        while (imagesToDisplay.length < 6) {
+            imagesToDisplay = imagesToDisplay.concat(
+                categoryOptions.slice(0, 6 - imagesToDisplay.length)
+            );
+        }
+
+        imagesToDisplay.forEach((option) => {
+            option.style.display = "flex";
+        });
+
+        //highlight the selected option
         options.forEach((option, index) => {
             if (index === activeIndex) {
                 option.classList.add("active");
             } else {
                 option.classList.remove("active");
+            }
+        });
+
+        //Highlight the slected bullet
+        selectAll(".bullet").forEach((bullet, index) => {
+            if (index === activeIndex) {
+                bullet.classList.add("active");
+            } else {
+                bullet.classList.remove("active");
             }
         });
     };
@@ -39,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function generateBullets(visibleOptions) {
         bulletsContainer.innerHTML = ""; // Supprimer les bullet points existants
 
-        visibleOptions.forEach((option, index) => {
+        visibleOptions.forEach((option) => {
             const bullet = document.createElement("span");
             bullet.classList.add("bullet");
             bullet.dataset.index = options.indexOf(option);
@@ -48,21 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
             );
             bulletsContainer.appendChild(bullet);
         });
-    }
-
-    function showFirstImage(category) {
-        const visibleOptions = options.filter((option) => {
-            return (
-                option.getAttribute("data-category") === category &&
-        window.getComputedStyle(option).display !== "none"
-            );
-        });
-
-        if (visibleOptions.length > 0) {
-            const firstOption = visibleOptions[0];
-            const firstOptionIndex = options.indexOf(firstOption);
-            handleClick(firstOptionIndex);
-        }
     }
 
     categoryButtons.forEach((button) => {
@@ -81,16 +101,16 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             generateBullets(categoryOptions);
-            showFirstImage(category);
+            handleClick(options.indexOf(categoryOptions[0]));
         });
 
-        // Cliquez sur le premier bouton de catégorie pour afficher la première catégorie
+        // Click on first button of category
         if (button.dataset.firstCategory) {
             button.click();
         }
     });
 
-    // Générer les bullet points initialement
+    // Generate Bullepoint
     const initialCategoryButton = categoryButtons.find(
         (button) => button.dataset.firstCategory
     );
