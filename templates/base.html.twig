@@ -6,7 +6,7 @@
         <link rel="icon" type="image/png" href="{{ asset('build/images/favicon.png') }}"/>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <title>
-            {% block title %}Projet 3 Name{% endblock %}
+            {% block title %}IREP{% endblock %}
         </title>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -18,6 +18,10 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}     
+        {% include 'includes/_navbar.html.twig' %}
+        {% block body %}
+            
+        {% endblock %}     
+        
     </body>
 </html>
