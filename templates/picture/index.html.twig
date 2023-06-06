@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Picture index{% endblock %}
+
+{% block body %}
+<div class="options">
+   {% for picture in pictures %}
+   <div class="option" style="--optionBackground:url('/assets/images/UsineBelAir_40FI78.jpg');">
+      <div class="shadow"></div>
+      <div class="label">
+         <div class="icon">
+            <i class="fas fa-walking"></i>
+         </div>
+         <div class="info">
+            <div class="main">{{ picture.title }}</div>
+            <div class="sub">{{ picture.subtitle }}</div>
+         </div>
+      </div>
+   </div>
+   {% endfor %}
+</div>
+{% endblock %}

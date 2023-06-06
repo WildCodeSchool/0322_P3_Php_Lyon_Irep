@@ -11,3 +11,20 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 import 'flowbite';
+
+
+// Gallery Js
+
+document.addEventListener('DOMContentLoaded', function() {
+    let options = document.querySelectorAll('.option');
+  
+    options.forEach(function(option) {
+        option.addEventListener('click', function() {
+            options.forEach(function(option) {
+                option.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+    });
+});
+  
