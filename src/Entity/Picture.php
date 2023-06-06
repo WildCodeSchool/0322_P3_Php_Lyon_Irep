@@ -23,8 +23,8 @@ class Picture
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $subtitle = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date = null;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $date = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $technic = null;
@@ -88,12 +88,12 @@ class Picture
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    public function setDate(?string $date): self
     {
         $this->date = $date;
 

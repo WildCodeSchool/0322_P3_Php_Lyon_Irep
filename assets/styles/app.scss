@@ -45,7 +45,7 @@ body {
             .option {
                 display: none;
             }
-            .option:nth-child(-n + 2) {
+            .option:nth-child(-n + 6) {
                 display: flex;
             }
         }
@@ -54,7 +54,7 @@ body {
             .option {
                 display: none;
             }
-            .option:nth-child(-n + 3) {
+            .option:nth-child(-n + 6) {
                 display: flex;
             }
         }

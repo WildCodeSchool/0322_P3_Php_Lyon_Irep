@@ -11,47 +11,23 @@ import "./styles/app.scss";
 // start the Stimulus application
 import "./bootstrap";
 import "flowbite";
-
 // Utility function to simplify NodeList to Array conversion
 function selectAll(selector) {
     return Array.from(document.querySelectorAll(selector));
 }
 
-// JS Galery
+// JS Gallery
 document.addEventListener("DOMContentLoaded", function () {
     let options = selectAll(".option");
-    let bullets = selectAll(".bullet");
     let categoryButtons = selectAll(".category-button");
+    let bulletsContainer = document.querySelector(".bullet-navigation");
 
     const handleClick = (activeIndex) => {
-        const activeOption = options[activeIndex];
-
-        if (
-            activeOption &&
-      window.getComputedStyle(activeOption).display === "none"
-        ) {
-            const randomVisibleIndex = options.findIndex(
-                (option) => window.getComputedStyle(option).display !== "none"
-            );
-            if (randomVisibleIndex !== -1) {
-                options[randomVisibleIndex].style.display = "none";
-            }
-            activeOption.style.display = "flex";
-        }
-
         options.forEach((option, index) => {
             if (index === activeIndex) {
                 option.classList.add("active");
-                const bulletIndex = options.indexOf(option);
-                if (bulletIndex !== -1 && bulletIndex < bullets.length) {
-                    bullets[bulletIndex].classList.add("active");
-                }
             } else {
                 option.classList.remove("active");
-                const bulletIndex = options.indexOf(option);
-                if (bulletIndex !== -1 && bulletIndex < bullets.length) {
-                    bullets[bulletIndex].classList.remove("active");
-                }
             }
         });
     };
@@ -60,40 +36,67 @@ document.addEventListener("DOMContentLoaded", function () {
         option.addEventListener("click", () => handleClick(index));
     });
 
-    bullets.forEach((bullet, index) => {
-        bullet.addEventListener("click", () => handleClick(index));
-    });
+    function generateBullets(visibleOptions) {
+        bulletsContainer.innerHTML = ""; // Supprimer les bullet points existants
 
-    handleClick(0);
+        visibleOptions.forEach((option, index) => {
+            const bullet = document.createElement("span");
+            bullet.classList.add("bullet");
+            bullet.dataset.index = options.indexOf(option);
+            bullet.addEventListener("click", () =>
+                handleClick(options.indexOf(option))
+            );
+            bulletsContainer.appendChild(bullet);
+        });
+    }
+
+    function showFirstImage(category) {
+        const visibleOptions = options.filter((option) => {
+            return (
+                option.getAttribute("data-category") === category &&
+        window.getComputedStyle(option).display !== "none"
+            );
+        });
+
+        if (visibleOptions.length > 0) {
+            const firstOption = visibleOptions[0];
+            const firstOptionIndex = options.indexOf(firstOption);
+            handleClick(firstOptionIndex);
+        }
+    }
 
     categoryButtons.forEach((button) => {
         button.addEventListener("click", function () {
             const category = this.getAttribute("data-category");
-            options.forEach((option) => {
-                if (option.getAttribute("data-category") !== category) {
-                    option.style.display = "none";
-                } else {
-                    option.style.display = "flex";
-                }
-            });
-
-            bullets.forEach((bullet, index) => {
-                const option = options[index];
-                if (option && option.getAttribute("data-category") !== category) {
-                    bullet.style.display = "none";
-                } else {
-                    bullet.style.display = "inline-block";
-                }
-            });
-
-            const firstVisibleOptionIndex = options.findIndex(
-                (option) => window.getComputedStyle(option).display !== "none"
+            const categoryOptions = options.filter(
+                (option) => option.getAttribute("data-category") === category
             );
-            handleClick(firstVisibleOptionIndex);
+
+            options.forEach((option) => {
+                option.style.display = "none";
+            });
+
+            categoryOptions.slice(0, 6).forEach((option) => {
+                option.style.display = "flex";
+            });
+
+            generateBullets(categoryOptions);
+            showFirstImage(category);
         });
+
+        // Cliquez sur le premier bouton de catégorie pour afficher la première catégorie
+        if (button.dataset.firstCategory) {
+            button.click();
+        }
     });
 
-    if (categoryButtons.length > 0) {
+    // Générer les bullet points initialement
+    const initialCategoryButton = categoryButtons.find(
+        (button) => button.dataset.firstCategory
+    );
+    if (initialCategoryButton) {
+        initialCategoryButton.click();
+    } else if (categoryButtons.length > 0) {
         categoryButtons[0].click();
     }
 });
