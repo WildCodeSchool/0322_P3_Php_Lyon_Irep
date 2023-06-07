@@ -1,9 +1,18 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
+$primaryColor : #EAD07F;
 
 body {
     background-color: rgb(208, 178, 178);
 }
 
+.custom-navbar {
+    border-bottom-color: $primaryColor; 
+  
+}
+
+.custum-bg-color-burger-menu{
+    background-color: $primaryColor; 
+  
+}
