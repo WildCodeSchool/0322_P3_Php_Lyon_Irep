@@ -1,99 +1,138 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you import will output into a single css file (app.css in this case)
 import "./styles/app.scss";
-
-// start the Stimulus application
 import "./bootstrap";
 import "flowbite";
 
-// Utility function to simplify NodeList to Array conversion
+
 function selectAll(selector) {
     return Array.from(document.querySelectorAll(selector));
 }
 
-// JS Galery
+
 document.addEventListener("DOMContentLoaded", function () {
+    // Get All options
     let options = selectAll(".option");
-    let bullets = selectAll(".bullet");
     let categoryButtons = selectAll(".category-button");
+    let bulletsContainer = document.querySelector(".bullet-navigation");
+
 
     const handleClick = (activeIndex) => {
-        const activeOption = options[activeIndex];
+        const category = options[activeIndex].getAttribute("data-category");
+        const categoryOptions = options.filter(
+            (option) => option.getAttribute("data-category") === category
+        );
+        const startIndex = categoryOptions.indexOf(options[activeIndex]);
 
-        if (
-            activeOption &&
-      window.getComputedStyle(activeOption).display === "none"
-        ) {
-            const randomVisibleIndex = options.findIndex(
-                (option) => window.getComputedStyle(option).display !== "none"
+
+        options.forEach((option) => {
+            option.style.display = "none";
+        });
+
+
+        //Display the option and the next 5 pictures
+        let imagesToDisplay = categoryOptions.slice(startIndex, startIndex + 6);
+
+
+        //If less than 6 get from the start
+        while (imagesToDisplay.length < 6) {
+            imagesToDisplay = imagesToDisplay.concat(
+                categoryOptions.slice(0, 6 - imagesToDisplay.length)
             );
-            if (randomVisibleIndex !== -1) {
-                options[randomVisibleIndex].style.display = "none";
-            }
-            activeOption.style.display = "flex";
         }
 
+
+        // Affiche les images à afficher
+        imagesToDisplay.forEach((option) => {
+            option.style.display = "flex";
+        });
+
+
+        // Met en surbrillance l'option sélectionnée
         options.forEach((option, index) => {
             if (index === activeIndex) {
                 option.classList.add("active");
-                const bulletIndex = options.indexOf(option);
-                if (bulletIndex !== -1 && bulletIndex < bullets.length) {
-                    bullets[bulletIndex].classList.add("active");
-                }
             } else {
                 option.classList.remove("active");
-                const bulletIndex = options.indexOf(option);
-                if (bulletIndex !== -1 && bulletIndex < bullets.length) {
-                    bullets[bulletIndex].classList.remove("active");
-                }
+            }
+        });
+
+
+        // Met en surbrillance le point sélectionné
+        selectAll(".bullet").forEach((bullet, index) => {
+            if (index === activeIndex) {
+                bullet.classList.add("active");
+            } else {
+                bullet.classList.remove("active");
             }
         });
     };
+
 
     options.forEach((option, index) => {
         option.addEventListener("click", () => handleClick(index));
     });
 
-    bullets.forEach((bullet, index) => {
-        bullet.addEventListener("click", () => handleClick(index));
-    });
 
-    handleClick(0);
+    function generateBullets(visibleOptions) {
+        bulletsContainer.innerHTML = "";
+
+
+        // New bullet point for each pictures
+        visibleOptions.forEach((option) => {
+            const bullet = document.createElement("span");
+            bullet.classList.add("bullet");
+            bullet.dataset.index = options.indexOf(option);
+            bullet.addEventListener("click", () =>
+                handleClick(options.indexOf(option))
+            );
+            bulletsContainer.appendChild(bullet);
+        });
+    }
+
 
     categoryButtons.forEach((button) => {
         button.addEventListener("click", function () {
             const category = this.getAttribute("data-category");
-            options.forEach((option) => {
-                if (option.getAttribute("data-category") !== category) {
-                    option.style.display = "none";
-                } else {
-                    option.style.display = "flex";
-                }
-            });
-
-            bullets.forEach((bullet, index) => {
-                const option = options[index];
-                if (option && option.getAttribute("data-category") !== category) {
-                    bullet.style.display = "none";
-                } else {
-                    bullet.style.display = "inline-block";
-                }
-            });
-
-            const firstVisibleOptionIndex = options.findIndex(
-                (option) => window.getComputedStyle(option).display !== "none"
+            const categoryOptions = options.filter(
+                (option) => option.getAttribute("data-category") === category
             );
-            handleClick(firstVisibleOptionIndex);
+
+
+            options.forEach((option) => {
+                option.style.display = "none";
+            });
+
+
+            //Display the 6 first images
+            categoryOptions.slice(0, 6).forEach((option) => {
+                option.style.display = "flex";
+            });
+
+
+            generateBullets(categoryOptions);
+            handleClick(options.indexOf(categoryOptions[0]));
         });
+
+
+        // Click on first category
+        if (button.dataset.firstCategory) {
+            button.click();
+        }
     });
 
-    if (categoryButtons.length > 0) {
+
+    const initialCategoryButton = categoryButtons.find(
+        (button) => button.dataset.firstCategory
+    );
+    if (initialCategoryButton) {
+        initialCategoryButton.click();
+    } else if (categoryButtons.length > 0) {
         categoryButtons[0].click();
     }
 });
+
+
+
+
+
+
+
