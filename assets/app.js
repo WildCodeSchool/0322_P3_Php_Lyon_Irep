@@ -2,7 +2,6 @@ import "./styles/app.scss";
 import "./bootstrap";
 import "flowbite";
 
-// Helper function to select elements
 function selectAll(selector) {
     return Array.from(document.querySelectorAll(selector));
 }
@@ -12,27 +11,28 @@ let categoryButtons = [];
 let bulletsContainer = null;
 let currentOptions = [];
 
-// Function to handle click event
-const handleClick = (activeIndex) => {
-    // Create a new array of visible options starting with the clicked option
-    const visibleOptions = currentOptions.slice(activeIndex, activeIndex + 6);
+// Function to check if it's a mobile device based on screen width
+const isMobileDevice = () => {
+    return window.innerWidth < 768;
+};
 
-    // If there are less than 6 options, fill in the rest with options from the start
-    while (visibleOptions.length < 6) {
-        visibleOptions.push(...currentOptions.slice(0, 6 - visibleOptions.length));
+const handleClick = (activeIndex) => {
+    // Use a single image on mobile, else 6 images.
+    const visibleCount = isMobileDevice() ? 1 : 6;
+    const visibleOptions = currentOptions.slice(activeIndex, activeIndex + visibleCount);
+
+    while (visibleOptions.length < visibleCount) {
+        visibleOptions.push(...currentOptions.slice(0, visibleCount - visibleOptions.length));
     }
 
-    // Hide all options
     options.forEach((option) => {
         option.style.display = "none";
     });
 
-    // Display the visible options
     visibleOptions.forEach((option) => {
         option.style.display = "flex";
     });
 
-    // Highlight the active option
     options.forEach((option) => {
         if (option === visibleOptions[0]) {
             option.classList.add("active");
@@ -41,7 +41,6 @@ const handleClick = (activeIndex) => {
         }
     });
 
-    // Highlight the active bullet
     selectAll(".bullet").forEach((bullet, index) => {
         if (index === activeIndex) {
             bullet.classList.add("active");
@@ -51,10 +50,9 @@ const handleClick = (activeIndex) => {
     });
 };
 
-// Function to generate bullet navigation
 const generateBullets = (visibleOptions) => {
     bulletsContainer.innerHTML = "";
-    visibleOptions.forEach((index) => {
+    visibleOptions.forEach((_, index) => {
         const bullet = document.createElement("span");
         bullet.classList.add("bullet");
         bullet.dataset.index = index;
@@ -68,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
     categoryButtons = selectAll(".category-button");
     bulletsContainer = document.querySelector(".bullet-navigation");
 
-    // Add click event listeners to options
     options.forEach((option) => {
         option.addEventListener("click", () => {
             const currentOptionIndex = currentOptions.indexOf(option);
@@ -78,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Add click event listeners to category buttons
     categoryButtons.forEach((button) => {
         button.addEventListener("click", function () {
             const category = this.getAttribute("data-category");
@@ -86,31 +82,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 (option) => option.getAttribute("data-category") === category
             );
 
-            // Hide all options
             options.forEach((option) => {
                 option.style.display = "none";
             });
 
-            // Display the first 6 options in this category
-            categoryOptions.slice(0, 6).forEach((option) => {
+            const visibleCount = isMobileDevice() ? 1 : 6;
+
+            categoryOptions.slice(0, visibleCount).forEach((option) => {
                 option.style.display = "flex";
             });
 
-            // Update currentOptions and generate bullets
             currentOptions = categoryOptions;
             generateBullets(categoryOptions);
 
-            // Handle click on the first option in this category
             handleClick(0);
         });
 
-        // Click on the first category
         if (button.dataset.firstCategory) {
             button.click();
         }
     });
 
-    // Click on the initial category
     const initialCategoryButton = categoryButtons.find(
         (button) => button.dataset.firstCategory
     );
