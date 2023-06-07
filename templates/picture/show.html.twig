@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Picture{% endblock %}
+
+{% block body %}
+    <h1>Picture</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ picture.id }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ picture.reference }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ picture.title }}</td>
+            </tr>
+            <tr>
+                <th>Subtitle</th>
+                <td>{{ picture.subtitle }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ picture.date ? picture.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Technic</th>
+                <td>{{ picture.technic }}</td>
+            </tr>
+            <tr>
+                <th>Size</th>
+                <td>{{ picture.size }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ picture.category }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ picture.number }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ picture.comment }}</td>
+            </tr>
+            <tr>
+                <th>Link</th>
+                <td>{{ picture.link }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_picture_index') }}">back to list</a>
+
+    <a href="{{ path('app_picture_edit', {'id': picture.id}) }}">edit</a>
+
+    {{ include('picture/_delete_form.html.twig') }}
+{% endblock %}
