@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block title %}Picture Index
 {% endblock %}
+
+        {% block javascripts %}
+		{{ parent()}}
+            {{ encore_entry_script_tags('galery') }}
+        {% endblock %}
 {%
 block body %}
 	<section class="galery">

@@ -213,11 +213,14 @@ body {
 
 .option:not(.active) .icon {
     opacity: 0;
+    pointer-events: none;
 }
 
 .option.active .icon {
     opacity: 1;
+    pointer-events: auto;
 }
+
 
 .bullet-navigation {
    display: flex;
