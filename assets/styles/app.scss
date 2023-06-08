@@ -14,22 +14,25 @@ $contentFont: "Hind Madurai";
 
 
 // Color Var
-$backgroundColor: rgb(239, 237, 237);
+$backgroundColor: rgb(21, 21, 21);
 $optionDefaultColours: white;
-$primaryColor : #EAD07F;
+$accentcolor : #EAD07F;
 
 body {
    background-color: $backgroundColor;
 }
 
 .custom-navbar {
-    border-bottom-color: $primaryColor; 
+    border-bottom-color: $accentcolor; 
   
 }
 
 .custom-bg-color-burger-menu{
-    background-color: $primaryColor; 
+    background-color: $accentcolor; 
   
+}
+.custom-dropdown:active {
+    border:none;
 }
 
 // Galery CSS
@@ -241,6 +244,36 @@ body {
 
 
 .bullet.active {
-   background-color: #333;
+   background-color: $accentcolor;
 }
 
+.category-buttons {
+    position: relative;
+    margin-bottom: 22px; 
+  }
+  .category-buttons .line {
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    margin-top: 10px;
+    background: $accentcolor;
+    transition: all 0.3s ease;
+  }
+  .buttons-container {
+    margin-bottom: 2px; 
+  }
+  .category-button {
+    margin-right: 40px;
+    color: #ccc;
+    transition: all 0.4s ease;
+  }
+  .category-button:hover {
+    opacity: .7;
+  }
+  .category-button.active {
+    color:white;
+  }
+  .category-button:last-child {
+    margin-right: 0;
+  }
+  

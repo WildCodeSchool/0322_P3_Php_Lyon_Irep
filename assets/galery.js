@@ -140,3 +140,50 @@ document.addEventListener("DOMContentLoaded", function () {
         categoryButtons[0].click();
     }
 });
+let nav = document.querySelector('.category-buttons');
+let line = document.createElement('div');
+line.className = 'line';
+nav.appendChild(line);
+
+let active = nav.querySelector('.category-button.active');
+let pos = 0;
+let wid = 0;
+
+if(active) {
+    pos = active.offsetLeft;
+    wid = active.offsetWidth;
+    line.style.left = `${pos}px`;
+    line.style.width = `${wid}px`;
+}
+
+nav.querySelectorAll('.category-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(!button.classList.contains('active')) {
+            nav.querySelectorAll('.category-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
+
+            let position = button.offsetLeft;
+            let width = button.offsetWidth;
+
+            // Double animation en deux étapes
+            if(position >= pos) {
+                line.style.width = `${position - pos + width}px`;
+                setTimeout(() => {
+                    line.style.width = `${width}px`;
+                    line.style.left = `${position}px`;
+                }, 300);
+            } else {
+                line.style.left = `${position}px`;
+                line.style.width = `${pos - position + wid}px`;
+                setTimeout(() => {
+                    line.style.width = `${width}px`;
+                }, 300);
+            }
+            pos = position;
+            wid = width;
+        }
+    });
+});
