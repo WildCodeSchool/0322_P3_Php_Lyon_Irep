@@ -17,7 +17,7 @@ const isMobileDevice = () => {
 // Function to handle click event on an option
 const handleClick = (activeIndex) => {
     // Use a single image on mobile, else 6 images.
-    const visibleCount = isMobileDevice() ? 1 : 6;
+    const visibleCount = isMobileDevice() ? 1 : 4;
     
     let previousOptions = [];
     let nextOptions = [];
