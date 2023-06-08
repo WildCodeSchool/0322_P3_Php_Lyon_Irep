@@ -172,8 +172,13 @@ body {
                    border-radius: 100%;
                    background-color: white;
                    color: var(--defaultBackground);
-               }
 
+                   svg {
+                    width: 70%;
+                    height: 70%;
+                    color:black;
+                  }
+               }
 
                .info {
                    display: flex;
@@ -206,6 +211,13 @@ body {
    }
 }
 
+.option:not(.active) .icon {
+    opacity: 0;
+}
+
+.option.active .icon {
+    opacity: 1;
+}
 
 .bullet-navigation {
    display: flex;
