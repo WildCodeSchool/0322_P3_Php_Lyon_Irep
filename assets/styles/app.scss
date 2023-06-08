@@ -16,19 +16,19 @@ $contentFont: "Hind Madurai";
 // Color Var
 $backgroundColor: #060606;
 $optionDefaultColours: white;
-$accentcolor : #EAD07F;
+$accentColor : #EAD07F;
 
 body {
    background-color: $backgroundColor;
 }
 
 .custom-navbar {
-    border-bottom-color: $accentcolor; 
+    border-bottom-color: $accentColor; 
   
 }
 
 .custom-bg-color-burger-menu{
-    background-color: $accentcolor; 
+    background-color: $accentColor; 
   
 }
 
@@ -170,7 +170,7 @@ body {
                    max-width: 40px;
                    height: 40px;
                    border-radius: 100%;
-                   background-color: white;
+                   background-color: #ccc;
                    color: var(--defaultBackground);
 
                    svg {
@@ -185,7 +185,7 @@ body {
                    flex-direction: column;
                    justify-content: center;
                    margin-left: 10px;
-                   color: white;
+                   color: #ccc;
                    white-space: pre;
 
 
@@ -241,7 +241,7 @@ body {
 
 
 .bullet.active {
-   background-color: $accentcolor;
+   background-color: $accentColor;
 }
 
 .category-buttons {
@@ -253,7 +253,7 @@ body {
     position: absolute;
     bottom: 0;
     margin-top: 10px;
-    background: $accentcolor;
+    background: $accentColor;
     transition: all 0.3s ease;
   }
   .buttons-container {
