@@ -23,12 +23,16 @@ const isMobileDevice = () => {
 const handleClick = (activeIndex) => {
     // Use a single image on mobile, else 6 images.
     const visibleCount = isMobileDevice() ? 1 : 6;
-    const visibleOptions = currentOptions.slice(activeIndex, activeIndex + visibleCount);
-
-    // If there are not enough visible options, wrap around to the beginning
-    while (visibleOptions.length < visibleCount) {
-        visibleOptions.push(...currentOptions.slice(0, visibleCount - visibleOptions.length));
+    
+    let previousOptions = [];
+    let nextOptions = [];
+    for(let i = 1; i <= visibleCount / 2; i++) {
+        const previousIndex = (activeIndex - i + currentOptions.length) % currentOptions.length;
+        const nextIndex = (activeIndex + i) % currentOptions.length;
+        previousOptions.unshift(currentOptions[previousIndex]);
+        nextOptions.push(currentOptions[nextIndex]);
     }
+    const visibleOptions = [...previousOptions, currentOptions[activeIndex], ...nextOptions];
 
     // Hide all options
     options.forEach((option) => {
@@ -42,7 +46,7 @@ const handleClick = (activeIndex) => {
 
     // Set the active class on the current option
     options.forEach((option) => {
-        if (option === visibleOptions[0]) {
+        if (option === currentOptions[activeIndex]) {
             option.classList.add("active");
         } else {
             option.classList.remove("active");
@@ -112,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
             currentOptions = categoryOptions;
             generateBullets(categoryOptions);
 
-            handleClick(Math.max(0, categoryOptions.length - 2));
+            handleClick(Math.floor(categoryOptions.length / 2));
         });
 
         // Click the button with the "data-first-category" attribute
