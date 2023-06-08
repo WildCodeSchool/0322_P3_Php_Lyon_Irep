@@ -2,68 +2,93 @@
 
 {% block title %}IREP{% endblock %}
 
-{% block body %} 
+{% block body %}
 
-<div id="default-carousel" class="relative w-full bg-yellow-200 h-[40rem]" data-carousel="static">
-        <!-- Carousel wrapper -->
-        <div class="relative h-56 overflow-hidden md:h-[40rem]">
-             <!-- Item 1 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                 <img src="{{ asset('build/images/UsineBelAir.jpg') }}"class="absolute object-cover w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                 <div class="absolute top-1/2 -translate-y-1/2 ml-5 bg-red-200 w-24 md:w-80">
-                    <h2 class="text-1xl font-bold md:text-5xl ">LE TAMPON</h2>
-                    <h3 class="text-1xl font-bold md:text-2xl text-white">Journées Européennes du Patrimoine 2023</h3>
-                  </div><!--
-                  <div class="absolute inline h-28 bg-green-300">
-                    <p class="m-4 w-5/6 bg-yellow-200">INFOS</p>
-                    <p class="m-4 w-1/6 bg-yellow-600"><a:href>+</a:href></p>
-                  </div>-->
-            </div>
-            <!-- Item 2 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{{ asset('build/images/ChanvertGolo.jpg') }}" class="absolute object-cover w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                <div class="absolute top-1/2 -translate-y-1/2 ml-5 bg-red-200 w-24 md:w-80">
-                    <h2 class="text-1xl font-bold md:text-5xl ">LE TAMPON</h2>
-                    <h3 class="text-1xl font-bold md:text-2xl text-white">Journées Européennes du Patrimoine 2023</h3>
-                </div>
-            </div>
-        </div>
-    <!-- Slider indicators -->
-    <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-    </div>
-</div>    
-  
-<div id="default-carousel" class="relative w-full my-20" data-carousel="static">
+<div id="default-carousel" class="relative w-full h-[40rem]" data-carousel="static">
     <!-- Carousel wrapper -->
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-         <!-- Item 1 -->
+    <div class="relative overflow-hidden h-[40rem]">
+        <!-- Item 1 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('build/images/paysage1.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ asset('build/images/carousel1.png') }}"
+                class="absolute block object-cover w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                alt="...">
+            <div class="absolute flex flex-col content-around top-1/2 -translate-y-1/2 ml-5 w-60 md:w-6/12">
+                <h2 class="text-3xl p-2 font-bold md:text-4xl text-white ">LE TAMPON</h2>
+                <h3 class="text-2xl p-2 text-white">Journées Européennes du Patrimoine 2023</h3>
+            </div>
+            <div class="absolute flex justify-start top-3/4 -translate-y-1/2 ml-7 mt-2 md:w-80">
+                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-200">INFOS</p>
+                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-300"><a href="#">+</a></p>
+            </div>
         </div>
+
         <!-- Item 2 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('build/images/paysage2.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ asset('build/images/carousel2.png') }}"
+                class="absolute block object-cover w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                alt="...">
+            <div class="absolute flex flex-col content-around top-1/2 -translate-y-1/2 ml-5 w-60 md:w-6/12">
+                <h2 class="text-3xl p-2 font-bold md:text-4xl text-white ">BEL AIR, D'UNE SUCRERIE A LA NAISSANCE D'UN VILLAGE</h2>
+                <h3 class="text-2xl p-2 mb-2 text-white">Visitez la galerie et parcourez les oeuvres</h3>
+            </div>
+            <div class="absolute flex justify-start top-3/4 -translate-y-1/2 ml-7 mt-2 w- md:w-80 ">
+                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-200">DECOUVRIR</p>
+                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-300"><a href="#">+</a></p>
+            </div>
         </div>
-     
-    </div>
-    <!-- Slider indicators -->
-    <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-     
-    </div>
-    
-</div>
 
-<div class="container h-full bg-yellow-200 mx-auto">
+        <!-- Item 3 -->
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+            <img src="{{ asset('build/images/carousel3.png') }}"
+                class="absolute block object-cover w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                alt="...">
+            <div class="absolute flex flex-col content-around top-1/2 -translate-y-1/2 ml-5 w-60 md:w-6/12">
+                <h2 class="text-3xl p-2 font-bold md:text-4xl text-white ">HIPPOLYTE CHARLES NAPOLEON MORTIER</h2>
+                <h3 class="text-2xl p-2 text-white">Duc de Trévise</h3>
+            </div>
+            <div class="absolute flex justify-start top-3/4 -translate-y-1/2 ml-7 mt-2 md:w-80 ">
+                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-200">DECOUVRIR</p>
+                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-300"><a href="#">+</a></p>
+            </div>
+        </div>
 
-    <div class="pink-stripe">
-        <h1 class="text-9xl p-10">
-            Let's start coding&nbsp;&#129304;
-        </h1>
+        <!-- Item 4 -->
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+            <img src="{{ asset('build/images/carousel3.png') }}"
+                class="absolute block object-cover w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                alt="...">
+            <div class="absolute flex flex-col content-around top-1/2 -translate-y-1/2 ml-5 w-60 md:w-6/12">
+                <h2 class="text-3xl p-2 font-bold md:text-4xl text-white ">L'AFAC 974</h2>
+                <h3 class="text-2xl p-2 text-white">Nos projets</h3>
+            </div>
+            <div class="absolute flex justify-start top-3/4 -translate-y-1/2 ml-7 mt-2 md:w-80 ">
+                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-200">DECOUVRIR</p>
+                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-300"><a href="#">+</a></p>
+            </div>
+        </div>
+
     </div>
-</div>  
 
-{% endblock %}
+        <!-- Slider indicators -->
+        <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-10 left-1/2">
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
+                data-carousel-slide-to="0"></button>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
+                data-carousel-slide-to="1"></button>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
+                data-carousel-slide-to="2"></button>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4"
+                data-carousel-slide-to="3"></button>
+        </div>
+
+   
+</div>    
+
+
+
+<!-- Section 1 -->
+
+
+
+
+    {% endblock %}
