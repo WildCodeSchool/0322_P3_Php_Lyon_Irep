@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
             currentOptions = categoryOptions;
             generateBullets(categoryOptions);
 
-            handleClick(0);
+            handleClick(Math.max(0, categoryOptions.length - 2));
         });
 
         // Click the button with the "data-first-category" attribute
