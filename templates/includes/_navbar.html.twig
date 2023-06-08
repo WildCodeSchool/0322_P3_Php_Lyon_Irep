@@ -1,11 +1,11 @@
 <nav class="custom-navbar border-gray-200 dark:border-gray-700 fixed top-0 w-full border-b-2 h-16 z-50 ">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
-    <a href="#" class="flex items-center">
+    <a href="{{ path('app_home') }}" class="flex items-center mr-12">
       <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">IREP</span>
     </a>
       <ul class="hidden md:flex items-center space-x-4 ml-auto">
         <li>
-          <a href="#" class="custum-bg-color-burger-menu block py-2 pl-3 pr-4 text-white rounded dark:bg-blue-600 mr-8" aria-current="page">Galerie</a>
+          <a href="{{ path('app_picture_index') }}" class="custum-bg-color-burger-menu block py-2 pl-3 pr-4 text-white rounded dark:bg-blue-600 mr-8" aria-current="page">Galerie</a>
         </li>
        
       </ul>
@@ -35,18 +35,10 @@
     <div class="hidden w-56 absolute top-full right-0 mt-0" id="navbar-hamburger">
       <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
         <li>
-          <a href="#" class="custum-bg-color-burger-menu block py-2 pl-3 pr-4 text-white rounded dark:bg-blue-600" aria-current="page">Galery</a>
-          <a href="{{ path('app_picture_index') }}" class="block py-2 pl-3 pr-4 text-white bg-yellow-200 rounded dark:bg-blue-600" aria-current="page">Galery</a>
+          <a href="{{ path('app_picture_index') }}" class="custum-bg-color-burger-menu block py-2 pl-3 pr-4 text-white rounded dark:bg-blue-600" aria-current="page">Galerie</a>
+          
         </li>
-        <li>
-          <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Other</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white">Other</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Other</a>
-        </li>
+       
       </ul>
     </div>
   </div>
