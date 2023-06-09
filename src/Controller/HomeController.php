@@ -11,11 +11,12 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
     public function index(ExhibitionRepository $exhibitionRepository): Response
-    {   
+    {
         $exhibitions = $exhibitionRepository->findAll();
 
-        return $this->render('home/index.html.twig', 
-        ['exhibitions' => $exhibitions]
+        return $this->render(
+            'home/index.html.twig',
+            ['exhibitions' => $exhibitions]
         );
     }
 }

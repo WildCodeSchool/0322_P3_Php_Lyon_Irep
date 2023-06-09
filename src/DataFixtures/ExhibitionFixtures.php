@@ -8,8 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ExhibitionFixtures extends Fixture
 {
-    
-        public const EXHIBITIONS = [    
+    public const EXHIBITIONS = [
         ['title' => "LE TAMPON",
          'subtitle' =>  "Journées Européennes du Patrimoine 2023.",
          'image' =>  "build/images/carousel1.png"],
@@ -27,20 +26,15 @@ class ExhibitionFixtures extends Fixture
          'image' =>  "build/images/carousel3.png"],
         ];
 
-    public function load(ObjectManager $manager):void
+    public function load(ObjectManager $manager): void
     {
-        foreach (self::EXHIBITIONS as $exhibitionCarousel){
-            $exhibition = new EXHIBITION(); 
+        foreach (self::EXHIBITIONS as $exhibitionCarousel) {
+            $exhibition = new EXHIBITION();
             $exhibition ->setTitle($exhibitionCarousel['title']);
             $exhibition ->setSubtitle($exhibitionCarousel['subtitle']);
             $exhibition ->setImage($exhibitionCarousel['image']);
-            $manager->persist($exhibition); 
+            $manager->persist($exhibition);
             $manager->flush();
-           
         }
-      
     }
-    
-
 }
-
