@@ -3,56 +3,28 @@
 {% block title %}Picture{% endblock %}
 
 {% block body %}
-    <h1>Picture</h1>
+    <div class="picture-details">
+        <div class="picture-image">
+            <img id="myImg" src="{{ asset(picture.image) }}" alt="{{ picture.title }}">
+        </div>
+        <hr>
+        <div class="picture-info">
+            <h1>Picture</h1>
+            <h3>{{ picture.title }}</h3>
+            <span>{{ picture.date }}</span>
+            <span>Dessin : {{ picture.size }}</span>
+            <p>{{ picture.comment }}</p>
+        </div>
+    </div>
+<div class="container-button-picture">
+    <a class="custom-button-picture" type="button" href="{{ path('app_picture_index') }}">Autres  oeuvres</a>
+</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ picture.id }}</td>
-            </tr>
-            <tr>
-                <th>Reference</th>
-                <td>{{ picture.reference }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ picture.title }}</td>
-            </tr>
-            <tr>
-                <th>Subtitle</th>
-                <td>{{ picture.subtitle }}</td>
-            </tr>
-            <tr>
-                <th>Technic</th>
-                <td>{{ picture.technic }}</td>
-            </tr>
-            <tr>
-                <th>Size</th>
-                <td>{{ picture.size }}</td>
-            </tr>
-            <tr>
-                <th>Category</th>
-                <td>{{ picture.category }}</td>
-            </tr>
-            <tr>
-                <th>Number</th>
-                <td>{{ picture.number }}</td>
-            </tr>
-            <tr>
-                <th>Comment</th>
-                <td>{{ picture.comment }}</td>
-            </tr>
-            <tr>
-                <th>Link</th>
-                <td>{{ picture.link }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_picture_index') }}">back to list</a>
-
-    <a href="{{ path('app_picture_edit', {'id': picture.id}) }}">edit</a>
-
-    {{ include('picture/_delete_form.html.twig') }}
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+   
 {% endblock %}

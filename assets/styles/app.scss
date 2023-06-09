@@ -14,7 +14,7 @@ $contentFont: "Hind Madurai";
 
 
 // Color Var
-$backgroundColor: rgb(239, 237, 237);
+$backgroundColor: rgb(255, 255, 255);
 $optionDefaultColours: white;
 $primaryColor : #EAD07F;
 
@@ -22,8 +22,30 @@ body {
    background-color: $backgroundColor;
 }
 
+h1{
+  display: block;
+  font-size: 2em !important;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+h3 {
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+
 .custom-navbar {
     border-bottom-color: $primaryColor; 
+    
   
 }
 
@@ -241,3 +263,152 @@ body {
    background-color: #333;
 }
 
+.picture-details {
+    display: flex;
+  }
+  
+  .picture-image {
+    flex-basis: 50%; /* Occupe 50% de la largeur */
+    padding: 20px; /* Espacement à droite de l'image */
+    display: flex;
+  align-items: center; 
+  justify-content: center;
+  }
+  
+  .picture-info {
+    flex-basis: 50%; /* Occupe 50% de la largeur */
+    display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centre le contenu verticalement */
+  padding: 2rem;
+
+  }
+
+  .picture-image img {
+    display: block;
+  margin: 0 auto; /* Centre l'image horizontalement */
+  max-height: 35rem; /* Remplacez la valeur par la hauteur souhaitée */
+  width: auto; 
+  height: auto;
+  box-shadow: 0px 0px 1px 10px #F2F0F0;
+    border-radius: 7px;
+  }
+  .custom-button-picture{
+    background-color: $primaryColor;
+    width: 14%;
+    border-radius: 10px;
+    padding: 5px;
+  }
+
+  .container-button-picture{
+    text-align: center;
+    padding: 10px;
+  }
+  hr {
+    height: auto;
+    width: 2px;
+    color: $primaryColor;
+    border: 1px solid $primaryColor;
+    margin: 5% auto;
+  }
+  
+
+  @media only screen and (max-width: 768px) {
+    .picture-image img {
+      width: auto;
+      
+    }
+  
+  }
+
+
+
+
+
+
+
+  #myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  #myImg:hover {opacity: 0.7;}
+  
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+  }
+  
+  /* Modal Content (image) */
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+  }
+  
+  /* Caption of Modal Image */
+  #caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+  }
+  
+  /* Add Animation */
+  .modal-content, #caption {  
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+  }
+  
+  @-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+  }
+  
+  @keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+  }
+  
+  /* The Close Button */
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* 100% Image Width on Smaller Screens */
+  @media only screen and (max-width: 700px){
+    .modal-content {
+      width: 100%;
+    }
+  }
