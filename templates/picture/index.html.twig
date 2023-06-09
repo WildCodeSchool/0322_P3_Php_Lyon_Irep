@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block title %}Picture Index
+{% endblock %}
+
+        {% block javascripts %}
+		{{ parent()}}
+            {{ encore_entry_script_tags('galery') }}
+        {% endblock %}
+{%
+block body %}
+	<section class="galery">
+		<div class="category-buttons">
+  <div class="buttons-container">
+    {% for category in categories %}
+      <button class="category-button"  style= "font-family: Montserrat, sans-serif" data-category="{{ category }}">
+        {{ category }}
+      </button>
+    {% endfor %}
+  </div>
+</div>
+		<div class="options">
+			{% for picture in pictures %}
+				<div class="option" data-category="{{ picture.category }}" style="--optionBackground:url({{ asset(picture.image) }}) ;">
+					<div class="shadow"></div>
+					<div class="label">
+						<a href="{{ path('app_picture_show', {id: picture.id}) }}">
+							<div class="icon" title="Cliquez ici pour obtenir plus d'information sur l'oeuvre">
+								<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"></path>
+								</svg>
+							</div>
+						</a>
+						<div class="info">
+							<div class="main">{{ picture.title }}</div>
+							<div class="sub">{{ picture.subtitle }}</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="bullet-navigation">
+			{% for picture in pictures %}
+				<span class="bullet" data-index="{{ loop.index }}" data-category="{{ picture.category }}"></span>
+			{% endfor %}
+		</div>
+	</section>
+
+
+{% endblock %}
