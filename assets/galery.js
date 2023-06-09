@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
         // Create new image with new style
         let testImg = new Image();
+        testImg.crossOrigin = "anonymous";
         testImg.src = imageUrl;
     
         // When picture is loaded
@@ -203,8 +204,6 @@ nav.querySelectorAll('.category-button').forEach(button => {
 
             let position = button.offsetLeft;
             let width = button.offsetWidth;
-
-            // Double animation en deux étapes
             if(position >= pos) {
                 line.style.width = `${position - pos + width}px`;
                 setTimeout(() => {
