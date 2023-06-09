@@ -6,7 +6,12 @@ module.exports = {
         "./node_modules/flowbite/**/*.js",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                accentColor: '#EAD07F',
+                backgroundColor: '#060606',
+            }
+        },
         screens: {
             'sm': '640px',
             'md': '768px',
