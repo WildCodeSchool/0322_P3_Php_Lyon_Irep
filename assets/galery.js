@@ -1,3 +1,6 @@
+import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
+const colorThief = new ColorThief();
+
 // Function to select all elements that match a given selector
 function selectAll(selector) {
     return Array.from(document.querySelectorAll(selector));
@@ -16,7 +19,7 @@ const isMobileDevice = () => {
 
 // Function to handle click event on an option
 const handleClick = (activeIndex) => {
-    // Use a single image on mobile, else 6 images.
+    // Use a single image on mobile, else 5 images.
     const visibleCount = isMobileDevice() ? 1 : 4;
     
     let previousOptions = [];
@@ -80,6 +83,39 @@ document.addEventListener("DOMContentLoaded", function () {
     options = selectAll(".option"); // Select all elements with class "option"
     categoryButtons = selectAll(".category-button"); // Select all elements with class "category-button"
     bulletsContainer = document.querySelector(".bullet-navigation"); // Select the bullets container element
+
+    options.forEach((option) => {
+        // Get the image in the background
+        let backgroundImage = getComputedStyle(option).backgroundImage;
+        // Clean the link
+        let imageUrl = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
+    
+        // Create new image with new style
+        let testImg = new Image();
+        testImg.src = imageUrl;
+    
+        // When picture is loaded
+        testImg.onload = async function() {
+            // If width is below 404 px
+            if(testImg.naturalWidth < 404) {
+                // Make the picture as the original size
+                option.style.backgroundSize = 'contain';
+                option.style.backgroundRepeat = 'no-repeat';
+                option.style.backgroundPosition = 'center';
+                // Add the image to the dom for colorthief
+                testImg.style.display = 'none';
+                document.body.appendChild(testImg);
+
+                // Get the dominant color
+
+                const dominantColor = await colorThief.getColor(testImg);
+
+                // Do a gradient in the background
+                option.style.backgroundImage = `${backgroundImage}, linear-gradient(to right, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},1) 50%, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},0.5) 100%), linear-gradient(to left, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},1) 50%, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},0.5) 100%)`;
+                
+            }
+        };
+    });
 
     // Add click event listeners to each option
     options.forEach((option) => {
