@@ -22,14 +22,13 @@ body {
    background-color: $backgroundColor;
 }
 
-h3 {
-  display: block;
+.custom-title {
   font-size: 1.17em;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  font-weight: bold;
+  font-family: $subtitleFont, sans-serif;
 }
 .custom-navbar {
     border-bottom-color: $accentColor; 
@@ -39,6 +38,10 @@ h3 {
 .custom-bg-color-burger-menu{
     background-color: $accentColor; 
   
+}
+
+span, p {
+  font-family: $contentFont;
 }
 
 // Galery CSS
@@ -262,17 +265,17 @@ h3 {
   .picture-info {
     flex-basis: 50%; /* Occupe 50% de la largeur */
     display: flex;
-  flex-direction: column;
-  justify-content: center; /* Centre le contenu verticalement */
+    flex-direction: column;
+    justify-content: center; /* Centre le contenu verticalement */
   }
 
   .picture-image img {
     display: block;
-  margin: 0 auto; /* Centre l'image horizontalement */
-  max-height: 35rem; /* Remplacez la valeur par la hauteur souhaitée */
-  width: auto; 
-  height: auto;
-  box-shadow: 0px 0px 1px 10px #F2F0F0;
+    margin: 0 auto; /* Centre l'image horizontalement */
+    max-height: 35rem; /* Remplacez la valeur par la hauteur souhaitée */
+    width: auto; 
+    height: auto;
+    box-shadow: 0px 0px 1px 10px #F2F0F0;
     border-radius: 7px;
   }
   .custom-button-picture{
