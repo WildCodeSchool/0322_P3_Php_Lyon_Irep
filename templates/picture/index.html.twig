@@ -3,12 +3,10 @@
 {% endblock %}
 
         {% block javascripts %}
-		{{ parent()}}
+			{{ parent()}}
             {{ encore_entry_script_tags('galery') }}
-			{{ encore_entry_script_tags('app') }}
         {% endblock %}
-{%
-block body %}
+{%block body %}
 	<section class="galery">
 		<div class="category-buttons">
   <div class="buttons-container">

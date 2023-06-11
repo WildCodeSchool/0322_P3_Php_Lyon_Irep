@@ -2265,6 +2265,11 @@ domutils@^2.5.2, domutils@^2.8.0:
     domelementtype "^2.2.0"
     domhandler "^4.2.0"
 
+drift-zoom@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/drift-zoom/-/drift-zoom-1.5.1.tgz#1f815c34590f4c8adda31a437d681c5b62f5d70d"
+  integrity sha512-GNLWl0ydTkgyFxfPouKvAZXvJhTt2dqUGkXCqENe+Y1OlQuQ+nUNKgvSpNvjp3nrbcij75GbJR/iMf/qdZbgPw==
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz"
