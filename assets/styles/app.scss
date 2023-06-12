@@ -271,18 +271,11 @@ span, p {
 
   .picture-image img {
     display: block;
-    margin: 0 auto; /* Centre l'image horizontalement */
-    max-height: 35rem; /* Remplacez la valeur par la hauteur souhaitée */
-    width: auto; 
-    height: auto;
     box-shadow: 0px 0px 1px 10px #F2F0F0;
     border-radius: 7px;
   }
   .custom-button-picture{
-    background-color: $accentColor;
-    width: 14%;
-    border-radius: 10px;
-    padding: 5px;
+    background-color: $accentColor; 
   }
 
   hr {
@@ -327,8 +320,6 @@ span, p {
       width: 100%;
     }
   }
-
-
   /*-----------------------------------------*/
 
 .category-buttons {
