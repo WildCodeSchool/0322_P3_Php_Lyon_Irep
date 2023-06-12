@@ -3,56 +3,25 @@
 {% block title %}Picture{% endblock %}
 
 {% block body %}
-    <h1>Picture</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ picture.id }}</td>
-            </tr>
-            <tr>
-                <th>Reference</th>
-                <td>{{ picture.reference }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ picture.title }}</td>
-            </tr>
-            <tr>
-                <th>Subtitle</th>
-                <td>{{ picture.subtitle }}</td>
-            </tr>
-            <tr>
-                <th>Technic</th>
-                <td>{{ picture.technic }}</td>
-            </tr>
-            <tr>
-                <th>Size</th>
-                <td>{{ picture.size }}</td>
-            </tr>
-            <tr>
-                <th>Category</th>
-                <td>{{ picture.category }}</td>
-            </tr>
-            <tr>
-                <th>Number</th>
-                <td>{{ picture.number }}</td>
-            </tr>
-            <tr>
-                <th>Comment</th>
-                <td>{{ picture.comment }}</td>
-            </tr>
-            <tr>
-                <th>Link</th>
-                <td>{{ picture.link }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_picture_index') }}">back to list</a>
-
-    <a href="{{ path('app_picture_edit', {'id': picture.id}) }}">edit</a>
-
-    {{ include('picture/_delete_form.html.twig') }}
+    <div class="picture-details">
+        <div class="picture-image p-5 ">
+            <img class="rounded-md cursor-pointer transition duration-300 hover:opacity-70" data-zoom="{{ asset(picture.image)}}" id="my-picture" src="{{ asset(picture.image) }}" alt="{{ picture.title }}">
+        </div>
+        <hr class="w-0.5 h-auto ">
+        <div class="picture-info text-white p-8 relative" id="zoom-img">
+            <h3 class="custom-title block font-bold">{{ picture.title }}</h3>
+            <span>Date de réalisation : {{ picture.date }}</span>
+            <span class="pt-3.5 pb-3.5">Format : {{ picture.size }}</span>
+            <p class="text-justify">{{ picture.comment }}</p>
+        </div>
+    </div>
+<div class="container-button-picture p-2.5 text-center">
+    <a class="custom-button-picture " type="button" href="{{ path('app_picture_index') }}">Autres  oeuvres</a>
+</div>
+<!-- The Modal -->
+<div id="myModal" class="modal overflow-auto hidden fixed z-50 inset-0 flex items-center justify-center pt-100p bg-black bg-opacity-90">>
+  <span class="close absolute top-15 right-0 text-white text-4xl font-bold transition duration-300">&times;</span>
+  <img class="modal-content mx-auto w-4/5 sm:w-3/5 md:w-2/3 lg:w-1/2 xl:w-2/5 max-w-screen-lg" id="img-modal">
+  <div id="caption" class="m-auto block w-80 max-w-700 text-center text-gray-300 py-2 h-150"></div>
+</div>
 {% endblock %}
