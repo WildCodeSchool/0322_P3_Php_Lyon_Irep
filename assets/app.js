@@ -29,6 +29,6 @@ window.addEventListener("scroll", () => {
 //zoom on the image on hover
 const imgTrigger = document.body.querySelector('#my-picture')
 const pane = document.body.querySelector('#zoom-img')
-let drift = new Drift(imgTrigger, {
+new Drift(imgTrigger, {
     paneContainer: pane
 })
