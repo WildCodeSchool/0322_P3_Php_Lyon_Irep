@@ -22,6 +22,14 @@ body {
    background-color: $backgroundColor;
 }
 
+.custom-title {
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-family: $subtitleFont, sans-serif;
+}
 .custom-navbar {
     border-bottom-color: $accentColor; 
   
@@ -30,6 +38,10 @@ body {
 .custom-bg-color-burger-menu{
     background-color: $accentColor; 
   
+}
+
+span, p {
+  font-family: $contentFont;
 }
 
 // Galery CSS
@@ -234,3 +246,120 @@ body {
    transition: background-color 0.3s;
 }
 
+
+.bullet.active {
+   background-color: $accentColor;
+}
+/* -----------------------------Show image by Id -----------------------------*/
+.picture-details {
+    display: flex;
+  }
+  
+  .picture-image {
+    flex-basis: 50%; /* Occupe 50% de la largeur */
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+  }
+  
+  .picture-info {
+    flex-basis: 50%; /* Occupe 50% de la largeur */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centre le contenu verticalement */
+  }
+
+  .picture-image img {
+    display: block;
+    margin: 0 auto; /* Centre l'image horizontalement */
+    max-height: 35rem; /* Remplacez la valeur par la hauteur souhaitée */
+    width: auto; 
+    height: auto;
+    box-shadow: 0px 0px 1px 10px #F2F0F0;
+    border-radius: 7px;
+  }
+  .custom-button-picture{
+    background-color: $accentColor;
+    width: 14%;
+    border-radius: 10px;
+    padding: 5px;
+  }
+
+  hr {
+    color: $accentColor;
+    border: 1px solid $accentColor;
+    margin: 5% auto;
+  }
+  
+
+  @media only screen and (max-width: 768px) {
+    .picture-image img {
+      width: auto; 
+    }
+  }
+  /* Add Animation Modal*/
+  .modal-content, #caption {  
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+  }
+  
+  @-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+  }
+  
+  @keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+  }
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* 100% Image Width on Smaller Screens */
+  @media only screen and (max-width: 700px){
+    .modal-content {
+      width: 100%;
+    }
+  }
+
+
+  /*-----------------------------------------*/
+
+.category-buttons {
+    position: relative;
+    margin-bottom: 22px; 
+  }
+  .category-buttons .line {
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    margin-top: 10px;
+    background: $accentColor;
+    transition: all 0.3s ease;
+  }
+  .buttons-container {
+    margin-bottom: 2px; 
+  }
+  .category-button {
+    margin-right: 40px;
+    color: #ccc;
+    transition: all 0.4s ease;
+  }
+  .category-button:hover {
+    opacity: .7;
+  }
+  .category-button.active {
+    color:white;
+  }
+  .category-button:last-child {
+    margin-right: 0;
+  }
+
+  
+  
