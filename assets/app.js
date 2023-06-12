@@ -9,20 +9,6 @@ document.getElementById('dropdownHoverButton').addEventListener('click', functio
     document.getElementById('dropdownHover').classList.toggle('hidden');
 });
 
-
-// Animation to hide the navbar when scrolldown
-// Import styles and dependencies
-import "./styles/app.scss";
-import "./bootstrap";
-import "flowbite";
-
-
-// Activate the dropdown menu language only on click
-document.getElementById('dropdownHoverButton').addEventListener('click', function() {
-    document.getElementById('dropdownHover').classList.toggle('hidden');
-});
-
-
 // Animation to hide the navbar when scrolldown
 
 let lastScrollTop = 0;
