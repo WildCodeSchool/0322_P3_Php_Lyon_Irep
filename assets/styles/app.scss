@@ -12,7 +12,6 @@ $titleFont: "Montserrat";
 $subtitleFont: "Lora";
 $contentFont: "Hind Madurai";
 
-
 // Color Var
 $backgroundColor: #060606;
 $optionDefaultColours: white;
@@ -40,7 +39,7 @@ body {
   
 }
 
-span, p {
+span, p, .custom-button-picture {
   font-family: $contentFont;
 }
 

@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Picture{% endblock %}
-
+{% block javascripts %}
+		        {{ parent()}}
+            {{ encore_entry_script_tags('modal') }}
+{% endblock %}
 {% block body %}
     <div class="picture-details flex flex-col sm:flex-row pt-16 pb-11">
         <div class="picture-image p-5">
