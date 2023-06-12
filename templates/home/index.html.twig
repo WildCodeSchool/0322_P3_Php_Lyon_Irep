@@ -4,12 +4,12 @@
 
 {% block body %}
 
-<div id="default-carousel" class="relative w-full h-[40rem]" data-carousel="static">
+<div id="default-carousel" class="relative w-full h-[40rem] mt-16" data-carousel="slide">
     <!-- Carousel wrapper -->
-    <div class="relative overflow-hidden h-[40rem]">
+    <div class="relative overflow-hidden h-[40rem] mt-16">
         <!-- Items-->
         {% for exhibition in exhibitions %} 
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <div class="hidden duration-1000 ease-in-out" data-carousel-item>
             <img src="{{ asset (exhibition.image) }}"
                 class="absolute block object-cover w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                 alt="...">
@@ -37,6 +37,9 @@
                 data-carousel-slide-to="3"></button>
         </div>
 </div>    
+
+<div class="h-96 bg-red-100"></div>
+
 
 
 
