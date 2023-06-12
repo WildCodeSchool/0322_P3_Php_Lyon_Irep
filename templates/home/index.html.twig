@@ -4,9 +4,9 @@
 
 {% block body %}
 
-<div id="default-carousel" class="relative w-full h-[40rem] mt-16" data-carousel="slide">
+<div id="default-carousel" class="relative w-full h-[40rem]" data-carousel="static">
     <!-- Carousel wrapper -->
-    <div class="relative overflow-hidden h-[40rem] mt-16">
+    <div class="relative overflow-hidden h-[40rem]">
         <!-- Items-->
         {% for exhibition in exhibitions %} 
         <div class="hidden duration-1000 ease-in-out" data-carousel-item>
@@ -22,7 +22,7 @@
                 <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-300"><a href="#">+</a></p>
             </div>
         </div>
-        {% endfor %}
+        {% endfor %}     
     </div>
 
         <!-- Slider indicators -->
@@ -38,9 +38,6 @@
         </div>
 </div>    
 
-<div class="h-96 bg-red-100"></div>
-
-
-
+<div class="h-96"></div>
 
 {% endblock %}
