@@ -42,7 +42,7 @@ class PictureController extends AbstractController
         }
 
 
-        return $this->renderForm('picture/new.html.twig', [
+        return $this->render('picture/new.html.twig', [
            'picture' => $picture,
            'form' => $form,
         ]);
@@ -73,7 +73,7 @@ class PictureController extends AbstractController
         }
 
 
-        return $this->renderForm('picture/edit.html.twig', [
+        return $this->render('picture/edit.html.twig', [
            'picture' => $picture,
            'form' => $form,
         ]);
