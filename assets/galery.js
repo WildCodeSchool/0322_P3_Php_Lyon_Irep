@@ -1,3 +1,5 @@
+import "./styles/galery.scss";
+
 // Import ColorThief from the node modules
 import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
 
@@ -5,9 +7,7 @@ import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
 const colorThief = new ColorThief();
 
 // Function to convert NodeList to Array for all elements matching a given selector
-function selectAll(selector) {
-    return Array.from(document.querySelectorAll(selector));
-}
+const selectAll = (selector) => Array.from(document.querySelectorAll(selector));
 
 // Initialize necessary variables
 let options = []; // Array to store all options
@@ -73,6 +73,49 @@ const generateBullets = (visibleOptions) => {
     });
 };
 
+// Function to handle option click events
+const handleOptionClick = (option) => {
+    option.addEventListener("click", event => {
+        const currentOptionIndex = currentOptions.indexOf(option);
+        if (currentOptionIndex !== -1) {
+            if (!option.classList.contains("active")) {
+                event.preventDefault();
+                handleClick(currentOptionIndex);
+            }
+        }
+    });
+};
+
+// Function to handle category button click events
+const handleCategoryButtonClick = (button) => {
+    button.addEventListener("click", function () {
+        const category = this.getAttribute("data-category");
+        const categoryOptions = options.filter(option => option.getAttribute("data-category") === category);
+
+        // Hide all options
+        options.forEach(option => {
+            option.style.display = "none";
+        });
+
+ 
+        const visibleCount = isMobileDevice() ? 1 : 6;
+
+        // Show the first few options from the selected category
+        categoryOptions.slice(0, visibleCount).forEach(option => {
+            option.style.display = "flex";
+        });
+
+        currentOptions = categoryOptions;
+        generateBullets(categoryOptions);
+
+        handleClick(Math.floor(categoryOptions.length / 2));
+    });
+
+    if (button.dataset.firstCategory) {
+        button.click();
+    }
+};
+
 // Add event listener for DOMContentLoaded
 document.addEventListener("DOMContentLoaded", function () {
     options = selectAll(".option"); // Select all elements with class "option"
@@ -105,46 +148,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Add click event listeners to each option
-    options.forEach(option => {
-        option.addEventListener("click", event => {
-            const currentOptionIndex = currentOptions.indexOf(option);
-            if (currentOptionIndex !== -1) {
-                if (!option.classList.contains("active")) {
-                    event.preventDefault();
-                    handleClick(currentOptionIndex);
-                }
-            }
-        });
-    });
+    options.forEach(option => handleOptionClick(option));
 
     // Add click event listeners to each category button
-    categoryButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const category = this.getAttribute("data-category");
-            const categoryOptions = options.filter(option => option.getAttribute("data-category") === category);
+    categoryButtons.forEach(button => handleCategoryButtonClick(button));
 
-            // Hide all options
-            options.forEach(option => {
-                option.style.display = "none";
-            });
-
-            const visibleCount = isMobileDevice() ? 1 : 6;
-
-            // Show the first few options from the selected category
-            categoryOptions.slice(0, visibleCount).forEach(option => {
-                option.style.display = "flex";
-            });
-
-            currentOptions = categoryOptions;
-            generateBullets(categoryOptions);
-
-            handleClick(Math.floor(categoryOptions.length / 2));
-        });
-
-        if (button.dataset.firstCategory) {
-            button.click();
-        }
-    });
     // Find the first category button that has a "data-first-category" attribute
     const initialCategoryButton = categoryButtons.find(button => button.dataset.firstCategory);
 
@@ -224,7 +232,6 @@ nav.querySelectorAll('.category-button').forEach(button => {
                     line.style.width = `${width}px`;
                 }, 300);
             }
-
             // Update pos and wid for future reference
             pos = position;
             wid = width;

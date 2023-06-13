@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block title %}Picture Index
 {% endblock %}
-
+        {% block stylesheets %}
+		{{ parent()}}
+            {{ encore_entry_link_tags('galery') }}
+        {% endblock %}
         {% block javascripts %}
 			{{ parent()}}
             {{ encore_entry_script_tags('galery') }}
