@@ -28,6 +28,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "colorthief": "^2.4.0",
         "drift-zoom": "^1.5.1",
         "flowbite": "^1.6.5"
     }

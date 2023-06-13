@@ -13,7 +13,7 @@ let lastScrollTop = 0;
 const navbar = document.querySelector('.custom-navbar');
 
 window.addEventListener("scroll", () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
     if (scrollTop > lastScrollTop) {
         navbar.style.transition = '0.5s';
