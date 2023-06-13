@@ -2,10 +2,7 @@ $accentColor : #EAD07F;
 
 // Gallery
 .option {
-        background: var(
-        --optionBackground,
-        var(--defaultBackground, #e6e9ed)
-        );
+        background: var( --optionBackground );
         background-size: auto 120%;
         background-position: center;
         transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
@@ -60,9 +57,6 @@ $accentColor : #EAD07F;
             height: 40px;
             transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
 
-            .icon {
-                color: var(--defaultBackground);
-            }
             
             .info {
                 > div {

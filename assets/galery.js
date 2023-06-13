@@ -6,6 +6,7 @@ import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
 // Create a new ColorThief instance
 const colorThief = new ColorThief();
 
+
 // Function to convert NodeList to Array for all elements matching a given selector
 const selectAll = (selector) => Array.from(document.querySelectorAll(selector));
 
@@ -26,14 +27,19 @@ const handleClick = (activeIndex) => {
     let previousOptions = [];
     let nextOptions = [];
 
-    // Determine the indices for the previous and next options
+    // The loop iterates for half of the visible count to determine the indices for the previous and next options
     for(let i = 1; i <= visibleCount / 2; i++) {
+    // Calculate the index of the previous option taking into account the length of the array to avoid negative indices
         const previousIndex = (activeIndex - i + currentOptions.length) % currentOptions.length;
+        // Calculate the index of the next option using modulo operator to wrap around if the end of the array is reached
         const nextIndex = (activeIndex + i) % currentOptions.length;
+        // Add the previous option at the beginning of the previous Options array
         previousOptions.unshift(currentOptions[previousIndex]);
+        // Add the next option at the end of the nextOptions array
         nextOptions.push(currentOptions[nextIndex]);
     }
 
+    // Create an array of visible options which includes previous options, the current option, and next options
     const visibleOptions = [...previousOptions, currentOptions[activeIndex], ...nextOptions];
 
     // Hide all options and disable their pointer events
@@ -77,10 +83,15 @@ const generateBullets = (visibleOptions) => {
 const handleOptionClick = (option) => {
     option.addEventListener("click", event => {
         const currentOptionIndex = currentOptions.indexOf(option);
+        // Get the index of the current option in the currentOptions array
         if (currentOptionIndex !== -1) {
+            // Check if the option was found in currentOptions
             if (!option.classList.contains("active")) {
+                // Check if the option does not already have the "active" class
                 event.preventDefault();
+                // Prevent the default click behavior of the option
                 handleClick(currentOptionIndex);
+                // Call the handleClick function with the index of the current option as an argument
             }
         }
     });
@@ -89,34 +100,43 @@ const handleOptionClick = (option) => {
 // Function to handle category button click events
 const handleCategoryButtonClick = (button) => {
     button.addEventListener("click", function () {
-        const category = this.getAttribute("data-category");
-        const categoryOptions = options.filter(option => option.getAttribute("data-category") === category);
+        // When the button is clicked, execute the following function:
 
-        // Hide all options
+        const category = this.getAttribute("data-category");
+        // Get the value of the "data-category" attribute from the clicked button
+        // This determines the selected category
+
+        const categoryOptions = options.filter(option => option.getAttribute("data-category") === category);
+        // Filter the options based on their "data-category" attribute that matches the selected category
+
+        // Hide all options of the category
         options.forEach(option => {
             option.style.display = "none";
         });
 
- 
-        const visibleCount = isMobileDevice() ? 1 : 6;
-
-        // Show the first few options from the selected category
-        categoryOptions.slice(0, visibleCount).forEach(option => {
+        // Show options from the selected category
+        categoryOptions.forEach(option => {
             option.style.display = "flex";
         });
 
         currentOptions = categoryOptions;
+        // Update the currentOptions array with the filtered category options
+
         generateBullets(categoryOptions);
+        // Generate bullets for the visible category options
 
         handleClick(Math.floor(categoryOptions.length / 2));
+        // Call the handleClick function with the index of the middle option as an argument
     });
 
-    if (button.dataset.firstCategory) {
+    if (button.dataset.Category) {
         button.click();
+        // Click on the first category
     }
 };
 
-// Add event listener for DOMContentLoaded
+
+/// Add event listener for DOMContentLoaded
 document.addEventListener("DOMContentLoaded", function () {
     options = selectAll(".option"); // Select all elements with class "option"
     categoryButtons = selectAll(".category-button"); // Select all elements with class "category-button"
@@ -124,28 +144,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
     options.forEach(option => {
         let backgroundImage = getComputedStyle(option).backgroundImage;
+        // Get the computed style of the option element's background image
+
         let imageUrl = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
+        // Extract the URL of the background image from the computed style
 
         let smImgWithGradient = new Image();
+        // Create a new Image object
+
         smImgWithGradient.crossOrigin = "anonymous";
+        // Set the crossOrigin attribute to allow fetching the image data from a different origin
+
         smImgWithGradient.src = imageUrl;
-    
+        // Set the source of the image to the extracted URL
+
         // When picture is loaded
         smImgWithGradient.onload = async function() {
+            // Once the image is loaded, execute the following function:
+
             if(smImgWithGradient.naturalWidth < 404) {
+                // Check if the image's natural width is less than 404 pixels
+
                 option.style.backgroundSize = 'contain';
+                // Set the background size of the option to "contain" to fit the image within the element
+
                 option.style.backgroundRepeat = 'no-repeat';
+                // Set the background repeat of the option to "no-repeat" to prevent repetition of the image
+
                 option.style.backgroundPosition = 'center';
+                // Set the background position of the option to "center" to center the image within the element
+
                 smImgWithGradient.style.display = 'none';
+                // Hide the original image element
+
                 document.body.appendChild(smImgWithGradient);
+                // Append the image element to the body of the document
 
                 const dominantColor = await colorThief.getColor(smImgWithGradient);
+                // Use the ColorThief library to get the dominant color of the image
 
-                option.style.backgroundColor = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]}, 1)`;                
+                option.style.backgroundColor = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]}, 1)`;
+                // Set the background color of the option to the dominant color of the image
             }
         };
     });
-
     // Add click event listeners to each option
     options.forEach(option => handleOptionClick(option));
 
