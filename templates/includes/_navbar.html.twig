@@ -3,6 +3,7 @@
     <a href="{{ path('app_home') }}" class="flex items-center mr-6">
       <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">IREP</span>
     </a>
+    {% if not app.user %}
     <ul class="hidden md:flex flex-grow justify-center items-center space-x-4 ml-auto">
   <li>
     <a href="{{ path('app_picture_index') }}" class="relative block py-2 pl-3 pr-4 text-white rounded hover:opacity-75 {{ app.request.attributes.get('_route') == 'app_picture_index' ? 'opacity-75' : '' }}" aria-current="page">
@@ -43,5 +44,6 @@
         </li>
       </ul>
     </div>
+    {% endif %}
   </div>
 </nav>
