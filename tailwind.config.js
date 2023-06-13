@@ -6,6 +6,11 @@ module.exports = {
         "./node_modules/flowbite/**/*.js",
     ],
     theme: {
+        fontFamily: {
+            'titlefont': ['Montserrat'],
+            'subtitlefont': ['Lora'],
+            'contentfont': ['Hind Madurai'],
+        },
         extend: {
             colors: {
                 accentColor: '#EAD07F',

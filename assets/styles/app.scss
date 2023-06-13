@@ -284,11 +284,8 @@ span, p, .custom-button-picture {
   }
   
 
-  @media only screen and (max-width: 768px) {
-    .picture-image img {
-      width: auto; 
-    }
-  }
+ 
+  
   /* Add Animation Modal*/
   .modal-content, #caption {  
     -webkit-animation-name: zoom;
