@@ -141,8 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const dominantColor = await colorThief.getColor(smImgWithGradient);
 
-                option.style.backgroundImage = `${backgroundImage}, linear-gradient(to right, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},1) 50%, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},0.5) 100%), linear-gradient(to left, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},1) 50%, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},0.5) 100%)`;
-                
+                option.style.backgroundColor = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]}, 1)`;                
             }
         };
     });

@@ -13,8 +13,12 @@ module.exports = {
         },
         extend: {
             colors: {
-                accentColor: '#EAD07F',
-                backgroundColor: '#060606',
+                accentcolor: '#EAD07F',
+                backgroundcolor: '#060606',
+            },
+
+            height: {
+                '128' : '28rem',
             }
         },
         screens: {

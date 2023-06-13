@@ -10,37 +10,37 @@
             {{ encore_entry_script_tags('galery') }}
         {% endblock %}
 {%block body %}
-	<section class="galery">
-		<div class="category-buttons">
-  <div class="buttons-container">
+	<section class="galery flex flex-col justify-center items-center overflow-hidden h-screen transition duration-250 text-white font-subtitlefont bg-backgroundcolor">
+		<div class="category-buttons relative mb-5">
+  <div class="buttons-container mb-0.5">
     {% for category in categories %}
-      <button class="category-button"  style= "font-family: Montserrat, sans-serif" data-category="{{ category }}">
+      <button class="category-button mx-6 text-gray-300 transition duration-400 ease-in-out font-titlefont active:text-white" data-category="{{ category }}">
         {{ category }}
       </button>
     {% endfor %}
   </div>
 </div>
-		<div class="options">
+		<div class="options flex flex-row items-stretch overflow-hidden justify-center min-w-400 max-w-1200 h-128 ">
 			{% for picture in pictures %}
-				<div class="option" data-category="{{ picture.category }}" style="--optionBackground:url({{ asset(picture.image) }}) ;">
+				<div class="option m-2.5 relative overflow-hidden cursor-pointer" data-category="{{ picture.category }}" style="--optionBackground:url({{ asset(picture.image) }}) ;">
 					<div class="shadow"></div>
 					<div class="label">
 						<a href="{{ path('app_picture_show', {id: picture.id}) }}">
-							<div class="icon" title="Cliquez ici pour obtenir plus d'information sur l'oeuvre">
-								<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<div class="icon flex flex-row justify-center items-center" title="Cliquez ici pour obtenir plus d'information sur l'oeuvre">
+								<svg class="w-60 h-60 text-black" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 									<path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"></path>
 								</svg>
 							</div>
 						</a>
-						<div class="info">
-							<div class="main">{{ picture.title }}</div>
+						<div class="info flex flex-col justify-center mx-2.5 whitespace-pre text-gray-300">
+							<div class="main font-bold text-xl">{{ picture.title }}</div>
 							<div class="sub">{{ picture.subtitle }}</div>
 						</div>
 					</div>
 				</div>
 			{% endfor %}
 		</div>
-		<div class="bullet-navigation">
+		<div class="bullet-navigation flex mt-4">
 			{% for picture in pictures %}
 				<span class="bullet" data-index="{{ loop.index }}" data-category="{{ picture.category }}"></span>
 			{% endfor %}
