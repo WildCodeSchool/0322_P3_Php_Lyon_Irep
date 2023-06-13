@@ -83,20 +83,20 @@ document.addEventListener("DOMContentLoaded", function () {
         let backgroundImage = getComputedStyle(option).backgroundImage;
         let imageUrl = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
 
-        let testImg = new Image();
-        testImg.crossOrigin = "anonymous";
-        testImg.src = imageUrl;
+        let smImgWithGradient = new Image();
+        smImgWithGradient.crossOrigin = "anonymous";
+        smImgWithGradient.src = imageUrl;
     
         // When picture is loaded
-        testImg.onload = async function() {
-            if(testImg.naturalWidth < 404) {
+        smImgWithGradient.onload = async function() {
+            if(smImgWithGradient.naturalWidth < 404) {
                 option.style.backgroundSize = 'contain';
                 option.style.backgroundRepeat = 'no-repeat';
                 option.style.backgroundPosition = 'center';
-                testImg.style.display = 'none';
-                document.body.appendChild(testImg);
+                smImgWithGradient.style.display = 'none';
+                document.body.appendChild(smImgWithGradient);
 
-                const dominantColor = await colorThief.getColor(testImg);
+                const dominantColor = await colorThief.getColor(smImgWithGradient);
 
                 option.style.backgroundImage = `${backgroundImage}, linear-gradient(to right, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},1) 50%, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},0.5) 100%), linear-gradient(to left, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},1) 50%, rgba(${dominantColor[0]},${dominantColor[1]},${dominantColor[2]},0.5) 100%)`;
                 
