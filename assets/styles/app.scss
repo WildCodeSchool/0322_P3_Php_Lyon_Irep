@@ -17,28 +17,9 @@ $backgroundColor: #060606;
 $optionDefaultColours: white;
 $accentColor : #EAD07F;
 
-body {
-   background-color: $backgroundColor;
-}
 
 
-.custom-title {
-  font-size: 1.17em;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-family: $subtitleFont, sans-serif;
-}
-.custom-navbar {
-    border-bottom-color: $accentColor; 
-  
-}
 
-.custom-bg-color-burger-menu{
-    background-color: $accentColor; 
-  
-}
 
 span, p, .custom-button-picture {
   font-family: $contentFont;
