@@ -109,16 +109,6 @@ const handleCategoryButtonClick = (button) => {
         const categoryOptions = options.filter(option => option.getAttribute("data-category") === category);
         // Filter the options based on their "data-category" attribute that matches the selected category
 
-        // Hide all options of the category
-        options.forEach(option => {
-            option.style.display = "none";
-        });
-
-        // Show options from the selected category
-        categoryOptions.forEach(option => {
-            option.style.display = "flex";
-        });
-
         currentOptions = categoryOptions;
         // Update the currentOptions array with the filtered category options
 
@@ -128,84 +118,101 @@ const handleCategoryButtonClick = (button) => {
         handleClick(Math.floor(categoryOptions.length / 2));
         // Call the handleClick function with the index of the middle option as an argument
     });
-
-    if (button.dataset.Category) {
-        button.click();
-        // Click on the first category
-    }
 };
+// Add an event listener for the "load" event to the window. 
+// This event fires when the entire page, including all dependent resources such as stylesheets images, has been fully loaded.
+window.addEventListener("load", function () {
+    initialize();  // Call the initialization function.
+});
 
+// The main function that is called once the page is loaded.
+function initialize() {
+    // Select all elements with the class "option".
+    options = selectAll(".option"); 
 
-/// Add event listener for DOMContentLoaded
-document.addEventListener("DOMContentLoaded", function () {
-    options = selectAll(".option"); // Select all elements with class "option"
-    categoryButtons = selectAll(".category-button"); // Select all elements with class "category-button"
-    bulletsContainer = document.querySelector(".bullet-navigation"); // Select the bullets container element
+    // Select all elements with the class "category-button".
+    categoryButtons = selectAll(".category-button"); 
 
-    options.forEach(option => {
-        let backgroundImage = getComputedStyle(option).backgroundImage;
-        // Get the computed style of the option element's background image
+    // Select the element with the class "bullet-navigation".
+    bulletsContainer = document.querySelector(".bullet-navigation"); 
 
-        let imageUrl = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
-        // Extract the URL of the background image from the computed style
+    // For each "option" element, prepare its background image.
+    options.forEach(option => prepareOptionBackground(option));
 
-        let smImgWithGradient = new Image();
-        // Create a new Image object
-
-        smImgWithGradient.crossOrigin = "anonymous";
-        // Set the crossOrigin attribute to allow fetching the image data from a different origin
-
-        smImgWithGradient.src = imageUrl;
-        // Set the source of the image to the extracted URL
-
-        // When picture is loaded
-        smImgWithGradient.onload = async function() {
-            // Once the image is loaded, execute the following function:
-
-            if(smImgWithGradient.naturalWidth < 404) {
-                // Check if the image's natural width is less than 404 pixels
-
-                option.style.backgroundSize = 'contain';
-                // Set the background size of the option to "contain" to fit the image within the element
-
-                option.style.backgroundRepeat = 'no-repeat';
-                // Set the background repeat of the option to "no-repeat" to prevent repetition of the image
-
-                option.style.backgroundPosition = 'center';
-                // Set the background position of the option to "center" to center the image within the element
-
-                smImgWithGradient.style.display = 'none';
-                // Hide the original image element
-
-                document.body.appendChild(smImgWithGradient);
-                // Append the image element to the body of the document
-
-                const dominantColor = await colorThief.getColor(smImgWithGradient);
-                // Use the ColorThief library to get the dominant color of the image
-
-                option.style.backgroundColor = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]}, 1)`;
-                // Set the background color of the option to the dominant color of the image
-            }
-        };
-    });
-    // Add click event listeners to each option
+    // For each "option" element, handle its click event.
     options.forEach(option => handleOptionClick(option));
 
-    // Add click event listeners to each category button
+    // For each "category-button" element, handle its click event.
     categoryButtons.forEach(button => handleCategoryButtonClick(button));
 
-    // Find the first category button that has a "data-first-category" attribute
-    const initialCategoryButton = categoryButtons.find(button => button.dataset.firstCategory);
+    // Handle the initial category button click.
+    handleInitialCategoryButton();
+}
 
-    if (initialCategoryButton) {
-    // If such button exists, simulate a click on it
-        initialCategoryButton.click();
-    } else if (categoryButtons.length > 0) {
-    // If there is no "first category" button but there are other category buttons, simulate a click on the first one of them
+// Function to prepare the background of each option.
+function prepareOptionBackground(option) {
+    // Get the computed style of the option element's background image.
+    let backgroundImage = getComputedStyle(option).backgroundImage;
+
+    // Extract the URL of the background image from the computed style.
+    let imageUrl = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
+
+    // Create a new Image object.
+    let smImgBackground = new Image();
+
+    // Set the crossOrigin attribute to allow fetching the image data from a different origin.
+    smImgBackground.crossOrigin = "anonymous";
+
+    // Set the source of the image to the extracted URL.
+    smImgBackground.src = imageUrl;
+
+    // When the image is loaded, handle the image load.
+    smImgBackground.onload = async function() {
+        await addBackgroundOnSmallImage(smImgBackground, option);
+    };
+}
+
+// Function to handle the load event of each image.
+async function addBackgroundOnSmallImage(smImgBackground, option) {
+    // Check if the image's natural width is less than 404 pixels.
+    if(smImgBackground.naturalWidth < 404) {
+
+        // If the image is small, apply certain styles to the option.
+        styleOptionForSmallImage(option);
+
+        // Hide the original image element.
+        smImgBackground.style.display = 'none';
+
+        // Append the image element to the body of the document.
+        document.body.appendChild(smImgBackground);
+
+        // Use the ColorThief library to get the dominant color of the image.
+        const dominantColor = await colorThief.getColor(smImgBackground);
+
+        // Set the background color of the option to the dominant color of the image.
+        option.style.backgroundColor = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]}, 1)`;
+    }
+}
+
+// Function to style the option for small images.
+function styleOptionForSmallImage(option) {
+    // Set the background size of the option to "contain" to fit the image within the element.
+    option.style.backgroundSize = 'contain';
+
+    // Set the background repeat of the option to "no-repeat" to prevent repetition of the image.
+    option.style.backgroundRepeat = 'no-repeat';
+
+    // Set the background position of the option to "center" to center the image within the element.
+    option.style.backgroundPosition = 'center';
+}
+
+// Function to handle the initial click on the category button`
+function handleInitialCategoryButton() {
+    
+    if (categoryButtons.length > 0) {
         categoryButtons[0].click();
     }
-// Close the DOMContentLoaded event listener
-});
+}
 
 // After handling initial category buttons, handle navigation
 
@@ -240,9 +247,7 @@ if(active) {
 
 // Add click event listeners to all category buttons
 nav.querySelectorAll('.category-button').forEach(button => {
-    button.addEventListener('click', (e) => {
-        // Prevent the default action of the click
-        e.preventDefault();
+    button.addEventListener('click', () => {
         
         if(!button.classList.contains('active')) {
             // If the clicked button is not currently active, remove 'active' class from all buttons
