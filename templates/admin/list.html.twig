@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Exposition{% endblock %}
+
+{% block body %}
+<div class="bg-black text-white">
+    <table class="table-auto w-full">
+        <thead>
+            <tr>
+                <th class="px-4 py-2">Nom</th>
+                <th class="px-4 py-2">Début</th>
+                <th class="px-4 py-2">Fin</th>
+                <th class="px-4 py-2">Voir</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exhibition in exhibitions %}
+            <tr class="bg-gray-700">
+                <td class="border px-4 py-2">{{ exhibition.name }}</td>
+                <td class="border px-4 py-2">{{ exhibition.start|date('d/m/Y') }}</td>
+                <td class="border px-4 py-2">{{ exhibition.end|date('d/m/Y') }}</td>
+                <td class="border px-4 py-2">
+                    <a href="{{ path('admin_exhibition_showlist', {id: exhibition.id}) }}" class="text-accentcolor">Voir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

@@ -5,25 +5,8 @@
 {% block body %}
 <div class="text-white">
     <h1 class="text-3xl font-bold mb-4">Page Admin</h1>
-    <table class="table-auto w-full">
-        <thead>
-            <tr>
-                <th class="px-4 py-2">Titre</th>
-                <th class="px-4 py-2">Sous-titre</th>
-                <th class="px-4 py-2">Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for exhibition in exhibitions %}
-                <tr>
-                    <td class="border px-4 py-2">{{ exhibition.title }}</td>
-                    <td class="border px-4 py-2">{{ exhibition.subtitle }}</td>
-                    <td class="border px-4 py-2">
-                        <img class="w-16 h-16 object-cover" src="{{ asset(exhibition.image) }}" alt="{{ exhibition.title }}">
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 </div>
+            <div class="mb-3">
+                Vous êtes connecter en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="text-blue-500 hover:text-blue-800">Logout</a>
+            </div>
 {% endblock %}
