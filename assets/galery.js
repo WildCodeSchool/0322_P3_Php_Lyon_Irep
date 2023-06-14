@@ -1,11 +1,10 @@
 import "./styles/galery.scss";
 
 // Import ColorThief from the node modules
-import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
+import ColorThief from "../node_modules/colorthief/dist/color-thief.mjs";
 
 // Create a new ColorThief instance
 const colorThief = new ColorThief();
-
 
 // Function to convert NodeList to Array for all elements matching a given selector
 const selectAll = (selector) => Array.from(document.querySelectorAll(selector));
@@ -23,14 +22,15 @@ const isMobileDevice = () => window.innerWidth < 768;
 const handleClick = (activeIndex) => {
     // Determine number of images to display based on device
     const visibleCount = isMobileDevice() ? 1 : 4;
-    
+
     let previousOptions = [];
     let nextOptions = [];
 
     // The loop iterates for half of the visible count to determine the indices for the previous and next options
-    for(let i = 1; i <= visibleCount / 2; i++) {
+    for (let i = 1; i <= visibleCount / 2; i++) {
     // Calculate the index of the previous option taking into account the length of the array to avoid negative indices
-        const previousIndex = (activeIndex - i + currentOptions.length) % currentOptions.length;
+        const previousIndex =
+      (activeIndex - i + currentOptions.length) % currentOptions.length;
         // Calculate the index of the next option using modulo operator to wrap around if the end of the array is reached
         const nextIndex = (activeIndex + i) % currentOptions.length;
         // Add the previous option at the beginning of the previous Options array
@@ -40,22 +40,26 @@ const handleClick = (activeIndex) => {
     }
 
     // Create an array of visible options which includes previous options, the current option, and next options
-    const visibleOptions = [...previousOptions, currentOptions[activeIndex], ...nextOptions];
+    const visibleOptions = [
+        ...previousOptions,
+        currentOptions[activeIndex],
+        ...nextOptions,
+    ];
 
     // Hide all options and disable their pointer events
-    options.forEach(option => {
+    options.forEach((option) => {
         option.style.display = "none";
         option.style.pointerEvents = "none";
     });
 
     // Show visible options and enable their pointer events
-    visibleOptions.forEach(option => {
+    visibleOptions.forEach((option) => {
         option.style.display = "flex";
         option.style.pointerEvents = "auto";
     });
 
     // Set the active class on the current option and remove from others
-    options.forEach(option => {
+    options.forEach((option) => {
         option.classList.toggle("active", option === currentOptions[activeIndex]);
     });
 
@@ -81,7 +85,7 @@ const generateBullets = (visibleOptions) => {
 
 // Function to handle option click events
 const handleOptionClick = (option) => {
-    option.addEventListener("click", event => {
+    option.addEventListener("click", (event) => {
         const currentOptionIndex = currentOptions.indexOf(option);
         // Get the index of the current option in the currentOptions array
         if (currentOptionIndex !== -1) {
@@ -100,13 +104,15 @@ const handleOptionClick = (option) => {
 // Function to handle category button click events
 const handleCategoryButtonClick = (button) => {
     button.addEventListener("click", function () {
-        // When the button is clicked, execute the following function:
+    // When the button is clicked, execute the following function:
 
         const category = this.getAttribute("data-category");
         // Get the value of the "data-category" attribute from the clicked button
         // This determines the selected category
 
-        const categoryOptions = options.filter(option => option.getAttribute("data-category") === category);
+        const categoryOptions = options.filter(
+            (option) => option.getAttribute("data-category") === category
+        );
         // Filter the options based on their "data-category" attribute that matches the selected category
 
         currentOptions = categoryOptions;
@@ -116,46 +122,49 @@ const handleCategoryButtonClick = (button) => {
         // Generate bullets for the visible category options
 
         handleClick(Math.floor(categoryOptions.length / 2));
-        // Call the handleClick function with the index of the middle option as an argument
+    // Call the handleClick function with the index of the middle option as an argument
     });
 };
-// Add an event listener for the "load" event to the window. 
+// Add an event listener for the "load" event to the window.
 // This event fires when the entire page, including all dependent resources such as stylesheets images, has been fully loaded.
 window.addEventListener("load", function () {
-    initialize();  // Call the initialization function.
+    initialize(); // Call the initialization function.
 });
 
 // The main function that is called once the page is loaded.
 function initialize() {
     // Select all elements with the class "option".
-    options = selectAll(".option"); 
+    options = selectAll(".option");
 
     // Select all elements with the class "category-button".
-    categoryButtons = selectAll(".category-button"); 
+    categoryButtons = selectAll(".category-button");
 
     // Select the element with the class "bullet-navigation".
-    bulletsContainer = document.querySelector(".bullet-navigation"); 
+    bulletsContainer = document.querySelector(".bullet-navigation");
 
     // For each "option" element, prepare its background image.
-    options.forEach(option => prepareOptionBackground(option));
+    options.forEach((option) => prepareOptionBackground(option));
 
     // For each "option" element, handle its click event.
-    options.forEach(option => handleOptionClick(option));
+    options.forEach((option) => handleOptionClick(option));
 
     // For each "category-button" element, handle its click event.
-    categoryButtons.forEach(button => handleCategoryButtonClick(button));
+    categoryButtons.forEach((button) => handleCategoryButtonClick(button));
 
     // Handle the initial category button click.
     handleInitialCategoryButton();
 }
 
-// Function to prepare the background of each option.
+// Function to prepare the background of each Small .
 function prepareOptionBackground(option) {
     // Get the computed style of the option element's background image.
     let backgroundImage = getComputedStyle(option).backgroundImage;
 
     // Extract the URL of the background image from the computed style.
-    let imageUrl = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
+    let imageUrl = backgroundImage
+        .replace("url(", "")
+        .replace(")", "")
+        .replace(/"/g, "");
 
     // Create a new Image object.
     let smImgBackground = new Image();
@@ -167,7 +176,7 @@ function prepareOptionBackground(option) {
     smImgBackground.src = imageUrl;
 
     // When the image is loaded, handle the image load.
-    smImgBackground.onload = async function() {
+    smImgBackground.onload = async function () {
         await addBackgroundOnSmallImage(smImgBackground, option);
     };
 }
@@ -175,13 +184,12 @@ function prepareOptionBackground(option) {
 // Function to handle the load event of each image.
 async function addBackgroundOnSmallImage(smImgBackground, option) {
     // Check if the image's natural width is less than 404 pixels.
-    if(smImgBackground.naturalWidth < 404) {
-
-        // If the image is small, apply certain styles to the option.
+    if (smImgBackground.naturalWidth < 404) {
+    // If the image is small, apply certain styles to the option.
         styleOptionForSmallImage(option);
 
         // Hide the original image element.
-        smImgBackground.style.display = 'none';
+        smImgBackground.style.display = "none";
 
         // Append the image element to the body of the document.
         document.body.appendChild(smImgBackground);
@@ -197,18 +205,17 @@ async function addBackgroundOnSmallImage(smImgBackground, option) {
 // Function to style the option for small images.
 function styleOptionForSmallImage(option) {
     // Set the background size of the option to "contain" to fit the image within the element.
-    option.style.backgroundSize = 'contain';
+    option.style.backgroundSize = "contain";
 
     // Set the background repeat of the option to "no-repeat" to prevent repetition of the image.
-    option.style.backgroundRepeat = 'no-repeat';
+    option.style.backgroundRepeat = "no-repeat";
 
     // Set the background position of the option to "center" to center the image within the element.
-    option.style.backgroundPosition = 'center';
+    option.style.backgroundPosition = "center";
 }
 
 // Function to handle the initial click on the category button`
 function handleInitialCategoryButton() {
-    
     if (categoryButtons.length > 0) {
         categoryButtons[0].click();
     }
@@ -217,25 +224,25 @@ function handleInitialCategoryButton() {
 // After handling initial category buttons, handle navigation
 
 // Select the navigation bar which contains category buttons
-let nav = document.querySelector('.category-buttons');
+let nav = document.querySelector(".category-buttons");
 
 // Create a new 'div' element which will represent the active line under the active category button
-let line = document.createElement('div');
+let line = document.createElement("div");
 
 // Add class 'line' to this div element
-line.className = 'line';
+line.className = "line";
 
 // Append the created line to the navigation bar
 nav.appendChild(line);
 
 // Find the currently active category button
-let active = nav.querySelector('.category-button.active');
+let active = nav.querySelector(".category-button.active");
 
 // Initialize positions and width variables
 let pos = 0;
 let wid = 0;
 
-if(active) {
+if (active) {
     // If there is an active button, get its left offset and width
     pos = active.offsetLeft;
     wid = active.offsetWidth;
@@ -246,24 +253,23 @@ if(active) {
 }
 
 // Add click event listeners to all category buttons
-nav.querySelectorAll('.category-button').forEach(button => {
-    button.addEventListener('click', () => {
-        
-        if(!button.classList.contains('active')) {
+nav.querySelectorAll(".category-button").forEach((button) => {
+    button.addEventListener("click", () => {
+        if (!button.classList.contains("active")) {
             // If the clicked button is not currently active, remove 'active' class from all buttons
-            nav.querySelectorAll('.category-button').forEach(btn => {
-                btn.classList.remove('active');
+            nav.querySelectorAll(".category-button").forEach((btn) => {
+                btn.classList.remove("active");
             });
-            
+
             // Then add 'active' class to the clicked button
-            button.classList.add('active');
+            button.classList.add("active");
 
             // Get the clicked button's left offset and width
             let position = button.offsetLeft;
             let width = button.offsetWidth;
-            
+
             // Update the line's width and position with a smooth transition
-            if(position >= pos) {
+            if (position >= pos) {
                 // If the clicked button is to the right of the currently active one, increase the line's width first, then move it to the right
                 line.style.width = `${position - pos + width}px`;
                 setTimeout(() => {
