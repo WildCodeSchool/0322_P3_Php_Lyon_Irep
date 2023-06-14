@@ -231,74 +231,7 @@ span, p, .custom-button-picture {
 .bullet.active {
    background-color: $accentColor;
 }
-/* -----------------------------Show image by Id -----------------------------*/
-.picture-details {
-    display: flex;
-  }
-  
-  .picture-image {
-    flex-basis: 50%; /* Occupe 50% de la largeur */
-    display: flex;
-    align-items: center; 
-    justify-content: center;
-  }
-  
-  .picture-info {
-    flex-basis: 50%; /* Occupe 50% de la largeur */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centre le contenu verticalement */
-  }
-
-  .picture-image img {
-    display: block;
-    box-shadow: 0px 0px 1px 10px #F2F0F0;
-    border-radius: 7px;
-  }
-  .custom-button-picture{
-    background-color: $accentColor; 
-  }
-
-  hr {
-    color: $accentColor;
-    border: 1px solid $accentColor;
-    margin: 5% auto;
-  }
-  
-
- 
-  
-  /* Add Animation Modal*/
-  .modal-content, #caption {  
-    -webkit-animation-name: zoom;
-    -webkit-animation-duration: 0.6s;
-    animation-name: zoom;
-    animation-duration: 0.6s;
-  }
-  
-  @-webkit-keyframes zoom {
-    from {-webkit-transform:scale(0)} 
-    to {-webkit-transform:scale(1)}
-  }
-  
-  @keyframes zoom {
-    from {transform:scale(0)} 
-    to {transform:scale(1)}
-  }
-  .close:hover,
-  .close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  /* 100% Image Width on Smaller Screens */
-  @media only screen and (max-width: 700px){
-    .modal-content {
-      width: 100%;
-    }
-  }
-  /*-----------------------------------------*/
+/*-----------------------------------------*/
 
 .category-buttons {
     position: relative;
