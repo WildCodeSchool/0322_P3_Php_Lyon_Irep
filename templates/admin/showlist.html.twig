@@ -3,7 +3,7 @@
 {% block title %}Présentation Exposition{% endblock %}
 
 {% block body %}
-<div class="bg-black text-white">
+<div class="flex justify-center items-center bg-backgroundcolor text-white mt-10">
     <table class="table-auto w-full">
         <thead>
             <tr>
@@ -17,7 +17,7 @@
             <tr class="bg-gray-700">
                 <td class="border px-4 py-2">{{ presentationExhibition.title }}</td>
                 <td class="border px-4 py-2">{{ presentationExhibition.subtitle }}</td>
-                <td class="border px-4 py-2">
+                <td class="flex justify-center items-center border px-4 py-2">
                     <img class="w-24 h-auto" src="{{ asset(presentationExhibition.image) }}">
                 </td>
             </tr>
