@@ -10,13 +10,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(PresentationExhibitionRepository $presexhibition): Response
+    public function index(PresentationExhibitionRepository $presExhibitRepo): Response
     {
-        $presexhibition = $presexhibition->findAll();
+        $exhibitions = $presExhibitRepo->findAll();
 
         return $this->render(
             'home/index.html.twig',
-            ['exhibitions' => $presexhibition]
+            ['exhibitions' => $exhibitions]
         );
     }
 }
