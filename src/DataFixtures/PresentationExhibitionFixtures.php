@@ -29,7 +29,7 @@ class PresentationExhibitionFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // Récupération de l'exhibition par sa référence
+
         $exhibition = $this->getReference(ExhibitionFixtures::EXHIBITION_REFERENCE);
 
         foreach (self::PRESENTATIONEXHIBITION as $presentationData) {
@@ -37,7 +37,7 @@ class PresentationExhibitionFixtures extends Fixture
             $presentation->setTitle($presentationData['title']);
             $presentation->setSubtitle($presentationData['subtitle']);
             $presentation->setImage($presentationData['image']);
-            $presentation->setExhibitionId($exhibition); // Assuming you renamed this to setExhibition
+            $presentation->setExhibition($exhibition);
 
             $manager->persist($presentation);
         }

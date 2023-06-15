@@ -23,7 +23,7 @@ class PresentationExhibition
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'presentationExhibitions')]
-    private ?Exhibition $exhibitionId = null;
+    private ?Exhibition $exhibition = null;
 
     public function getId(): ?int
     {
@@ -66,14 +66,14 @@ class PresentationExhibition
         return $this;
     }
 
-    public function getExhibitionId(): ?Exhibition
+    public function getExhibition(): ?Exhibition
     {
-        return $this->exhibitionId;
+        return $this->exhibition;
     }
 
-    public function setExhibitionId(?Exhibition $exhibitionId): self
+    public function setExhibition(?Exhibition $exhibition): self
     {
-        $this->exhibitionId = $exhibitionId;
+        $this->exhibition = $exhibition;
 
         return $this;
     }

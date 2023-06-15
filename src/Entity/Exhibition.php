@@ -25,7 +25,7 @@ class Exhibition
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $end = null;
 
-    #[ORM\OneToMany(mappedBy: 'exhibitionId', targetEntity: PresentationExhibition::class)]
+    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: PresentationExhibition::class)]
     private Collection $presExhibition;
 
     public function __construct()
@@ -86,7 +86,7 @@ class Exhibition
     {
         if (!$this->presExhibition->contains($presExhibition)) {
             $this->presExhibition->add($presExhibition);
-            $presExhibition->setExhibitionId($this);
+            $presExhibition->setExhibition($this);
         }
 
         return $this;
@@ -96,8 +96,8 @@ class Exhibition
     {
         if ($this->presExhibition->removeElement($presExhibition)) {
             // set the owning side to null (unless already changed)
-            if ($presExhibition->getExhibitionId() === $this) {
-                $presExhibition->setExhibitionId(null);
+            if ($presExhibition->getExhibition() === $this) {
+                $presExhibition->setExhibition(null);
             }
         }
 
