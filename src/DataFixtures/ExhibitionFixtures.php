@@ -2,39 +2,26 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Exhibition;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use App\Entity\Exhibition;
+use DateTime;
 
 class ExhibitionFixtures extends Fixture
 {
-    public const EXHIBITIONS = [
-        ['title' => "LE TAMPON",
-         'subtitle' =>  "Journées Européennes du Patrimoine 2023",
-         'image' =>  "build/images/carousel1.png"],
-
-         ['title' => "BEL AIR, D'UNE SUCRERIE A LA NAISSANCE D'UN VILLAGE",
-         'subtitle' =>  "Visitez la galerie et parcourez les oeuvres",
-         'image' =>  "build/images/carousel2.png"],
-
-         ['title' => "HIPPOLYTE CHARLES NAPOLEON MORTIER",
-         'subtitle' =>  "Duc de Trévise",
-         'image' =>  "build/images/carousel3.png"],
-
-         ['title' => "ILE DE LA REUNION EXPOSITIONS PATRIMOINE",
-         'subtitle' => "Une association au service de l'histoire de l'Ile",
-         'image' =>  "build/images/carousel3.png"],
-        ];
+    public const EXHIBITION_REFERENCE = 'exhibition';
 
     public function load(ObjectManager $manager): void
     {
-        foreach (self::EXHIBITIONS as $exhibitionCarousel) {
-            $exhibition = new EXHIBITION();
-            $exhibition ->setTitle($exhibitionCarousel['title']);
-            $exhibition ->setSubtitle($exhibitionCarousel['subtitle']);
-            $exhibition ->setImage($exhibitionCarousel['image']);
-            $manager->persist($exhibition);
-            $manager->flush();
-        }
+        $exhibition = new Exhibition();
+        $exhibition->setName("Bel'air, d'une sucrerie à la naissance d'un village");
+        $exhibition->setStart(DateTime::createFromFormat('d/m/Y', '16/09/2023'));
+        $exhibition->setEnd(DateTime::createFromFormat('d/m/Y', '17/09/2023'));
+
+        $manager->persist($exhibition);
+        $manager->flush();
+
+        // Ajout d'une référence à l'exhibition
+        $this->addReference(self::EXHIBITION_REFERENCE, $exhibition);
     }
 }
