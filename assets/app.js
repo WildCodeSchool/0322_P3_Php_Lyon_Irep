@@ -2,7 +2,6 @@
 import "./styles/app.scss";
 import "./bootstrap";
 import "flowbite";
-import Drift from "drift-zoom";
 
 // Activate the dropdown menu language only on click
 document.getElementById('dropdownHoverButton').addEventListener('click', function() {
@@ -25,10 +24,3 @@ window.addEventListener("scroll", () => {
     }
     lastScrollTop = scrollTop;
 });
-
-//zoom on the image on hover
-const imgTrigger = document.body.querySelector('#my-picture')
-const pane = document.body.querySelector('#zoom-img')
-new Drift(imgTrigger, {
-    paneContainer: pane
-})
