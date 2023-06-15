@@ -1,3 +1,13 @@
+import "./styles/picture_show.scss";
+import Drift from "drift-zoom";
+
+//zoom on the image on hover
+const imgTrigger = document.body.querySelector('#my-picture')
+const pane = document.body.querySelector('#zoom-img')
+new Drift(imgTrigger, {
+    paneContainer: pane
+})
+
 // Get the modal
 let modal = document.getElementById("myModal");
 
@@ -18,5 +28,3 @@ let span = document.getElementsByClassName("close")[0];
 span.onclick = function() { 
     modal.style.display = "none";
 }
-
- 
