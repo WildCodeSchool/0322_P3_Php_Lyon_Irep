@@ -2,11 +2,37 @@ import "./styles/picture_show.scss";
 import Drift from "drift-zoom";
 
 //zoom on the image on hover
-const imgTrigger = document.body.querySelector('#my-picture')
-const pane = document.body.querySelector('#zoom-img')
-new Drift(imgTrigger, {
-    paneContainer: pane
-})
+const imgTrigger = document.body.querySelector('#my-picture');
+const pane = document.body.querySelector('#zoom-img');
+let driftInstance;
+
+function enableZoom() {
+    driftInstance = new Drift(imgTrigger, {
+        paneContainer: pane
+    });
+}
+
+function disableZoom() {
+    if (driftInstance) {
+        driftInstance.destroy();
+        driftInstance = null;
+    }
+}
+
+function handleResize() {
+    if (window.innerWidth > 640) {
+        enableZoom();
+    } else {
+        disableZoom();
+    }
+}
+
+// Vérifier l'état initial lors du chargement de la page
+handleResize();
+
+// Écouter les événements de redimensionnement de la fenêtre
+window.addEventListener('resize', handleResize);
+
 
 // Get the modal
 let modal = document.getElementById("myModal");
