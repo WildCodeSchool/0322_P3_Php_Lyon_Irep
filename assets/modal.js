@@ -5,33 +5,45 @@ import Drift from "drift-zoom";
 const imgTrigger = document.body.querySelector('#my-picture');
 const pane = document.body.querySelector('#zoom-img');
 let driftInstance;
+let isZoomEnabled = false; // Indicateur pour suivre l'état du zoom
 
 function enableZoom() {
-    driftInstance = new Drift(imgTrigger, {
-        paneContainer: pane
-    });
+    if (!isZoomEnabled) {
+        driftInstance = new Drift(imgTrigger, {
+            paneContainer: pane
+        });
+        isZoomEnabled = true;
+    }
 }
 
 function disableZoom() {
-    if (driftInstance) {
+    if (isZoomEnabled) {
         driftInstance.destroy();
         driftInstance = null;
+        isZoomEnabled = false;
     }
 }
 
 function handleResize() {
-    if (window.innerWidth > 640) {
+    if (window.innerWidth > 640 && !isZoomEnabled) {
         enableZoom();
-    } else {
+    } else if (window.innerWidth <= 640 && isZoomEnabled) {
         disableZoom();
     }
 }
 
-// Vérifier l'état initial lors du chargement de la page
-handleResize();
+function handleResizeEvent() {
+    handleResize(); // Vérifier l'état initial lors du chargement de la page
 
-// Écouter les événements de redimensionnement de la fenêtre
-window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', () => {
+        const wasZoomEnabled = isZoomEnabled; // Stocker l'état précédent
+        handleResize(); // Vérifier l'état actuel
+
+       
+    });
+}
+
+handleResizeEvent();
 
 
 // Get the modal
