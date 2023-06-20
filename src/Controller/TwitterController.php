@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\TwitterService;
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -13,13 +14,15 @@ class TwitterController extends AbstractController
 {
     private Client $client;
     private RequestStack $requestStack;
+    private TwitterService $twitterService;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, TwitterService $twitterService)
     {
         $this->client = new Client([
             'base_uri' => 'https://api.twitter.com/',
         ]);
         $this->requestStack = $requestStack;
+        $this->twitterService = $twitterService;
     }
 
     #[Route('/twitter', name: 'twitter')]
@@ -60,5 +63,18 @@ class TwitterController extends AbstractController
         }
 
         return $this->render('twitter/callback.html.twig');
+    }
+    #[Route('/twitter/tweet', name: 'twitter_tweet')]
+    public function tweet(): Response
+    {
+        $urlToTweet = 'https://www.example.com';
+        $session = $this->requestStack->getCurrentRequest()->getSession();
+        $accessToken = $session->get('access_token');
+
+        if ($this->twitterService->tweet($accessToken, $urlToTweet)) {
+            return new Response('ENFIN CA MARCHE');
+        }
+
+        return $this->redirectToRoute('twitter_callback');
     }
 }
