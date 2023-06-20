@@ -1,8 +1,6 @@
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
 services:
@@ -12,10 +10,7 @@ services:
 
     App\Service\TwitterService:
         arguments:
-            $consumerKey: '%env(TWITTER_CONSUMER_KEY)%'
-            $consumerSecret: '%env(TWITTER_CONSUMER_SECRET)%'
-            $accessToken: '%env(TWITTER_ACCESS_TOKEN)%'
-            $accessTokenSecret: '%env(TWITTER_ACCESS_TOKEN_SECRET)%'
+
 
     App\:
         resource: '../src/'
@@ -24,6 +19,3 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Service/'
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
