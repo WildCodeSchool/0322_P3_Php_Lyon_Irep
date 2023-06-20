@@ -25,12 +25,12 @@ class Exhibition
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $end = null;
 
-    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: PresentationExhibition::class)]
-    private Collection $presExhibition;
+    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: Presentation::class, orphanRemoval: true)]
+    private Collection $presentations;
 
     public function __construct()
     {
-        $this->presExhibition = new ArrayCollection();
+        $this->presentations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,29 +75,29 @@ class Exhibition
     }
 
     /**
-     * @return Collection<int, PresentationExhibition>
+     * @return Collection<int, Presentation>
      */
-    public function getPresentationExhibitions(): Collection
+    public function getPresentations(): Collection
     {
-        return $this->presExhibition;
+        return $this->presentations;
     }
 
-    public function addPresentationExhibition(PresentationExhibition $presExhibition): self
+    public function addPresentation(Presentation $presentation): self
     {
-        if (!$this->presExhibition->contains($presExhibition)) {
-            $this->presExhibition->add($presExhibition);
-            $presExhibition->setExhibition($this);
+        if (!$this->presentations->contains($presentation)) {
+            $this->presentations->add($presentation);
+            $presentation->setExhibition($this);
         }
 
         return $this;
     }
 
-    public function removePresentationExhibition(PresentationExhibition $presExhibition): self
+    public function removePresentation(Presentation $presentation): self
     {
-        if ($this->presExhibition->removeElement($presExhibition)) {
+        if ($this->presentations->removeElement($presentation)) {
             // set the owning side to null (unless already changed)
-            if ($presExhibition->getExhibition() === $this) {
-                $presExhibition->setExhibition(null);
+            if ($presentation->getExhibition() === $this) {
+                $presentation->setExhibition(null);
             }
         }
 

@@ -2,27 +2,28 @@
 
 namespace App\Entity;
 
-use App\Repository\PresentationExhibitionRepository;
+use App\Repository\PresentationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PresentationExhibitionRepository::class)]
-class PresentationExhibition
+#[ORM\Entity(repositoryClass: PresentationRepository::class)]
+class Presentation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $subtitle = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\ManyToOne(inversedBy: 'presExhibitions')]
+    #[ORM\ManyToOne(inversedBy: 'presentations')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Exhibition $exhibition = null;
 
     public function getId(): ?int

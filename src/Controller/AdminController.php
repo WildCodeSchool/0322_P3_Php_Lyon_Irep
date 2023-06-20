@@ -33,13 +33,14 @@ class AdminController extends AbstractController
     }
 
 
-    #[Route('/admin/exhibition/{id}', name: 'admin_exhibition_showlist')]
-    public function showPresentationExhibition(Exhibition $exhibition): Response
+/*   #[Route('/admin/exhibition/{id}', name: 'admin_exhibition_showlist')]
+   public function showPresentationExhibition(Exhibition $exhibition): Response
     {
-        $presExhibitions = $exhibition->getPresentationExhibitions();
+        $presExhibitions = $exhibition->getPresentations();
 
         return $this->render('admin/showlist.html.twig', [
             'presentationExhibitions' => $presExhibitions,
         ]);
     }
+    */
 }
