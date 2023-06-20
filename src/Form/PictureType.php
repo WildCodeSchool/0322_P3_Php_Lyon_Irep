@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Picture;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,8 +26,9 @@ class PictureType extends AbstractType
         ->add('subtitle', TextType::class, [
             'label' => 'sous titre'
         ])
-        ->add('date', TextType::class, [
-            'label' => 'date'
+        ->add('date', DateType::class, [
+            'label' => 'date',
+            'format' => 'yyyy-MM-dd'
         ])
         ->add('technic', TextType::class, [
             'label' => 'technique'
@@ -34,10 +36,17 @@ class PictureType extends AbstractType
         ->add('size', TextType::class, [
             'label' => 'Dimension'
         ])
-        ->add('category', TextType::class, [
-            'label' => 'catégorie'
+        ->add('category', ChoiceType::class, [
+            'label' => 'catégorie',
+            'choices' => [
+                'Usines' => 'Usines',
+                'Travailleurs' => 'Travailleurs',
+                'Lieux' => 'Lieux',
+                'Animaux' => 'Animaux',
+
+            ],
         ])
-        ->add('number', TextType::class, [
+        ->add('number', IntegerType::class, [
             'label' => 'numéro'
         ])
         ->add('comment', TextType::class, [

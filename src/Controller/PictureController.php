@@ -37,11 +37,10 @@ class PictureController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $imageFile = $form->get('photoFile')->getData();
             if ($imageFile) {
                 $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeImageName = $slugger->slug($originalImageName) . '.' . $imageFile->guessExtension();
+                $safeImageName = 'build/images/'. $slugger->slug($originalImageName) . '.' . $imageFile->guessExtension();
 
                 try {
                     $imageFile->move(
