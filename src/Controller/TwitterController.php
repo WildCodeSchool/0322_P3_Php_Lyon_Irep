@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\PictureRepository;
 use App\Service\TwitterService;
-use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -14,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TwitterController extends AbstractController
 {
-    private Client $client;
     private RequestStack $requestStack;
     private TwitterService $twitterService;
     private PictureRepository $pictureRepository;
@@ -24,9 +22,7 @@ class TwitterController extends AbstractController
         TwitterService $twitterService,
         PictureRepository $pictureRepository
     ) {
-        $this->client = new Client([
-            'base_uri' => 'https://api.twitter.com/',
-        ]);
+
         $this->requestStack = $requestStack;
         $this->twitterService = $twitterService;
         $this->pictureRepository = $pictureRepository;
@@ -41,31 +37,19 @@ class TwitterController extends AbstractController
         $request = $this->requestStack->getCurrentRequest();
         $code = $request->get('code');
 
-        $response = $this->client->request('POST', '2/oauth2/token', [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Authorization' => 'Basic ' . base64_encode($clientId . ':' . $clientSecret),
-            ],
-            'form_params' => [
-                'code' => $code,
-                'grant_type' => 'authorization_code',
-                'client_id' => $clientId,
-                'redirect_uri' => $twitterUri,
-                'code_verifier' => 'challenge',
-            ]
-        ]);
+        $responseData = $this->twitterService->authenticate($clientId, $clientSecret, $code, $twitterUri);
 
-        if ($response->getStatusCode() === 200) {
-            $responseData = json_decode($response->getBody()->getContents(), true);
+        if ($responseData !== null) {
             $accessToken = $responseData['access_token'];
 
             $session->set('access_token', $accessToken);
 
-            return $this->redirectToRoute('twitter');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('twitter/callback.html.twig');
     }
+
 
     #[Route('/twitter/tweet/', name: 'twitter_tweet')]
     public function tweet(Request $request): Response
@@ -92,8 +76,6 @@ class TwitterController extends AbstractController
         if (!$picture) {
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
-
-
         // Récupérer les hashtags du formulaire
         $hashtags = $request->request->get('hashtags');
 
@@ -107,14 +89,13 @@ class TwitterController extends AbstractController
             '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state='
             . 'state&code_challenge=challenge&code_challenge_method=plain');
         }
-
         if ($this->twitterService->tweet($accessToken, $hashtags)) {
             $this->addFlash('notice', 'Le tweet a été publié avec succès');
             return $this->redirectToRoute('app_picture_show', ['id' => $id]);
         }
-
         return $this->redirectToRoute('twitter_callback');
     }
+
 
 
     #[Route('/twitter/tweet/preview/{id}', name: 'twitter_preview')]
@@ -125,9 +106,7 @@ class TwitterController extends AbstractController
         if (!$picture) {
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
-
         $hashtags = $picture->getLink();
-
         // passer les hashtags à la vue
         return $this->render('twitter/preview.html.twig', [
         'picture' => $picture,
