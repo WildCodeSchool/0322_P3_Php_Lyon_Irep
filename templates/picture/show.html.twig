@@ -13,7 +13,11 @@
 {% endblock %}
 
 {% block body %}
-
+{% for message in app.flashes('notice') %}
+    <div class="bg-white text-black px-4 py-2 rounded-md mb-2">
+        {{ message }}
+    </div>
+{% endfor %}
     <div class="picture-details flex flex-col sm:flex-row pt-16 pb-11">
         <div class="picture-image flex justify-center items-center basis-1/2 p-5">
             <img class="block mx-auto max-h-[35rem] w-auto h-auto rounded-md shadow-[0_0_0_10px_#F2F0F0]" data-zoom="{{ asset(picture.image)}}" id="my-picture" src="{{ asset(picture.image) }}" alt="{{ picture.title }}">
@@ -26,8 +30,8 @@
           <span class="font-subtitlefont text-sm">Date de réalisation : {{ picture.date }}</span>
           <span class="font-subtitlefont text-sm pb-3.5">Format : {{ picture.size }}</span>
           <p class="font-contentfont text-justify">{{ picture.comment }}</p>
-          <p class="font-contentfont text-justify">{{ picture.link }}</p>
-<a href="{{ path('twitter_hashtag', {id: picture.id}) }}" class="bg-black text-white py-2 px-4">Tweeter les hashtags</a>
+          <p class="font-contentfont text-justify mt-3">{{ picture.link }}</p>
+<a href="{{ path('twitter_hashtag', {id: picture.id}) }}" class="bg-black text-white mt-1">Tweeter les hashtags</a>
         </div>
     </div>
 

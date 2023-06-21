@@ -43,6 +43,7 @@ class TwitterController extends AbstractController
     {
         $clientId = $_ENV['TWITTER_CLIENT_ID'];
         $clientSecret = $_ENV['TWITTER_CLIENT_SECRET'];
+        $twitterUri = $_ENV['TWITTER_REDIRECT_URI'];
         $request = $this->requestStack->getCurrentRequest();
         $code = $request->get('code');
 
@@ -55,7 +56,7 @@ class TwitterController extends AbstractController
                 'code' => $code,
                 'grant_type' => 'authorization_code',
                 'client_id' => $clientId,
-                'redirect_uri' => 'https://61a9-90-63-160-23.ngrok-free.app/twitter/callback',
+                'redirect_uri' => $twitterUri,
                 'code_verifier' => 'challenge',
             ]
         ]);
@@ -86,21 +87,35 @@ class TwitterController extends AbstractController
     }
 
     #[Route('/twitter/tweet/hashtags/{id}', name: 'twitter_hashtag')]
-    public function tweetHashtags(int $id): Response
+    public function tweetHashtags(int $id, SessionInterface $session, Request $request): Response
     {
         $picture = $this->pictureRepository->find($id);
+        $clientId = $_ENV['TWITTER_CLIENT_ID'];
+        $twitterUri = $_ENV['TWITTER_REDIRECT_URI'];
+        $session = $request->getSession();
 
         if (!$picture) {
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
 
+        $referrer = $request->headers->get('referer');
+        $session->set('referrer', $referrer);
         $hashtags = $picture->getLink();
 
         $session = $this->requestStack->getCurrentRequest()->getSession();
         $accessToken = $session->get('access_token');
 
+        if ($accessToken === null || $accessToken === '') {
+            return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
+            . $clientId . 'Q&redirect_uri='
+            . $twitterUri .
+            '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state='
+            . 'state&code_challenge=challenge&code_challenge_method=plain');
+        }
+
         if ($this->twitterService->tweet($accessToken, $hashtags)) {
-            return new Response('ENFIN CA MARCHE');
+            $this->addFlash('notice', 'Le tweet a été publié avec succès');
+            return $this->redirect($session->get('referrer'));
         }
 
         return $this->redirectToRoute('twitter_callback');
