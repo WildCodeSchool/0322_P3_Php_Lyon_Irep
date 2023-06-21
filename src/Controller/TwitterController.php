@@ -72,19 +72,6 @@ class TwitterController extends AbstractController
 
         return $this->render('twitter/callback.html.twig');
     }
-    #[Route('/twitter/tweet/', name: 'twitter_tweet')]
-    public function tweet(Request $request): Response
-    {
-        $hashtags = $request->query->get('hashtags', 'test');
-        $session = $this->requestStack->getCurrentRequest()->getSession();
-        $accessToken = $session->get('access_token');
-
-        if ($this->twitterService->tweet($accessToken, $hashtags)) {
-            return new Response('ENFIN CA MARCHE');
-        }
-
-        return $this->redirectToRoute('twitter_callback');
-    }
 
     #[Route('/twitter/tweet/hashtags/{id}', name: 'twitter_hashtag')]
     public function tweetHashtags(int $id, SessionInterface $session, Request $request): Response
