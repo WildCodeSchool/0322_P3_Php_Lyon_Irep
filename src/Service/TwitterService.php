@@ -15,7 +15,7 @@ class TwitterService
         ]);
     }
 
-    public function tweet(string $accessToken, string $urlToTweet): bool
+    public function tweet(string $accessToken, string $hashtags): bool
     {
         $response = $this->client->request('POST', '2/tweets', [
             'headers' => [
@@ -23,7 +23,7 @@ class TwitterService
                 'Content-Type' => 'application/json',
             ],
             'body' => json_encode([
-                'text' => $urlToTweet,
+                'text' => $hashtags,
             ]),
         ]);
 

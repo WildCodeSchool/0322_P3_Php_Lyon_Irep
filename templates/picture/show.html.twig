@@ -26,6 +26,8 @@
           <span class="font-subtitlefont text-sm">Date de réalisation : {{ picture.date }}</span>
           <span class="font-subtitlefont text-sm pb-3.5">Format : {{ picture.size }}</span>
           <p class="font-contentfont text-justify">{{ picture.comment }}</p>
+          <p class="font-contentfont text-justify">{{ picture.link }}</p>
+<a href="{{ path('twitter_hashtag', {id: picture.id}) }}" class="bg-black text-white py-2 px-4">Tweeter les hashtags</a>
         </div>
     </div>
 

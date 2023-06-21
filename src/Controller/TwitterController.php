@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PictureRepository;
 use App\Service\TwitterService;
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -9,20 +10,26 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class TwitterController extends AbstractController
 {
     private Client $client;
     private RequestStack $requestStack;
     private TwitterService $twitterService;
+    private PictureRepository $pictureRepository;
 
-    public function __construct(RequestStack $requestStack, TwitterService $twitterService)
-    {
+    public function __construct(
+        RequestStack $requestStack,
+        TwitterService $twitterService,
+        PictureRepository $pictureRepository
+    ) {
         $this->client = new Client([
             'base_uri' => 'https://api.twitter.com/',
         ]);
         $this->requestStack = $requestStack;
         $this->twitterService = $twitterService;
+        $this->pictureRepository = $pictureRepository;
     }
 
     #[Route('/twitter', name: 'twitter')]
@@ -48,7 +55,7 @@ class TwitterController extends AbstractController
                 'code' => $code,
                 'grant_type' => 'authorization_code',
                 'client_id' => $clientId,
-                'redirect_uri' => 'https://6211-90-63-160-23.ngrok-free.app/twitter/callback',
+                'redirect_uri' => 'https://61a9-90-63-160-23.ngrok-free.app/twitter/callback',
                 'code_verifier' => 'challenge',
             ]
         ]);
@@ -64,14 +71,35 @@ class TwitterController extends AbstractController
 
         return $this->render('twitter/callback.html.twig');
     }
-    #[Route('/twitter/tweet', name: 'twitter_tweet')]
-    public function tweet(): Response
+    #[Route('/twitter/tweet/', name: 'twitter_tweet')]
+    public function tweet(Request $request): Response
     {
-        $urlToTweet = 'https://www.example.com';
+        $hashtags = $request->query->get('hashtags', 'test');
         $session = $this->requestStack->getCurrentRequest()->getSession();
         $accessToken = $session->get('access_token');
 
-        if ($this->twitterService->tweet($accessToken, $urlToTweet)) {
+        if ($this->twitterService->tweet($accessToken, $hashtags)) {
+            return new Response('ENFIN CA MARCHE');
+        }
+
+        return $this->redirectToRoute('twitter_callback');
+    }
+
+    #[Route('/twitter/tweet/hashtags/{id}', name: 'twitter_hashtag')]
+    public function tweetHashtags(int $id): Response
+    {
+        $picture = $this->pictureRepository->find($id);
+
+        if (!$picture) {
+            throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
+        }
+
+        $hashtags = $picture->getLink();
+
+        $session = $this->requestStack->getCurrentRequest()->getSession();
+        $accessToken = $session->get('access_token');
+
+        if ($this->twitterService->tweet($accessToken, $hashtags)) {
             return new Response('ENFIN CA MARCHE');
         }
 
