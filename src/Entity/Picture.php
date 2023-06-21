@@ -27,8 +27,7 @@ class Picture
     private ?string $subtitle = null;
 
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    private ?string $date = null;
+
 
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -57,6 +56,8 @@ class Picture
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
 
 
     public function getId(): ?int
@@ -110,19 +111,10 @@ class Picture
     }
 
 
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
 
 
-    public function setDate(?string $date): self
-    {
-        $this->date = $date;
 
 
-        return $this;
-    }
 
 
     public function getTechnic(): ?string
@@ -226,6 +218,17 @@ class Picture
         $this->image = $image;
 
 
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
         return $this;
     }
 }

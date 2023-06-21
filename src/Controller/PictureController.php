@@ -6,9 +6,11 @@ use App\Entity\Picture;
 use App\Form\PictureType;
 use App\Repository\PictureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
@@ -18,8 +20,8 @@ class PictureController extends AbstractController
     {
         $categories = $pictureRepository->getCategories();
         return $this->render('picture/index.html.twig', [
-           'pictures' => $pictureRepository->findAll(),
-           'categories' => $categories,
+            'pictures' => $pictureRepository->findAll(),
+            'categories' => $categories,
         ]);
     }
 
@@ -27,7 +29,7 @@ class PictureController extends AbstractController
 
 
     #[Route('/new', name: 'app_picture_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PictureRepository $pictureRepository): Response
+    public function new(Request $request, PictureRepository $pictureRepository, SluggerInterface $slugger): Response
     {
         $picture = new Picture();
         $form = $this->createForm(PictureType::class, $picture);
@@ -35,6 +37,24 @@ class PictureController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('photoFile')->getData();
+            if ($imageFile) {
+                $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeImageName = 'uploads/images/'
+                    . $slugger->slug($originalImageName) . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $safeImageName
+                    );
+
+                    $picture->setImage($safeImageName);
+                } catch (FileException $e) {
+                    die("erreur de chargement de l'image !!");
+                }
+            }
+
             $pictureRepository->save($picture, true);
 
 
@@ -43,8 +63,8 @@ class PictureController extends AbstractController
 
 
         return $this->render('picture/new.html.twig', [
-           'picture' => $picture,
-           'form' => $form,
+            'picture' => $picture,
+            'form' => $form,
         ]);
     }
 
@@ -53,7 +73,7 @@ class PictureController extends AbstractController
     public function show(Picture $picture): Response
     {
         return $this->render('picture/show.html.twig', [
-           'picture' => $picture,
+            'picture' => $picture,
         ]);
     }
 
@@ -74,8 +94,8 @@ class PictureController extends AbstractController
 
 
         return $this->render('picture/edit.html.twig', [
-           'picture' => $picture,
-           'form' => $form,
+            'picture' => $picture,
+            'form' => $form,
         ]);
     }
 
