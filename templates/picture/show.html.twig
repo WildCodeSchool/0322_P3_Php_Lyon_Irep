@@ -14,7 +14,7 @@
 
 {% block body %}
 {% for message in app.flashes('notice') %}
-    <div class="bg-white text-black px-4 py-2 rounded-md mb-2">
+    <div class="bg-white text-black px-4 py-2 rounded-md mb-2 mt-2">
         {{ message }}
     </div>
 {% endfor %}
@@ -31,7 +31,7 @@
           <span class="font-subtitlefont text-sm pb-3.5">Format : {{ picture.size }}</span>
           <p class="font-contentfont text-justify">{{ picture.comment }}</p>
           <p class="font-contentfont text-justify mt-3">{{ picture.link }}</p>
-<a href="{{ path('twitter_hashtag', {id: picture.id}) }}" class="bg-black text-white mt-1">Tweeter les hashtags</a>
+<a href="{{ path('twitter_preview', {id: picture.id}) }}" class="bg-black text-white mt-1">Tweeter les hashtags</a>
         </div>
     </div>
 

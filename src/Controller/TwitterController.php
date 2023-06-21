@@ -32,12 +32,6 @@ class TwitterController extends AbstractController
         $this->pictureRepository = $pictureRepository;
     }
 
-    #[Route('/twitter', name: 'twitter')]
-    public function index(): Response
-    {
-        return $this->render('twitter/index.html.twig');
-    }
-
     #[Route('/twitter/callback', name: 'twitter_callback')]
     public function callback(SessionInterface $session): Response
     {
@@ -73,7 +67,21 @@ class TwitterController extends AbstractController
         return $this->render('twitter/callback.html.twig');
     }
 
-    #[Route('/twitter/tweet/hashtags/{id}', name: 'twitter_hashtag')]
+    #[Route('/twitter/tweet/', name: 'twitter_tweet')]
+    public function tweet(Request $request): Response
+    {
+        $hashtags = $request->query->get('hashtags', 'test');
+        $session = $this->requestStack->getCurrentRequest()->getSession();
+        $accessToken = $session->get('access_token');
+
+        if ($this->twitterService->tweet($accessToken, $hashtags)) {
+            return new Response('ENFIN CA MARCHE');
+        }
+
+        return $this->redirectToRoute('twitter_callback');
+    }
+
+    #[Route('/twitter/tweet/hashtags/{id}', name: 'twitter_hashtag', methods: ['POST'])]
     public function tweetHashtags(int $id, SessionInterface $session, Request $request): Response
     {
         $picture = $this->pictureRepository->find($id);
@@ -85,9 +93,9 @@ class TwitterController extends AbstractController
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
 
-        $referrer = $request->headers->get('referer');
-        $session->set('referrer', $referrer);
-        $hashtags = $picture->getLink();
+
+        // Récupérer les hashtags du formulaire
+        $hashtags = $request->request->get('hashtags');
 
         $session = $this->requestStack->getCurrentRequest()->getSession();
         $accessToken = $session->get('access_token');
@@ -102,9 +110,28 @@ class TwitterController extends AbstractController
 
         if ($this->twitterService->tweet($accessToken, $hashtags)) {
             $this->addFlash('notice', 'Le tweet a été publié avec succès');
-            return $this->redirect($session->get('referrer'));
+            return $this->redirectToRoute('app_picture_show', ['id' => $id]);
         }
 
         return $this->redirectToRoute('twitter_callback');
+    }
+
+
+    #[Route('/twitter/tweet/preview/{id}', name: 'twitter_preview')]
+    public function previewTweet(int $id): Response
+    {
+        $picture = $this->pictureRepository->find($id);
+
+        if (!$picture) {
+            throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
+        }
+
+        $hashtags = $picture->getLink();
+
+        // passer les hashtags à la vue
+        return $this->render('twitter/preview.html.twig', [
+        'picture' => $picture,
+        'hashtags' => $hashtags,
+        ]);
     }
 }
