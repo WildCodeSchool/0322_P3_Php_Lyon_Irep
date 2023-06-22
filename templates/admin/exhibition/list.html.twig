@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste Exposition{% endblock %}
+{% block title %}Liste Expositions{% endblock %}
 
 {% block body %}
 <div class="bg-backgroundcolor text-white mt-20">
@@ -20,7 +20,7 @@
                 <td class="text-center border px-4 py-2">{{ exhibition.start|date('d/m/Y') }}</td>
                 <td class="text-center border px-4 py-2">{{ exhibition.end|date('d/m/Y') }}</td>
                 <td class="flex justify-center items-center border px-4 py-2">
-                    <a href="{{ path('admin_exhibition_showlist', {id: exhibition.id}) }}" class="text-accentcolor">Voir</a>
+                    <a href="{{ path('app_exhibition_index', {id: exhibition.id}) }}" class="text-accentcolor">Voir</a>
                 </td>
             </tr>
             {% endfor %}

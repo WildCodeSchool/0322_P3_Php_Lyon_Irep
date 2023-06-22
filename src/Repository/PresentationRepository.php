@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\PresentationExhibition;
+use App\Entity\Presentation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PresentationExhibition>
+ * @extends ServiceEntityRepository<Presentation>
  *
- * @method PresentationExhibition|null find($id, $lockMode = null, $lockVersion = null)
- * @method PresentationExhibition|null findOneBy(array $criteria, array $orderBy = null)
- * @method PresentationExhibition[]    findAll()
- * @method PresentationExhibition[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Presentation|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Presentation|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Presentation[]    findAll()
+ * @method Presentation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PresentationExhibitionRepository extends ServiceEntityRepository
+class PresentationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PresentationExhibition::class);
+        parent::__construct($registry, Presentation::class);
     }
 
-    public function save(PresentationExhibition $entity, bool $flush = false): void
+    public function save(Presentation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class PresentationExhibitionRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(PresentationExhibition $entity, bool $flush = false): void
+    public function remove(Presentation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -39,10 +39,8 @@ class PresentationExhibitionRepository extends ServiceEntityRepository
         }
     }
 
-
-
 //    /**
-//     * @return PresentationExhibition[] Returns an array of PresentationExhibition objects
+//     * @return Presentation[] Returns an array of Presentation objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -56,7 +54,7 @@ class PresentationExhibitionRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?PresentationExhibition
+//    public function findOneBySomeField($value): ?Presentation
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

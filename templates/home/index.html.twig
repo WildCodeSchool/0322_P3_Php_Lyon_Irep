@@ -8,14 +8,14 @@
     <!-- Carousel wrapper -->
     <div class="relative overflow-hidden h-[40rem]">
         <!-- Items-->
-        {% for exhibition in exhibitions %} 
+        {% for presentation in presentations %} 
         <div class="hidden duration-700" data-carousel-item>
-            <img src="{{ asset (exhibition.image) }}"
+            <img src="{{ asset (presentation.image) }}"
                 class="absolute block  w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                 alt="...">
             <div class="absolute flex flex-col content-around top-1/2 -translate-y-1/2 ml-16 w-60 md:w-6/12">
-                <h2 class="text-3xl p-2 font-bold md:text-4xl text-white ">{{ exhibition.title }}</h2>
-                <h3 class="text-2xl p-2 text-white">{{ exhibition.subtitle }}</h3>
+                <h2 class="text-3xl p-2 font-bold md:text-4xl text-white ">{{ presentation.title }}</h2>
+                <h3 class="text-2xl p-2 text-white">{{ presentation.subtitle }}</h3>
             </div>
             <div class="absolute flex justify-start top-3/4 -translate-y-1/2 ml-16 mt-2 md:w-80">
                 <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-200">DECOUVRIR</p>
