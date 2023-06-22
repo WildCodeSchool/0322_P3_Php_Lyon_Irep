@@ -43,26 +43,12 @@ class TwitterController extends AbstractController
             $accessToken = $responseData['access_token'];
 
             $session->set('access_token', $accessToken);
+            $id = $session->get('picture_id');
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_picture_show', ['id' => $id]);
         }
 
-        return $this->render('twitter/callback.html.twig');
-    }
-
-
-    #[Route('/twitter/tweet/', name: 'twitter_tweet')]
-    public function tweet(Request $request): Response
-    {
-        $hashtags = $request->query->get('hashtags', 'test');
-        $session = $this->requestStack->getCurrentRequest()->getSession();
-        $accessToken = $session->get('access_token');
-
-        if ($this->twitterService->tweet($accessToken, $hashtags)) {
-            return new Response('ENFIN CA MARCHE');
-        }
-
-        return $this->redirectToRoute('twitter_callback');
+        return $this->render('home/index.html.twig');
     }
 
     #[Route('/twitter/tweet/hashtags/{id}', name: 'twitter_hashtag', methods: ['POST'])]
@@ -76,18 +62,16 @@ class TwitterController extends AbstractController
         if (!$picture) {
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
-        // Récupérer les hashtags du formulaire
-        $hashtags = $request->request->get('hashtags');
 
-        $session = $this->requestStack->getCurrentRequest()->getSession();
+        $hashtags = $request->request->get('hashtags');
         $accessToken = $session->get('access_token');
+        $session->set('picture_id', $id);
 
         if ($accessToken === null || $accessToken === '') {
             return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
-            . $clientId . 'Q&redirect_uri='
-            . $twitterUri .
-            '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state='
-            . 'state&code_challenge=challenge&code_challenge_method=plain');
+            . $clientId . '&redirect_uri=' . $twitterUri .
+            '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
+            'state&code_challenge=challenge&code_challenge_method=plain');
         }
         if ($this->twitterService->tweet($accessToken, $hashtags)) {
             $this->addFlash('notice', 'Le tweet a été publié avec succès');
@@ -95,8 +79,6 @@ class TwitterController extends AbstractController
         }
         return $this->redirectToRoute('twitter_callback');
     }
-
-
 
     #[Route('/twitter/tweet/preview/{id}', name: 'twitter_preview')]
     public function previewTweet(int $id): Response
@@ -107,7 +89,7 @@ class TwitterController extends AbstractController
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
         $hashtags = $picture->getLink();
-        // passer les hashtags à la vue
+
         return $this->render('twitter/preview.html.twig', [
         'picture' => $picture,
         'hashtags' => $hashtags,
