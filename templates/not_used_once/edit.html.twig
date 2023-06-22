@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Exhibition{% endblock %}
+
+{% block body %}
+    <h1>Edit Exhibition</h1>
+
+    {{ include('exhibition/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_exhibition_index') }}">back to list</a>
+
+    {{ include('exhibition/_delete_form.html.twig') }}
+{% endblock %}

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExhibitionRepository::class)]
 class Exhibition
@@ -17,16 +18,29 @@ class Exhibition
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max:255,
+        maxMessage:"Le nom de l'exposition est trop long. Veuillez limiter votre saisie à 255 caractères."
+    )]
     private ?string $name = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $start = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $end = null;
 
     #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: Presentation::class, orphanRemoval: true)]
     private Collection $presentations;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual(
+        'today',
+        message: "La date saisie ne peut pas être antérieure à la date du jour."
+    )]
+    private ?\DateTimeInterface $start = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan(
+        'today',
+        message: "La date saisie doit obligatoirement être supérieure à la date du jour."
+    )]
+    private ?\DateTimeInterface $end = null;
 
     public function __construct()
     {
@@ -50,29 +64,6 @@ class Exhibition
         return $this;
     }
 
-    public function getStart(): ?\DateTimeInterface
-    {
-        return $this->start;
-    }
-
-    public function setStart(\DateTimeInterface $start): self
-    {
-        $this->start = $start;
-
-        return $this;
-    }
-
-    public function getEnd(): ?\DateTimeInterface
-    {
-        return $this->end;
-    }
-
-    public function setEnd(\DateTimeInterface $end): self
-    {
-        $this->end = $end;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Presentation>
@@ -100,6 +91,30 @@ class Exhibition
                 $presentation->setExhibition(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStart(): ?\DateTimeInterface
+    {
+        return $this->start;
+    }
+
+    public function setStart(\DateTimeInterface $start): self
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    public function getEnd(): ?\DateTimeInterface
+    {
+        return $this->end;
+    }
+
+    public function setEnd(\DateTimeInterface $end): self
+    {
+        $this->end = $end;
 
         return $this;
     }
