@@ -8,14 +8,9 @@ services:
         autowire: true      
         autoconfigure: true 
 
-    App\Service\TwitterService:
-        arguments:
-
-
     App\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-            - '../src/Service/'
