@@ -11,7 +11,7 @@
         {% for presentation in presentations %} 
         <div class="hidden duration-700" data-carousel-item>
             <img src="{{ asset (presentation.image) }}"
-                class="absolute block  w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                class="absolute block  w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                 alt="...">
             <div class="absolute flex flex-col content-around top-1/2 -translate-y-1/2 ml-16 w-60 md:w-6/12">
                 <h2 class="text-3xl p-2 font-bold md:text-4xl text-white ">{{ presentation.title }}</h2>
