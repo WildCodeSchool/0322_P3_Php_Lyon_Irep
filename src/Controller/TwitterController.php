@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use GuzzleHttp\Client;
 
 class TwitterController extends AbstractController
 {
@@ -64,8 +65,15 @@ class TwitterController extends AbstractController
         }
 
         $hashtags = $request->request->get('hashtags');
+        $urlPage = $request->request->get('urlPage');
+
+        $client = new Client();
+        $response = $client->request('GET', 'http://tinyurl.com/api-create.php?url=' . urlencode($urlPage));
+        $shortenedUrl = $response->getBody()->getContents();
+
+
         $comments = $request->request->get('comments');
-        $tweet = $hashtags . ' ' . $comments;
+        $tweet = $hashtags . ' ' .  $shortenedUrl . ' ' . $comments;
         $accessToken = $session->get('access_token');
         $session->set('picture_id', $id);
 
@@ -83,7 +91,7 @@ class TwitterController extends AbstractController
     }
 
     #[Route('/twitter/tweet/preview/{id}', name: 'twitter_preview')]
-    public function previewTweet(int $id): Response
+    public function previewTweet(int $id, Request $request): Response
     {
         $picture = $this->pictureRepository->find($id);
 
@@ -91,10 +99,12 @@ class TwitterController extends AbstractController
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
         $hashtags = $picture->getLink();
+        $urlPage = $request->getSchemeAndHttpHost() . $this->generateUrl('app_picture_show', ['id' => $id]);
 
         return $this->render('twitter/preview.html.twig', [
         'picture' => $picture,
         'hashtags' => $hashtags,
+        'urlPage' => $urlPage,
         ]);
     }
 }
