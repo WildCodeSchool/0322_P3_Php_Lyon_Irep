@@ -9,7 +9,9 @@
 
             <form method="POST" action="{{ path('twitter_hashtag', {id: picture.id}) }}" class="mx-auto bg-white text-black p-6 rounded shadow-md">
                 <label for="hashtags" class="block mb-2 font-semibold font-subtitlefont text-gray-700">Hashtags :</label>
-                <textarea id="hashtags" name="hashtags" class="w-full px-3 py-2 border font-contentfont rounded text-gray-700 focus:outline-none focus:shadow-outline">{{ hashtags }}</textarea>
+                <input type="text" id="hashtags" name="hashtags" value="{{ hashtags }}" readonly class="w-full px-3 py-2 border font-contentfont rounded text-gray-700 focus:outline-none focus:shadow-outline">
+                <label for="comments" class="block mt-4 mb-2 font-semibold font-subtitlefont text-gray-700">Votre commentaire :</label>
+                <textarea id="comments" name="comments" class="w-full px-3 py-2 border font-contentfont rounded text-gray-700 focus:outline-none focus:shadow-outline"></textarea>
                 <input type="submit" value="Tweeter" class="mt-6 bg-accentcolor text-white px-4 py-2 rounded font-titlefont cursor-pointer">
             </form>
         </div>

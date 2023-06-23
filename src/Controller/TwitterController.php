@@ -64,6 +64,8 @@ class TwitterController extends AbstractController
         }
 
         $hashtags = $request->request->get('hashtags');
+        $comments = $request->request->get('comments');
+        $tweet = $hashtags . ' ' . $comments;
         $accessToken = $session->get('access_token');
         $session->set('picture_id', $id);
 
@@ -73,7 +75,7 @@ class TwitterController extends AbstractController
             '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
             'state&code_challenge=challenge&code_challenge_method=plain');
         }
-        if ($this->twitterService->tweet($accessToken, $hashtags)) {
+        if ($this->twitterService->tweet($accessToken, $tweet)) {
             $this->addFlash('notice', 'Le tweet a été publié avec succès');
             return $this->redirectToRoute('app_picture_show', ['id' => $id]);
         }
