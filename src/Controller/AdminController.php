@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Exhibition;
 use App\Repository\ExhibitionRepository;
+use App\Service\StatisticService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,6 +13,25 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
+    private StatisticService $statisticService;
+
+    public function __construct(StatisticService $statisticService)
+    {
+        $this->statisticService = $statisticService;
+    }
+
+    #[Route('/admin/statistics', name: 'admin_statistics')]
+    public function showStatistics(): Response
+    {
+        $pageVisitsCount = $this->statisticService->getPageVisitsCount();
+        $linkClicksCount = $this->statisticService->getLinkClicksCount();
+
+        return $this->render('admin/statistics.html.twig', [
+            'pageVisitsCount' => $pageVisitsCount,
+            'linkClicksCount' => $linkClicksCount,
+        ]);
+    }
+
     #[Route('/admin', name: 'app_admin')]
     public function index(): Response
     {
