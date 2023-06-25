@@ -28,3 +28,19 @@ let span = document.getElementsByClassName("close")[0];
 span.onclick = function() { 
     modal.style.display = "none";
 }
+
+// Modal tweeter
+
+document.getElementById("openModalTweeter").addEventListener("click", function() {
+    document.getElementById("modalTweeter").classList.remove("hidden");
+});
+
+document.getElementById("closeModalTweeter").addEventListener("click", function() {
+    document.getElementById("modalTweeter").classList.add("hidden");
+});
+
+document.getElementById("modalTweeter").addEventListener("click", function(event) {
+    if (event.target == document.getElementById("modalTweeter")) {
+        document.getElementById("modalTweeter").classList.add("hidden");
+    }
+});

@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class TwitterController extends AbstractController
 {
@@ -77,15 +78,20 @@ class TwitterController extends AbstractController
         $accessToken = $session->get('access_token');
         $session->set('picture_id', $id);
 
-        if ($accessToken === null || $accessToken === '') {
-            return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
-            . $clientId . '&redirect_uri=' . $twitterUri .
-            '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
-            'state&code_challenge=challenge&code_challenge_method=plain');
-        }
-        if ($this->twitterService->tweet($accessToken, $tweet)) {
-            $this->addFlash('notice', 'Le tweet a été publié avec succès');
-            return $this->redirectToRoute('app_picture_show', ['id' => $id]);
+        try {
+            if ($this->twitterService->tweet($accessToken, $tweet)) {
+                $this->addFlash('notice', 'Le tweet a été publié avec succès');
+                return $this->redirectToRoute('app_picture_show', ['id' => $id]);
+            }
+        } catch (ClientException $e) {
+            if ($e->getCode() === 401) {
+                $session->remove('access_token');
+                return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
+                . $clientId . '&redirect_uri=' . $twitterUri .
+                '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
+                'state&code_challenge=challenge&code_challenge_method=plain');
+            }
+            throw $e;
         }
         return $this->redirectToRoute('twitter_callback');
     }
