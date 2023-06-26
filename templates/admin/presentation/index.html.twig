@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des présentations{% endblock %}
+
+{% block body %}
+
+<div class="bg-zinc-200 w-11/12 my-10 mx-auto p-12">
+    <h3 class="text-3xl font-bold font-title my-6 ">Présentations page d'accueil</h3>
+    <hr class="h-px my-5 bg-stone-950 border-0">
+
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-gray-700 font-titlefont uppercase bg-gray-100">
+                <tr>
+                    <th scope="col" class="px-6 py-3">Exposition</th>
+                    <th scope="col" class="px-6 py-3">Titre</th>
+                    <th scope="col" class="px-6 py-3">Sous-titre / accroche</th>
+                    <th scope="col" class="px-6 py-3">Image</th>
+                    <th scope="col" class="px-6 py-3">Voir</th>
+                    <th scope="col" class="px-6 py-3">Modifier</th>
+                </tr>
+            </thead>
+            <tbody class="font-contentfont">
+                {% for presentation in presentations %}
+                <tr class="bg-white border-b">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900"> {{ presentation.exhibition.name }}</th>
+                    <td class="px-6 py-4">{{ presentation.title }}</td>
+                    <td class="px-6 py-4">{{ presentation.subtitle }}</td>
+                    <td class="px-6 py-4 w-48">
+                        <img class="w-auto h-auto rounded-lg" src="{{ asset(presentation.image) }}">
+                    </td>    
+                    <td class="px-6 py-4 text-center"><a class="hover:text-sky-600 hover:font-bold" href="{{ path('app_presentation_show', {'id': presentation.id}) }}">Voir</a></td>
+                    
+                    <td class="px-6 py-4 text-center">
+                        <a class="hover:text-red-500 hover:font-bold" href="{{ path('app_presentation_edit', {'id': presentation.id}) }} ">Modifier</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">Aucune présentation à afficher</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center mt-5 "><a href="{{ path('app_presentation_new') }}">Créer une nouvelle présentation </a>
+    </button>
+</div>
+{% endblock %}

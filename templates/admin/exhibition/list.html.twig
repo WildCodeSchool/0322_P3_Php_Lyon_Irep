@@ -20,7 +20,7 @@
                 <td class="text-center border px-4 py-2">{{ exhibition.start|date('d/m/Y') }}</td>
                 <td class="text-center border px-4 py-2">{{ exhibition.end|date('d/m/Y') }}</td>
                 <td class="flex justify-center items-center border px-4 py-2">
-                    <a href="{{ path('app_exhibition_index', {id: exhibition.id}) }}" class="text-accentcolor">Voir</a>
+                    <a href="{{ path('app_presentation_index', {id: exhibition.id}) }}" class="text-accentcolor">Voir</a>
                 </td>
             </tr>
             {% endfor %}
