@@ -24,7 +24,8 @@ class AdminController extends AbstractController
     #[Route('/admin/statistics', name: 'admin_statistics')]
     public function showStatistics(PictureRepository $pictureRepository): Response
     {
-        $pageVisitsCount = $this->statisticService->getPageVisitsCount();
+        $homePageVisitsCount = $this->statisticService->getPageVisitsCountByRoute('app_home');
+        $galleryVisitsCount = $this->statisticService->getPageVisitsCountByRoute('app_picture_index');
         $pictures = $pictureRepository->findAll();
         $picturesWithCounts = [];
 
@@ -37,7 +38,8 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/statistics.html.twig', [
-            'pageVisitsCount' => $pageVisitsCount,
+            'homePageVisitsCount' => $homePageVisitsCount,
+            'galleryVisitsCount' => $galleryVisitsCount,
             'pictures' => $picturesWithCounts,
         ]);
     }

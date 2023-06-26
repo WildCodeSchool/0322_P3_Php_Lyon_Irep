@@ -35,9 +35,9 @@ class StatisticService
         $this->entityManager->flush();
     }
 
-    public function getPageVisitsCount(): int
+    public function getPageVisitsCountByRoute(string $routeName): int
     {
-        return $this->pageVisitRepository->count([]);
+        return $this->pageVisitRepository->count(['routeName' => $routeName]);
     }
 
     public function getPageVisitsCountByPicture(Picture $picture): int

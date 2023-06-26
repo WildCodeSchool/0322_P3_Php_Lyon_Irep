@@ -25,6 +25,7 @@ class PictureController extends AbstractController
     public function index(PictureRepository $pictureRepository): Response
     {
         $categories = $pictureRepository->getCategories();
+        $this->statisticService->recordPageVisit('app_picture_index');
 
         return $this->render('picture/index.html.twig', [
            'pictures' => $pictureRepository->findAll(),

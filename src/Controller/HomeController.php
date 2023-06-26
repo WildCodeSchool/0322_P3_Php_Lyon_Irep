@@ -20,7 +20,7 @@ class HomeController extends AbstractController
     public function index(PresentationExhibitionRepository $presExhibitRepo): Response
     {
         $exhibitions = $presExhibitRepo->findAll();
-        $this->statisticService->recordPageVisit('home');
+        $this->statisticService->recordPageVisit('app_home');
 
         return $this->render(
             'home/index.html.twig',
