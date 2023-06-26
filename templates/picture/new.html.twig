@@ -3,9 +3,14 @@
 {% block title %}New Picture{% endblock %}
 
 {% block body %}
-    <h1>Create new Picture</h1>
+    <div class="bg-zinc-200 w-3/4 my-10 mx-auto p-12">
+    <h3 class="text-3xl font-bold font-title my-6 ">Ajouter une nouvelle aquarelle</h3>
+    <hr class="h-px my-5 bg-stone-950 border-0">
+    <div class="mt-1">
+        {{ include('picture/_form.html.twig') }}
+    </div>
+    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center "><a href="{{ path('app_picture_index') }}">retour sur la liste des aquarelles</a>
+    </button>
 
-    {{ include('picture/_form.html.twig') }}
-
-    <a href="{{ path('app_picture_index') }}">back to list</a>
+</div>
 {% endblock %}

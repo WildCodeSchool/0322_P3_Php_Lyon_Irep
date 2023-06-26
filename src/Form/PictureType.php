@@ -18,23 +18,36 @@ class PictureType extends AbstractType
     {
         $builder
         ->add('reference', TextType::class, [
-            'label' => 'reference'
+            'label' => 'reference',
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
         ])
         ->add('title', TextType::class, [
-            'label' => 'titre'
+            'label' => 'titre',
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
         ])
         ->add('subtitle', TextType::class, [
-            'label' => 'sous titre'
+            'label' => 'sous titre',
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
         ])
         ->add('date', DateType::class, [
             'label' => 'date',
-            'format' => 'yyyy-MM-dd'
+            'format' => 'yyyy-MM-dd',
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
+                'widget' => 'single_text',
         ])
         ->add('technic', TextType::class, [
-            'label' => 'technique'
+            'label' => 'technique',
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
         ])
         ->add('size', TextType::class, [
-            'label' => 'Dimension'
+            'label' => 'Dimension',
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
         ])
         ->add('category', ChoiceType::class, [
             'label' => 'catégorie',
@@ -45,12 +58,18 @@ class PictureType extends AbstractType
                 'Animaux' => 'Animaux',
 
             ],
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
         ])
         ->add('number', IntegerType::class, [
-            'label' => 'numéro'
+            'label' => 'numéro',
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
         ])
         ->add('comment', TextType::class, [
-            'label' => 'commentaire'
+            'label' => 'commentaire',
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
         ])
         ->add('photoFile', FileType::class, [
             'label' => 'Image',
