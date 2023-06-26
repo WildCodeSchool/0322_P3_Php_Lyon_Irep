@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -57,6 +59,14 @@ class Picture
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
+
+    #[ORM\OneToMany(mappedBy: 'picture', targetEntity: PageVisit::class)]
+    private Collection $pageVisits;
+
+    public function __construct()
+    {
+        $this->pageVisits = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -225,6 +235,36 @@ class Picture
     {
         $this->image = $image;
 
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PageVisit>
+     */
+    public function getPageVisits(): Collection
+    {
+        return $this->pageVisits;
+    }
+
+    public function addPageVisit(PageVisit $pageVisit): static
+    {
+        if (!$this->pageVisits->contains($pageVisit)) {
+            $this->pageVisits->add($pageVisit);
+            $pageVisit->setPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removePageVisit(PageVisit $pageVisit): static
+    {
+        if ($this->pageVisits->removeElement($pageVisit)) {
+            // set the owning side to null (unless already changed)
+            if ($pageVisit->getPicture() === $this) {
+                $pageVisit->setPicture(null);
+            }
+        }
 
         return $this;
     }

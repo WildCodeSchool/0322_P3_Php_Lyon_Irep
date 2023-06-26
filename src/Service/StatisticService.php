@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\PageVisit;
 use App\Entity\LinkClick;
+use App\Entity\Picture;
 use App\Repository\LinkClickRepository;
 use App\Repository\PageVisitRepository;
 use DateTime;
@@ -25,11 +26,15 @@ class StatisticService
         $this->linkClickRepository = $linkClickRepository;
     }
 
-    public function recordPageVisit(string $routeName): void
+    public function recordPageVisit(string $routeName, Picture $picture = null): void
     {
         $pageVisit = new PageVisit();
         $pageVisit->setRouteName($routeName);
         $pageVisit->setVisitedAt(new DateTime());
+
+        if ($picture) {
+            $pageVisit->setPicture($picture);
+        }
 
         $this->entityManager->persist($pageVisit);
         $this->entityManager->flush();
@@ -53,5 +58,10 @@ class StatisticService
     public function getLinkClicksCount(): int
     {
         return $this->linkClickRepository->count([]);
+    }
+
+    public function getPageVisitsCountByPicture(Picture $picture): int
+    {
+        return $this->pageVisitRepository->count(['picture' => $picture]);
     }
 }

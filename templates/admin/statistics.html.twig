@@ -8,9 +8,24 @@
         <h1 class="text-3xl font-bold mb-4">Admin Statistics</h1>
 
         <div class="mb-3">
-            <p>Total page visits: <span class="font-semibold">{{ pageVisitsCount }}</span></p>
-            <p>Total link clicks: <span class="font-semibold">{{ linkClicksCount }}</span></p>
+            <p>Total visite page d'acceuil: <span class="font-semibold">{{ pageVisitsCount }}</span></p>
         </div>
+                <table class="table-auto w-full">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Picture</th>
+                    <th class="px-4 py-2">Page Visits</th>
+                </tr>
+            </thead>
+            <tbody>
+               {% for pictureData in pictures %}
+    <tr>
+        <td class="border px-4 py-2">{{ pictureData.picture.title }}</td>
+        <td class="border px-4 py-2">{{ pictureData.count }}</td>
+    </tr>
+{% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}

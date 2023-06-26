@@ -25,7 +25,6 @@ class PictureController extends AbstractController
     public function index(PictureRepository $pictureRepository): Response
     {
         $categories = $pictureRepository->getCategories();
-        $this->statisticService->recordPageVisit('app_picture_index');
 
         return $this->render('picture/index.html.twig', [
            'pictures' => $pictureRepository->findAll(),
@@ -59,6 +58,7 @@ class PictureController extends AbstractController
     #[Route('/{id}', name: 'app_picture_show', methods: ['GET'])]
     public function show(Picture $picture): Response
     {
+        $this->statisticService->recordPageVisit('app_picture_show', $picture);
         return $this->render('picture/show.html.twig', [
            'picture' => $picture,
         ]);

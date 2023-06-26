@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\PageVisit;
+use App\Entity\Picture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,6 +40,15 @@ class PageVisitRepository extends ServiceEntityRepository
         }
     }
 
+    public function countByPicture(Picture $picture): int
+    {
+        return $this->createQueryBuilder('pv')
+            ->select('count(pv.id)')
+            ->where('pv.picture = :picture')
+            ->setParameter('picture', $picture)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 //    /**
 //     * @return PageVisit[] Returns an array of PageVisit objects
 //     */

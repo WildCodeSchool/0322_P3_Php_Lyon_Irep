@@ -20,6 +20,9 @@ class PageVisit
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $visitedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'pageVisits')]
+    private ?Picture $picture = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class PageVisit
     public function setVisitedAt(\DateTimeInterface $visitedAt): static
     {
         $this->visitedAt = $visitedAt;
+
+        return $this;
+    }
+
+    public function getPicture(): ?Picture
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?Picture $picture): static
+    {
+        $this->picture = $picture;
 
         return $this;
     }
