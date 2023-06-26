@@ -25,7 +25,6 @@ class AdminController extends AbstractController
     public function showStatistics(PictureRepository $pictureRepository): Response
     {
         $pageVisitsCount = $this->statisticService->getPageVisitsCount();
-        $linkClicksCount = $this->statisticService->getLinkClicksCount();
         $pictures = $pictureRepository->findAll();
         $picturesWithCounts = [];
 
@@ -39,7 +38,6 @@ class AdminController extends AbstractController
 
         return $this->render('admin/statistics.html.twig', [
             'pageVisitsCount' => $pageVisitsCount,
-            'linkClicksCount' => $linkClicksCount,
             'pictures' => $picturesWithCounts,
         ]);
     }
