@@ -78,6 +78,13 @@ class TwitterController extends AbstractController
         $accessToken = $session->get('access_token');
         $session->set('picture_id', $id);
 
+        if ($accessToken === null || $accessToken === '') {
+            return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
+            . $clientId . '&redirect_uri=' . $twitterUri .
+            '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
+            'state&code_challenge=challenge&code_challenge_method=plain');
+        }
+
         try {
             if ($this->twitterService->tweet($accessToken, $tweet)) {
                 $this->addFlash('notice', 'Le tweet a été publié avec succès');
