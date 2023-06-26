@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class TwitterController extends AbstractController
 {
@@ -64,6 +66,15 @@ class TwitterController extends AbstractController
         }
 
         $hashtags = $request->request->get('hashtags');
+        $urlPage = $request->request->get('urlPage');
+
+        $client = new Client();
+        $response = $client->request('GET', 'http://tinyurl.com/api-create.php?url=' . urlencode($urlPage));
+        $shortenedUrl = $response->getBody()->getContents();
+
+
+        $comments = $request->request->get('comments');
+        $tweet = $hashtags . ' ' .  $shortenedUrl . ' ' . $comments;
         $accessToken = $session->get('access_token');
         $session->set('picture_id', $id);
 
@@ -73,15 +84,27 @@ class TwitterController extends AbstractController
             '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
             'state&code_challenge=challenge&code_challenge_method=plain');
         }
-        if ($this->twitterService->tweet($accessToken, $hashtags)) {
-            $this->addFlash('notice', 'Le tweet a été publié avec succès');
-            return $this->redirectToRoute('app_picture_show', ['id' => $id]);
+
+        try {
+            if ($this->twitterService->tweet($accessToken, $tweet)) {
+                $this->addFlash('notice', 'Le tweet a été publié avec succès');
+                return $this->redirectToRoute('app_picture_show', ['id' => $id]);
+            }
+        } catch (ClientException $e) {
+            if ($e->getCode() === 401) {
+                $session->remove('access_token');
+                return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
+                . $clientId . '&redirect_uri=' . $twitterUri .
+                '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
+                'state&code_challenge=challenge&code_challenge_method=plain');
+            }
+            throw $e;
         }
         return $this->redirectToRoute('twitter_callback');
     }
 
     #[Route('/twitter/tweet/preview/{id}', name: 'twitter_preview')]
-    public function previewTweet(int $id): Response
+    public function previewTweet(int $id, Request $request): Response
     {
         $picture = $this->pictureRepository->find($id);
 
@@ -89,10 +112,12 @@ class TwitterController extends AbstractController
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
         $hashtags = $picture->getLink();
+        $urlPage = $request->getSchemeAndHttpHost() . $this->generateUrl('app_picture_show', ['id' => $id]);
 
         return $this->render('twitter/preview.html.twig', [
         'picture' => $picture,
         'hashtags' => $hashtags,
+        'urlPage' => $urlPage,
         ]);
     }
 }
