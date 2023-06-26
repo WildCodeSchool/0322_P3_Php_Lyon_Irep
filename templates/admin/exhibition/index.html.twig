@@ -26,7 +26,7 @@
                     <td class="px-6 py-4">{{ exhibition.end|date("d-m-Y")}}</td>
                     <td class="px-6 py-4">
                         <a class="hover:text-sky-600 hover:font-bold"
-                            href="{{ path('exhibition_show_presentation', {'exhibitionName': exhibition.name}) }}">Voir</a>
+                            href="{{ path('exhibition_show_presentation', {'id': exhibition.id}) }}">Voir</a>
                     </td>
 
                     <td class="px-6 py-4">
