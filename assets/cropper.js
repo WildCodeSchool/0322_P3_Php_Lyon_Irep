@@ -19,18 +19,18 @@ const cropper = new Cropper(image, {
 
 const saveCropButton = document.getElementById('save-crop-button');
 saveCropButton.addEventListener('click', () => {
-    // Obtenir les coordonnées et les dimensions de la crop
+    // Obtain the coordinates and dimensions of the crop
     const cropData = cropper.getData();
 
-    // Créer un élément canvas pour dessiner la crop
+    // Create a canvas element to draw the crop
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
-    // Définir les dimensions du canvas en fonction de la crop
+    // Defining the canvas dimensions according to the crop
     canvas.width = cropData.width;
     canvas.height = cropData.height;
 
-    // Dessiner la crop sur le canvas
+    // Draw the crop on the canvas
     context.drawImage(
         image,
         cropData.x,
@@ -43,16 +43,16 @@ saveCropButton.addEventListener('click', () => {
         cropData.height
     );
 
-    // Convertir le canvas en base64
+    // Convert canvas to base64
     const croppedImageBase64 = canvas.toDataURL();
 
-    // Envoyer l'image recadrée au serveur
+    // Send the cropped image to the server
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/picture/upload-crop', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
    
 
-    // Créer un objet contenant l'ID et les données de l'image
+    // Create an object containing the image ID and data
     const data = {
         id: id,
         croppedImage: croppedImageBase64
