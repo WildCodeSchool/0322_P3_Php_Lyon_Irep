@@ -3,21 +3,28 @@
 namespace App\Controller;
 
 use App\Entity\Exhibition;
+use App\Entity\Presentation;
 use App\Form\ExhibitionType;
 use App\Repository\ExhibitionRepository;
+use App\Repository\PresentationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use DateTime;
 
 #[IsGranted('ROLE_ADMIN')]
+#[Route('/admin/exhibition')]
 class ExhibitionController extends AbstractController
 {
-    #[Route('admin/exhibition/new', name: 'app_exhibition_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_exhibition_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ExhibitionRepository $exhibitionRepository): Response
     {
         $exhibition = new Exhibition();
+        $exhibition->setStart(new DateTime());
+        $exhibition->setEnd(new DateTime());
+
         $form = $this->createForm(ExhibitionType::class, $exhibition);
         $form->handleRequest($request);
 
@@ -33,26 +40,38 @@ class ExhibitionController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/exhibition', name: 'app_exhibition_index', methods: ['GET'])]
+    #[Route('/', name: 'app_exhibition_index', methods: ['GET'])]
     public function index(ExhibitionRepository $exhibitionRepository): Response
     {
-        return $this->render('/admin/exhibition/list.html.twig', [
+        return $this->render('/admin/exhibition/index.html.twig', [
             'exhibitions' => $exhibitionRepository->findAll(),
         ]);
     }
 
-    #[Route('exhibition/{id}', name: 'app_exhibition_show', methods: ['GET'])]
-    public function show(Exhibition $exhibition): Response
-    {
-        return $this->render('exhibition/show.html.twig', [
+    #[Route('/{exhibitionName}', methods: ['GET'], name: 'exhibition_show_presentation')]
+    public function showPresentation(
+        string $exhibitionName,
+        ExhibitionRepository $exhibitionRepository,
+        PresentationRepository $presentRepository
+    ): Response {
+        $exhibition = $exhibitionRepository->findOneBy(['name' => $exhibitionName]);
+
+        $presentations = $presentRepository->findBy(
+            ['exhibition' => $exhibition],
+        );
+
+        return $this->render('admin/presentation/index.html.twig', [
             'exhibition' => $exhibition,
+            'presentations' => $presentations,
         ]);
     }
 
-    #[Route('exhibition/{id}/edit', name: 'app_exhibition_edit', methods: ['GET', 'POST'])]
+
+    #[Route('/{id}/edit', name: 'app_exhibition_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Exhibition $exhibition, ExhibitionRepository $exhibitionRepository): Response
     {
         $form = $this->createForm(ExhibitionType::class, $exhibition);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,13 +80,13 @@ class ExhibitionController extends AbstractController
             return $this->redirectToRoute('app_exhibition_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('exhibition/edit.html.twig', [
+        return $this->render('admin/exhibition/edit.html.twig', [
             'exhibition' => $exhibition,
             'form' => $form,
         ]);
     }
 
-    #[Route('exhibition/{id}', name: 'app_exhibition_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_exhibition_delete', methods: ['POST'])]
     public function delete(Request $request, Exhibition $exhibition, ExhibitionRepository $exhiRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $exhibition->getId(), $request->request->get('_token'))) {
