@@ -29,12 +29,6 @@ class PresentationType extends AbstractType
                 'label' => 'Lien image : ',
                 'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
                 'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
-            ])
-
-            ->add('exhibition', null, [
-                'choice_label' => 'name',
-                'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
-                'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
             ]);
     }
 
