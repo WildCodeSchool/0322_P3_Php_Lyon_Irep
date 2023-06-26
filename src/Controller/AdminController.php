@@ -28,6 +28,7 @@ class AdminController extends AbstractController
         $galleryVisitsCount = $this->statisticService->getPageVisitsCountByRoute('app_picture_index');
         $pictures = $pictureRepository->findAll();
         $picturesWithCounts = [];
+        $maxViewsCount = 0;
 
         foreach ($pictures as $picture) {
             $visitCount = $this->statisticService->getPageVisitsCountByPicture($picture);
@@ -35,12 +36,17 @@ class AdminController extends AbstractController
                 'picture' => $picture,
                 'count' => $visitCount
             ];
+
+            if ($visitCount > $maxViewsCount) {
+                $maxViewsCount = $visitCount;
+            }
         }
 
         return $this->render('admin/statistics.html.twig', [
             'homePageVisitsCount' => $homePageVisitsCount,
             'galleryVisitsCount' => $galleryVisitsCount,
             'pictures' => $picturesWithCounts,
+            'maxViewsCount' => $maxViewsCount,
         ]);
     }
 

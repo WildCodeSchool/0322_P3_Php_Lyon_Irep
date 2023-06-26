@@ -11,18 +11,23 @@
             <p>Total visite page d'acceuil : <span class="font-semibold">{{ homePageVisitsCount }}</span></p>
             <p>Total visite page galerie : <span class="font-semibold">{{ galleryVisitsCount }}</span></p>
         </div>
-                <table class="table-auto w-full">
+        <table class="table-auto w-full">
             <thead>
                 <tr>
                     <th class="px-4 py-2 font-subtitlefont">Image</th>
-                    <th class="px-4 py-2 font-subtitlefont">Nombre de vues</th>
+                    <th class="px-4 py-2 font-subtitlefont">Nombres de vues</th>
                 </tr>
             </thead>
             <tbody>
                {% for pictureData in pictures %}
     <tr>
         <td class="border px-4 py-2 font-contentfont">{{ pictureData.picture.title }}</td>
-        <td class="border px-4 py-2 font-contentfont text-center">{{ pictureData.count }}</td>
+        <td class="border px-4 py-2 font-contentfont">
+            <div class="relative h-6 w-full bg-gray-200">
+                <div class="absolute left-0 top-0 h-full bg-accentcolor" style="width: {{ (pictureData.count / maxViewsCount) * 100 }}%;"></div>
+                <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center text-black">{{ pictureData.count }}</div>
+            </div>
+        </td>
     </tr>
 {% endfor %}
             </tbody>
