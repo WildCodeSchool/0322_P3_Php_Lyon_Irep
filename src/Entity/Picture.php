@@ -26,10 +26,6 @@ class Picture
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $subtitle = null;
 
-
-
-
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $technic = null;
 
@@ -56,8 +52,12 @@ class Picture
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageCrop = null;
 
 
     public function getId(): ?int
@@ -109,13 +109,6 @@ class Picture
 
         return $this;
     }
-
-
-
-
-
-
-
 
     public function getTechnic(): ?string
     {
@@ -229,6 +222,18 @@ class Picture
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+        return $this;
+    }
+
+    public function getImageCrop(): ?string
+    {
+        return $this->imageCrop;
+    }
+
+    public function setImageCrop(?string $imageCrop): self
+    {
+        $this->imageCrop = $imageCrop;
+
         return $this;
     }
 }

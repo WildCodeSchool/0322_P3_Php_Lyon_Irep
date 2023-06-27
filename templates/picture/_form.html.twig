@@ -1,5 +1,5 @@
 {% form_theme form 'tailwind_2_layout.html.twig' %}
-<div class="bg-yellow-300">{{ form_start(form) }}
+{{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}</div>
+    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center my-4">{{ button_label|default('Créer') }}</button>
+{{ form_end(form) }}

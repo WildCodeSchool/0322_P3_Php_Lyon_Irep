@@ -55,7 +55,7 @@ class PictureFixtures extends Fixture
                'category' => 'Usines',
                'number' => 1,
                'comment' => "Attribuée parfois à l'usine du Grand Tampon, mais c'est peu probable...",
-               'image' => 'build/images/Cheminee_40FI79.jpg'
+               'image' => 'uploads/images/Cheminee_40FI79.jpg'
            ],
            [
                'reference' => '40FI78',
@@ -67,7 +67,7 @@ class PictureFixtures extends Fixture
                'category' => 'Usines',
                'number' => 2,
                'comment' => "Le chemin de l'Etablissement existe toujours aujourd'hui, à 400 mètres d'altitude...",
-               'image' => 'build/images/UsineBelAir_40FI78.jpg'
+               'image' => 'uploads/images/UsineBelAir_40FI78.jpg'
            ],
            [
                'reference' => '40FI106',
@@ -93,7 +93,7 @@ class PictureFixtures extends Fixture
                   vêtu d'un pantalon de toile bleue. Un vacoa est" . "
                    ici le témoin indispensable de l'usage de ses feuilles pour le " . "
                   tressage de sacs, destinés ensuite à transporter le sucre produit.",
-               'image' => 'build/images/AD974_40FI106.jpg'
+               'image' => 'uploads/images/AD974_40FI106.jpg'
            ],
            [
                'reference' => '40FI',
@@ -106,7 +106,7 @@ class PictureFixtures extends Fixture
                'number' => 1,
                'comment' => "Boutchiana est devenu le domestique personnel" . "
                 de Ch.Mortier de Trévise, et il a vieilli de 6 ans.",
-               'image' => 'build/images/ADR-40fi100-danse-des-noirs.jpg'
+               'image' => 'uploads/images/ADR-40fi100-danse-des-noirs.jpg'
            ],
            [
                'reference' => '40FI91',
@@ -121,7 +121,7 @@ class PictureFixtures extends Fixture
                des Casernes, il tient une lance, " . "
                peut-être a-t-il une fonction de gardien? Sur sa fiche" . "
                 d'engagement, il était recensé comme tailleur",
-               'image' => 'build/images/FRAD974_40FI91.jpg'
+               'image' => 'uploads/images/FRAD974_40FI91.jpg'
            ],
            [
                'reference' => '40FI90',
@@ -136,7 +136,7 @@ class PictureFixtures extends Fixture
                 jeunesse de Boutchiana, engagé à l'adolescence." . "
                 Arrivé à bord de Yanaon, en Inde, à bord du navire" . "
                  de la famille Kerveguen, Le Canova, on le dit âgé de 17 ans",
-               'image' => 'build/images/FRAD974_40FI90.jpg'
+               'image' => 'uploads/images/FRAD974_40FI90.jpg'
            ],
         ];
         return $picturesPart1;
@@ -156,7 +156,7 @@ class PictureFixtures extends Fixture
                'category' => 'Travailleurs',
                'number' => 7,
                'comment' => "Une autre petite fille de Victorine, sans doute dans la maison des Casernes.",
-               'image' => 'build/images/FRAD974_40FI75.jpg'
+               'image' => 'uploads/images/FRAD974_40FI75.jpg'
            ],
            [
                'reference' => '40Fi74',
@@ -172,7 +172,7 @@ class PictureFixtures extends Fixture
                 fille de Victorine, plus jeune. Il semble que" . "
                  les fillettes fassent leur apprentissage de domestiques" . "
                   dans la propriété des Kerveguen.",
-               'image' => 'build/images/FRAD974_40FI74.jpg'
+               'image' => 'uploads/images/FRAD974_40FI74.jpg'
            ],
            [
                'reference' => '40Fi60',
@@ -187,7 +187,7 @@ class PictureFixtures extends Fixture
                l'Habitation, mais qu'il a vraisemblablement été recruté " . "
                comme engagé. Il est armé d'une lance, et surveille " . "
                l'orée des champs, ou les abords du camp des travailleurs.",
-               'image' => 'build/images/Jamali.jpg'
+               'image' => 'uploads/images/Jamali.jpg'
            ],
            [
                'reference' => '40FI53.2',
@@ -204,7 +204,7 @@ class PictureFixtures extends Fixture
                 créole porte un chapeau de feutre déformé, pas de " . "
                chaussures, comme la majorité des travailleurs. " . "
                Janvier est en pleine période cyclonique: est-ce le cas ici?",
-               'image' => 'build/images/FRAD974_40FI74.jpg'
+               'image' => 'uploads/images/FRAD974_40FI74.jpg'
            ],
            [
                'reference' => '40FI59',
@@ -217,7 +217,7 @@ class PictureFixtures extends Fixture
                'number' => 12,
                'comment' => "La suite du commentaire est: " . "
                'Allons, Virasami, vivement mettre la racine de ce plant (?) comme à Madras!'",
-               'image' => 'build/images/MORTIER.de.TREVISE_Mr.Bourraye.dans.jardin.Casernes_1861.jpg'
+               'image' => 'uploads/images/MORTIER.de.TREVISE_Mr.Bourraye.dans.jardin.Casernes_1861.jpg'
            ],
            [
                'reference' => '40Fi72',
@@ -236,7 +236,7 @@ class PictureFixtures extends Fixture
                 des Cafres, et, au-delà, à Saint-Benoît. L'Etablissement de Bel-Air " . "
                 est situé au tiers du parcours," . "
                  entre La Plaine des Cafres et Saint-Pierre.",
-               'image' => 'build/images/AD974_40FI72-ChanvertGolo.jpg'
+               'image' => 'uploads/images/AD974_40FI72-ChanvertGolo.jpg'
            ],
         ];
         return $picturesPart2;
@@ -265,7 +265,7 @@ class PictureFixtures extends Fixture
                  frais à la 'boutique'. Depuis 1859, le salaire" . "
                  ( démonétisés, au cours forcé de 1 franc. " . "
                  peut-être celle de Bel-Air, au Tampon.",
-               'image' => 'build/images/FRAD974_40FI55.jpg'
+               'image' => 'uploads/images/FRAD974_40FI55.jpg'
            ],[
                'reference' => '40FI76',
                'title' => 'Cafrine et son petit au Tampon',
@@ -281,7 +281,7 @@ class PictureFixtures extends Fixture
                 par l'employeur, selon les termes du contrat d'engagement. " . "
                La pratique ne change guère de ce" . "
                 qui était déjà prévu avant 1848 pour les esclaves, par le 'Code noir' de 1723.",
-               'image' => 'build/images/MORTIERdeTREVISE_caffrine1861.jpg'
+               'image' => 'uploads/images/MORTIERdeTREVISE_caffrine1861.jpg'
            ],[
            'reference' => '40Fi105bis',
            'title' => 'Le volcan de Bourbon vu du Pas de Bellecombre',
@@ -297,7 +297,7 @@ class PictureFixtures extends Fixture
             de la découverte du passage, mais c'est un esclave,
             " . " Jacob, qui l'a découvert, en réalité." . "
              Bellecombe avait commandité l'expédition.",
-           'image' => 'build/images/FRAD974_40FI105bis.jpg'
+           'image' => 'uploads/images/FRAD974_40FI105bis.jpg'
            ],[
            'reference' => '40Fi108',
            'title' => 'Mamzelle',
@@ -311,7 +311,7 @@ class PictureFixtures extends Fixture
            ils font l'objet de soins attentifs," . "
             et ne sont montés que par les propriétaires des Etablissements et les contremaîtres. Selle et cuirs
             " . "  peuvent être fabriqués sur place: il y eut un atelier sur l'Etablissement du Tampon.",
-           'image' => 'build/images/Mamsellemini_40FI108.jpg'
+           'image' => 'uploads/images/Mamsellemini_40FI108.jpg'
            ],[
            'reference' => '40FI73',
            'title' => 'Charrette tirée par deux boeufs, dits créoles',
@@ -324,7 +324,7 @@ class PictureFixtures extends Fixture
            'comment' => "La charrette, les boeufs, et la 'femme à bras'" . "
             au fond sont des motifs qui se retrouvent souvent dans les " . "
             collections de Mortier de Trévise.",
-           'image' => 'build/images/trevise-cannes_1861.jpg'
+           'image' => 'uploads/images/trevise-cannes_1861.jpg'
            ],[
            'reference' => '40Fi94',
            'title' => 'Coco, en équilibre sur un arbre',
@@ -337,7 +337,7 @@ class PictureFixtures extends Fixture
            'comment' => "Coco est un gros lézard, inoffensif, qui vit" . "
             dans les jardins créoles, où il est utile. Il y a une dizaine" . "
              d'espèces de lézards à La Réunion.",
-           'image' => 'build/images/Cheminee_40FI79.jpg'
+           'image' => 'uploads/images/Cheminee_40FI79.jpg'
            ],
         ];
         return $picturesPart3;
@@ -363,7 +363,7 @@ class PictureFixtures extends Fixture
                (ancienne ravine du Tampon), et la ravine des Cafres." . "
                 Au sommet de ces champs, une scierie fournissait" . "
                 le bois et les planches pour les Etablissements K/Véguen.",
-               'image' => 'build/images/Cheminee_40FI79.jpg'
+               'image' => 'uploads/images/Cheminee_40FI79.jpg'
            ],
            [
                'reference' => '40Fi77',
@@ -376,7 +376,7 @@ class PictureFixtures extends Fixture
                'number' => 2,
                'comment' => "La cascade alimente un bassin" . "
                 à proximité d'un affluent de la rivière d'Abord.",
-               'image' => 'build/images/FRAD974_40FI77.jpg'
+               'image' => 'uploads/images/FRAD974_40FI77.jpg'
            ],
            [
                'reference' => '40Fi104',
@@ -391,7 +391,7 @@ class PictureFixtures extends Fixture
                 sa belle-famille sont en excursion au volcan. Il n'y avait pas de route, alors:" . "
                  il faut donc dormir en chemin dans cette caverne autrefois" . "
                  connue des noirs marrons, autrement dit fugitifs - avant l'abolition de l'esclavage de 1848.",
-               'image' => 'build/images/Cheminee_40FI79.jpg'
+               'image' => 'uploads/images/Cheminee_40FI79.jpg'
            ],
            [
                'reference' => '40FI52',
@@ -408,7 +408,7 @@ class PictureFixtures extends Fixture
            " Son foulard noué sur la tête est taillé dans la même toile.",
 
 
-               'image' => 'build/images/FRAD974_40FI52.jpg'
+               'image' => 'uploads/images/FRAD974_40FI52.jpg'
            ],
            [
                'reference' => '40FI66',
@@ -420,7 +420,7 @@ class PictureFixtures extends Fixture
                'category' => 'Travailleurs',
                'number' => 6,
                'comment' => "Elise est une petite fille de Victorine, issue de sa fille Coralie",
-               'image' => 'build/images/MORTIERTREVISE_Elise_1861.jpg'
+               'image' => 'uploads/images/MORTIERTREVISE_Elise_1861.jpg'
            ],
            [
                'reference' => '40FI80',
@@ -439,7 +439,7 @@ class PictureFixtures extends Fixture
                  " . "  un homme, une femme avec un bébé qui porte " . "
                  une jarre sur la tête, et un autre personnage. L'auteur note
                  " . " le nom des arbres et plantes (aloés divers, vacoas, palmiers)"
-           ,                'image' => 'build/images/FRAD974_40FI80.jpg'],
+           ,                'image' => 'uploads/images/FRAD974_40FI80.jpg'],
         ];
         return $picturesPart4;
     }

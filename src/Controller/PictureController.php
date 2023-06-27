@@ -9,12 +9,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
 {
+    private PictureRepository $pictureRepository;
+
+    public function __construct(PictureRepository $pictureRepository)
+    {
+        $this->pictureRepository = $pictureRepository;
+    }
     #[Route('/', name: 'app_picture_index', methods: ['GET'])]
     public function index(PictureRepository $pictureRepository): Response
     {
@@ -99,7 +106,40 @@ class PictureController extends AbstractController
         ]);
     }
 
+    #[Route('/upload-crop', name: 'upload_crop', methods: ['POST'])]
+    public function uploadCropAction(Request $request): Response
+    {
 
+        $id = json_decode($request->getContent(), true)['id'];
+
+
+        $imageData = json_decode($request->getContent(), true)['croppedImage'];
+
+
+        $filename = uniqid('crop_') . '.png';
+
+
+        $decodedImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
+
+
+        $destinationPath = $this->getParameter('kernel.project_dir') . '/public/uploads/images/' . $filename;
+        file_put_contents($destinationPath, $decodedImage);
+
+        $picture = $this->pictureRepository->find($id);
+        if (!$picture) {
+            throw new NotFoundHttpException('Image not found');
+        }
+
+        $picture->setImageCrop('uploads/images/' . $filename);
+        $this->pictureRepository->save($picture, true);
+
+
+        return new Response(
+            json_encode(['success' => true]),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/json']
+        );
+    }
     #[Route('/{id}', name: 'app_picture_delete', methods: ['POST'])]
     public function delete(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
     {
@@ -109,5 +149,13 @@ class PictureController extends AbstractController
 
 
         return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/cropped', name: 'app_picture_cropped', methods: ['GET'])]
+    public function cropped(Picture $picture): Response
+    {
+        return $this->render('picture/cropped.html.twig', [
+            'picture' => $picture,
+        ]);
     }
 }
