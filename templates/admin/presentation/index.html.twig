@@ -16,7 +16,6 @@
                     <th scope="col" class="px-6 py-3">Titre</th>
                     <th scope="col" class="px-6 py-3">Sous-titre / accroche</th>
                     <th scope="col" class="px-6 py-3">Image</th>
-                    <th scope="col" class="px-6 py-3">Voir</th>
                     <th scope="col" class="px-6 py-3">Modifier</th>
                 </tr>
             </thead>
@@ -28,10 +27,7 @@
                     <td class="px-6 py-4 w-48">
                         <img class="w-auto h-auto rounded-lg" src="{{ asset(presentation.image) }}">
                     </td>
-                    <td class="px-6 py-4 text-center"><a class="hover:text-sky-600 hover:font-bold"
-                            href="{{ path('app_presentation_show', {'id': presentation.id}) }}">Voir</a></td>
-
-                    <td class="px-6 py-4 text-center">
+                    <td class="px-6 py-4">
                         <a class="hover:text-red-500 hover:font-bold"
                             href="{{ path('app_presentation_edit', {'id': presentation.id}) }} ">Modifier</a>
                     </td>
@@ -47,7 +43,7 @@
     <div class="flex justify-between">
         <button
             class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center mt-5"><a
-                href="{{ path('app_presentation_new') }}">Créer une nouvelle présentation</a>
+                href="{{ path('app_presentation_new', {'id': exhibition.id}) }}">Créer une nouvelle présentation</a>
         </button>
         <button
             class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center mt-5"><a
