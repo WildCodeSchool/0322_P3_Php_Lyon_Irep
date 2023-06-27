@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Exhibition;
 use App\Entity\Presentation;
 use App\Form\PresentationType;
-use App\Repository\ExhibitionRepository;
 use App\Repository\PresentationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,7 +68,7 @@ class PresentationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_presentation_delete', methods: ['POST', 'GET'])]
+    #[Route('/{id}', name: 'app_presentation_delete', methods: ['POST'])]
     public function delete(
         Request $request,
         Presentation $presentation,
@@ -85,24 +84,4 @@ class PresentationController extends AbstractController
             Response::HTTP_SEE_OTHER
         );
     }
-
-
-    /* A supprimer
-    #[Route('/{id}', name: 'app_presentation_show', methods: ['GET'])]
-    public function show(Presentation $presentation): Response
-    {
-        return $this->render('admin/presentation/show.html.twig', [
-            'presentation' => $presentation,
-        ]);
-    }
-    */
-    /*
-    #[Route('/', name: 'app_presentation_index', methods: ['GET'])]
-    public function index(PresentationRepository $presentRepository): Response
-    {
-        return $this->render('admin/presentation/index.html.twig', [
-            'presentations' => $presentRepository->findAll(),
-        ]);
-    }
-    */
 }
