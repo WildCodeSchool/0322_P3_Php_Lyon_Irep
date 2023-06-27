@@ -20,8 +20,8 @@ class Exhibition
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Length(
-        max:255,
-        maxMessage:"Le nom de l'exposition est trop long. Veuillez limiter votre saisie à 255 caractères."
+        max: 255,
+        maxMessage: "Le nom de l'exposition est trop long. Veuillez limiter votre saisie à 255 caractères."
     )]
     private ?string $name = null;
 

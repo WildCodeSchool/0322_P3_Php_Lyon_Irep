@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Exhibition;
-use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +25,6 @@ class ExhibitionType extends AbstractType
                 'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
                 'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
                 'widget' => 'single_text',
-                'data' => new DateTime(),
             ])
 
             ->add('end', DateType::class, [
@@ -34,7 +32,6 @@ class ExhibitionType extends AbstractType
                 'label_attr' => ['class' => 'block mt-2 font-contentfont font-medium'],
                 'attr' => ['class' => "bg-gray-100 border-gray-50 text-sm rounded-lg block w-full p-2.5"],
                 'widget' => 'single_text',
-                'data' => new DateTime()
             ]);
     }
 
