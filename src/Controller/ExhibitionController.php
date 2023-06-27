@@ -48,13 +48,13 @@ class ExhibitionController extends AbstractController
         ]);
     }
 
-    #[Route('/{exhibitionName}', methods: ['GET'], name: 'exhibition_show_presentation')]
+    #[Route('/{id}', methods: ['GET'], name: 'exhibition_show_presentation')]
     public function showPresentation(
-        string $exhibitionName,
+        int $id,
         ExhibitionRepository $exhibitionRepository,
         PresentationRepository $presentRepository
     ): Response {
-        $exhibition = $exhibitionRepository->findOneBy(['name' => $exhibitionName]);
+        $exhibition = $exhibitionRepository->findOneBy(['id' => $id]);
 
         $presentations = $presentRepository->findBy(
             ['exhibition' => $exhibition],

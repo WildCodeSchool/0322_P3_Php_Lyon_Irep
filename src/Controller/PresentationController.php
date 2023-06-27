@@ -30,7 +30,7 @@ class PresentationController extends AbstractController
 
             return $this->redirectToRoute(
                 'exhibition_show_presentation',
-                ['exhibitionName' => $exhibition->getName()],
+                ['id' => $exhibition->getId()],
                 Response::HTTP_SEE_OTHER
             );
         }
@@ -42,22 +42,7 @@ class PresentationController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'app_presentation_index', methods: ['GET'])]
-    public function index(PresentationRepository $presentRepository): Response
-    {
-        return $this->render('admin/presentation/index.html.twig', [
-            'presentations' => $presentRepository->findAll(),
-        ]);
-    }
-/* A supprimer
-    #[Route('/{id}', name: 'app_presentation_show', methods: ['GET'])]
-    public function show(Presentation $presentation): Response
-    {
-        return $this->render('admin/presentation/show.html.twig', [
-            'presentation' => $presentation,
-        ]);
-    }
-    */
+
     #[Route('/{id}/edit', name: 'app_presentation_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
@@ -70,18 +55,22 @@ class PresentationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $presentRepository->save($presentation, true);
 
-            return $this->redirectToRoute('exhibition_show_presentation', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'exhibition_show_presentation',
+                ['id' => $presentation->getExhibition()->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('admin/presentation/edit.html.twig', [
             'presentation' => $presentation,
             'form' => $form,
+            'exhibition' => $presentation->getExhibition(),
         ]);
     }
 
-    #[Route('/{id}', name: 'app_presentation_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_presentation_delete', methods: ['POST', 'GET'])]
     public function delete(
-        Exhibition $exhibition,
         Request $request,
         Presentation $presentation,
         PresentationRepository $presentRepository
@@ -90,6 +79,30 @@ class PresentationController extends AbstractController
             $presentRepository->remove($presentation, true);
         }
 
-        return $this->redirectToRoute('exhibition_show_presentation', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute(
+            'exhibition_show_presentation',
+            ['id' => $presentation->getExhibition()->getId()],
+            Response::HTTP_SEE_OTHER
+        );
     }
+
+
+    /* A supprimer
+    #[Route('/{id}', name: 'app_presentation_show', methods: ['GET'])]
+    public function show(Presentation $presentation): Response
+    {
+        return $this->render('admin/presentation/show.html.twig', [
+            'presentation' => $presentation,
+        ]);
+    }
+    */
+    /*
+    #[Route('/', name: 'app_presentation_index', methods: ['GET'])]
+    public function index(PresentationRepository $presentRepository): Response
+    {
+        return $this->render('admin/presentation/index.html.twig', [
+            'presentations' => $presentRepository->findAll(),
+        ]);
+    }
+    */
 }

@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="bg-zinc-200 w-11/12 my-10 mx-auto p-12">
-    <h3 class="text-3xl font-bold font-title my-6 ">Modification de la présentation</h3>
+    <h3 class="text-3xl font-bold font-title my-6 ">Modification de la présentation / carrousel</h3>
     <hr class="h-px my-5 bg-stone-950 border-0">
 
     {{ include('admin/presentation/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
@@ -13,7 +13,7 @@
     <div class="flex justify-end">
         <button
             class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center"><a
-                <a href="{{ path('app_presentation_index') }}">Retour aux expositions</a>
+                <a href="{{ path('exhibition_show_presentation', {'id': exhibition.id}) }}">Retour aux présentations</a>
         </button>
     </div>
 </div>

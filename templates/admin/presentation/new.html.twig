@@ -10,7 +10,7 @@
     <div class="mt-1">
         {{ include('admin/presentation/_form.html.twig') }}
     </div>
-    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center "><a href="{{ path('app_presentation_index') }}">Retour à la liste des présentations</a>
+    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center "><a href="{{ path('exhibition_show_presentation', {'id': exhibition.id}) }}">Retour à la liste des présentations</a>
     </button>
 
 </div>
