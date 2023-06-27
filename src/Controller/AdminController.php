@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Exhibition;
 use App\Repository\ExhibitionRepository;
+use App\Repository\PictureRepository;
+use App\Service\StatisticService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,6 +14,42 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
+    private StatisticService $statisticService;
+
+    public function __construct(StatisticService $statisticService)
+    {
+        $this->statisticService = $statisticService;
+    }
+
+    #[Route('/admin/statistics', name: 'admin_statistics')]
+    public function showStatistics(PictureRepository $pictureRepository): Response
+    {
+        $homePageVisitsCount = $this->statisticService->getPageVisitsCountByRoute('app_home');
+        $galleryVisitsCount = $this->statisticService->getPageVisitsCountByRoute('app_picture_index');
+        $pictures = $pictureRepository->findAll();
+        $picturesWithCounts = [];
+        $maxViewsCount = 0;
+
+        foreach ($pictures as $picture) {
+            $visitCount = $this->statisticService->getPageVisitsCountByPicture($picture);
+            $picturesWithCounts[] = [
+                'picture' => $picture,
+                'count' => $visitCount
+            ];
+
+            if ($visitCount > $maxViewsCount) {
+                $maxViewsCount = $visitCount;
+            }
+        }
+
+        return $this->render('admin/statistics.html.twig', [
+            'homePageVisitsCount' => $homePageVisitsCount,
+            'galleryVisitsCount' => $galleryVisitsCount,
+            'pictures' => $picturesWithCounts,
+            'maxViewsCount' => $maxViewsCount,
+        ]);
+    }
+
     #[Route('/admin', name: 'app_admin')]
     public function index(): Response
     {

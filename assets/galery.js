@@ -290,3 +290,9 @@ nav.querySelectorAll(".category-button").forEach((button) => {
         }
     });
 });
+
+window.onload = function () {
+    // Cachez l'écran de chargement
+    document.getElementById("loading-screen").style.display = "none";
+    initialize(); // Call the initialization function.
+};
