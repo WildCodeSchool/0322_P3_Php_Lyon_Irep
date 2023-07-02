@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Knp\Snappy\Pdf;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
@@ -157,5 +158,26 @@ class PictureController extends AbstractController
         return $this->render('picture/cropped.html.twig', [
             'picture' => $picture,
         ]);
+    }
+
+    #[Route('/{id}/toto', name: 'app_picture_toto', methods: ['GET'])]
+    public function generatePdfAction(Picture $picture): Response
+    {
+        $knpSnappy = new Pdf();
+
+        $html = $this->renderView('picture/show.html.twig', [
+            'picture' => $picture,
+        ]);
+
+        $pdf = $knpSnappy->getOutputFromHtml($html);
+
+        return new Response(
+            $pdf,
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="toto.pdf"',
+            ]
+        );
     }
 }

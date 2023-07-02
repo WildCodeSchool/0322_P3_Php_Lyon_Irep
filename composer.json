@@ -13,6 +13,8 @@
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.15",
+        "h4cc/wkhtmltopdf-amd64": "^0.12.4",
+        "knplabs/knp-snappy-bundle": "^1.9",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.20",
         "sensio/framework-extra-bundle": "^6.1",
