@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="{{ asset('build/images/favicon.png') }}" />
+    <title>
+        {% block title %}IREP{% endblock %}
+    </title>
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+
+<body class="bg-zinc-200">
+
+    <div class=" w-full m-0">
+
+        <div class="flex flex-wrap">
+
+            <div class="lg:w-1/6">   
+                {% include 'includes/_sidebar.html.twig' %}
+            </div>
+
+            <div class="w:screen lg:w-5/6 mx-auto">
+                {% block body %}{% endblock %}
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
