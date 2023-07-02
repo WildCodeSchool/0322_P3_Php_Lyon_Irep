@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Presentation;
-use App\Repository\ExhibitionRepository;
 use App\Repository\PresentationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
