@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
@@ -42,13 +44,12 @@ class PictureController extends AbstractController
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('photoFile')->getData();
             if ($imageFile) {
                 $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeImageName = 'uploads/images/'
-                    . $slugger->slug($originalImageName) . '.' . $imageFile->guessExtension();
+                $safeImageName = 'uploads/images/' . $slugger->slug($originalImageName) . '.' .
+                $imageFile->guessExtension();
 
                 try {
                     $imageFile->move(
@@ -57,21 +58,44 @@ class PictureController extends AbstractController
                     );
 
                     $picture->setImage($safeImageName);
+
+
+                    $imagine = new Imagine();
+                    $imagePath = $safeImageName;
+
+
+                    $smallImagePath =  $slugger->slug($originalImageName) . '.jpg';
+                    $imagine->open($imagePath)
+                        ->thumbnail(new Box(100, 100))
+                        ->save($this->getParameter('images_directory') . '/smallImage' . '/' . $smallImagePath);
+                    $picture->setSmallImage($smallImagePath);
+
+
+                    $mediumImagePath =  $slugger->slug($originalImageName) . '.jpg';
+                    $imagine->open($imagePath)
+                        ->thumbnail(new Box(500, 500))
+                        ->save($this->getParameter('images_directory') . '/mediumImage' . '/' . $mediumImagePath);
+                    $picture->setMediumImage($mediumImagePath);
+
+
+                    $largeImagePath =  $slugger->slug($originalImageName) . '.jpg';
+                    $imagine->open($imagePath)
+                        ->thumbnail(new Box(800, 800))
+                        ->save($this->getParameter('images_directory') . '/largeImage' . '/' . $largeImagePath);
+                    $picture->setLargeImage($largeImagePath);
+
+                    $pictureRepository->save($picture, true);
                 } catch (FileException $e) {
-                    die("erreur de chargement de l'image !!");
+                    die("Erreur lors du chargement de l'image !!");
                 }
             }
-
-            $pictureRepository->save($picture, true);
-
 
             return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
         }
 
-
         return $this->render('picture/new.html.twig', [
-            'picture' => $picture,
-            'form' => $form,
+        'picture' => $picture,
+        'form' => $form,
         ]);
     }
 
