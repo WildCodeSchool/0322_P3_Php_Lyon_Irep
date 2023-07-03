@@ -12,7 +12,8 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(PresentationRepository $presentRepository): Response
     {
-        $presentations = $presentRepository->findAll();
+
+        $presentations = $presentRepository->showPresentationByDate();
 
         return $this->render(
             'home/index.html.twig',

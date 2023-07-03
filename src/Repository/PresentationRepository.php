@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Presentation;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,18 @@ class PresentationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function showPresentationByDate(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select(['p','e'])
+            ->innerJoin('p.exhibition', 'e')
+            ->setParameter('now', new DateTime())
+            ->andWhere('e.start <= :now and e.end >= :now')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**
