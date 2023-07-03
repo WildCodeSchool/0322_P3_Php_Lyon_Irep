@@ -42,9 +42,13 @@ class Exhibition
     )]
     private ?\DateTimeInterface $end = null;
 
+    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: Newsletter::class)]
+    private Collection $newsletters;
+
     public function __construct()
     {
         $this->presentations = new ArrayCollection();
+        $this->newsletters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,6 +119,36 @@ class Exhibition
     public function setEnd(\DateTimeInterface $end): self
     {
         $this->end = $end;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Newsletter>
+     */
+    public function getNewsletters(): Collection
+    {
+        return $this->newsletters;
+    }
+
+    public function addNewsletter(Newsletter $newsletter): self
+    {
+        if (!$this->newsletters->contains($newsletter)) {
+            $this->newsletters->add($newsletter);
+            $newsletter->setExhibition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewsletter(Newsletter $newsletter): self
+    {
+        if ($this->newsletters->removeElement($newsletter)) {
+            // set the owning side to null (unless already changed)
+            if ($newsletter->getExhibition() === $this) {
+                $newsletter->setExhibition(null);
+            }
+        }
 
         return $this;
     }

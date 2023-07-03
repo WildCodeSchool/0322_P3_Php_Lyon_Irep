@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<div class="relative w-full h-[40rem]" data-carousel="static">
+<section class="relative w-full h-[40rem]" data-carousel="static">
     <!-- Carousel wrapper -->
     <div class="relative overflow-hidden h-[40rem]">
         <!-- Items-->
@@ -14,8 +14,8 @@
                 class="absolute block  w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                 alt="...">
             <div class="absolute flex flex-col content-around top-1/2 -translate-y-1/2 ml-16 w-60 md:w-6/12 bg-gray-500/[.05]">
-                <h2 class="text-3xl p-2 font-bold md:text-4xl text-white">{{ presentation.title }}</h2>
-                <h3 class="text-2xl p-2 text-white">{{ presentation.subtitle }}</h3>
+                <h2 class="text-3xl p-2 font-bold md:text-4xl text-white font-titlefont" >{{ presentation.title }}</h2>
+                <h3 class="text-2xl p-2 text-white font-subtitlefont">{{ presentation.subtitle }}</h3>
             </div>
             <div class="absolute flex justify-start top-3/4 -translate-y-1/2 ml-16 mt-2 md:w-80">
                 <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-200">DECOUVRIR</p>
@@ -47,8 +47,22 @@
             <span class="sr-only">Next</span>
         </span>
     </button>
-</div>    
+</section>    
 
 <div class="h-96"></div>
 
+
+<section class="bg-zinc-200">
+    <div class="py-4 px-4 mx-auto max-w-screen-xl lg:py-12 lg:px-6">
+        <div class="mx-auto max-w-screen-md sm:text-center">
+            <p class="mx-auto mb-4 max-w-2xl text-center text-gray-800 md:mb-8 sm:text-xl font-titlefont">Inscrivez-vous à notre newsletter pour recevoir les actualités de l'exposition de votre choix.</p>
+                <div class="items-center w-full mx-auto mb-3 space-y-4 max-w-screen">
+                      {{ include('home/newsletter_form.html.twig') }}    
+                </div>
+        </div>       
+    </div>
+</section>
+
+
+  <div class="h-48"></div>
 {% endblock %}
