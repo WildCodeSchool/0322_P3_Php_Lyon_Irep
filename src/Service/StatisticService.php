@@ -48,25 +48,47 @@ class StatisticService
 
     public function getPageVisitsCountByRouteWithDates(string $routeName): array
     {
-        return $this->pageVisitRepository->createQueryBuilder('pv')
-        ->select("DATE_FORMAT(pv.visitedAt, '%Y-%m-%d') AS date, COUNT(pv.id) AS count")
+        $visits = $this->pageVisitRepository->createQueryBuilder('pv')
+            ->select("pv.visitedAt, COUNT(pv.id) AS count")
             ->where('pv.routeName = :routeName')
             ->setParameter('routeName', $routeName)
-            ->groupBy('date')
+            ->groupBy('pv.visitedAt')
             ->getQuery()
             ->getResult();
+
+        $groupedVisits = [];
+
+        foreach ($visits as $visit) {
+            $date = $visit['visitedAt']->format('Y-m-d');
+            if (!isset($groupedVisits[$date])) {
+                $groupedVisits[$date] = 0;
+            }
+            $groupedVisits[$date] += $visit['count'];
+        }
+
+        return $groupedVisits;
     }
-
-
 
     public function getPageVisitsCountByPictureWithDates(Picture $picture): array
     {
-        return $this->pageVisitRepository->createQueryBuilder('pv')
-        ->select("DATE_FORMAT(pv.visitedAt, '%Y-%m-%d') AS date, COUNT(pv.id) AS count")
-        ->where('pv.picture = :picture')
-        ->setParameter('picture', $picture)
-        ->groupBy('pv.visitedAt')
-        ->getQuery()
-        ->getResult();
+        $visits = $this->pageVisitRepository->createQueryBuilder('pv')
+            ->select("pv.visitedAt, COUNT(pv.id) AS count")
+            ->where('pv.picture = :picture')
+            ->setParameter('picture', $picture)
+            ->groupBy('pv.visitedAt')
+            ->getQuery()
+            ->getResult();
+
+        $groupedVisits = [];
+
+        foreach ($visits as $visit) {
+            $date = $visit['visitedAt']->format('Y-m-d');
+            if (!isset($groupedVisits[$date])) {
+                $groupedVisits[$date] = 0;
+            }
+            $groupedVisits[$date] += $visit['count'];
+        }
+
+        return $groupedVisits;
     }
 }

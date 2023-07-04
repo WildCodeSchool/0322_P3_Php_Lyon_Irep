@@ -16,10 +16,6 @@ doctrine:
                 prefix: 'App\Entity'
                 alias: App
 
-        dql:
-            string_functions:
-                DATE_FORMAT: DoctrineExtensions\Query\Mysql\DateFormat
-
 when@test:
     doctrine:
         dbal:
