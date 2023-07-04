@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExhibitionRepository::class)]
 class Exhibition
@@ -17,20 +18,37 @@ class Exhibition
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le nom de l'exposition est trop long. Veuillez limiter votre saisie à 255 caractères."
+    )]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: Presentation::class, orphanRemoval: true)]
+    private Collection $presentations;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual(
+        'today',
+        message: "La date saisie ne peut pas être antérieure à la date du jour."
+    )]
     private ?\DateTimeInterface $start = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan(
+        'today',
+        message: "La date saisie doit obligatoirement être supérieure à la date du jour."
+    )]
     private ?\DateTimeInterface $end = null;
 
-    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: PresentationExhibition::class)]
-    private Collection $presExhibition;
+    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: Newsletter::class)]
+    private Collection $newsletters;
 
     public function __construct()
     {
-        $this->presExhibition = new ArrayCollection();
+        $this->presentations = new ArrayCollection();
+        $this->newsletters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,6 +64,37 @@ class Exhibition
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection<int, Presentation>
+     */
+    public function getPresentations(): Collection
+    {
+        return $this->presentations;
+    }
+
+    public function addPresentation(Presentation $presentation): self
+    {
+        if (!$this->presentations->contains($presentation)) {
+            $this->presentations->add($presentation);
+            $presentation->setExhibition($this);
+        }
+
+        return $this;
+    }
+
+    public function removePresentation(Presentation $presentation): self
+    {
+        if ($this->presentations->removeElement($presentation)) {
+            // set the owning side to null (unless already changed)
+            if ($presentation->getExhibition() === $this) {
+                $presentation->setExhibition(null);
+            }
+        }
 
         return $this;
     }
@@ -75,29 +124,29 @@ class Exhibition
     }
 
     /**
-     * @return Collection<int, PresentationExhibition>
+     * @return Collection<int, Newsletter>
      */
-    public function getPresentationExhibitions(): Collection
+    public function getNewsletters(): Collection
     {
-        return $this->presExhibition;
+        return $this->newsletters;
     }
 
-    public function addPresentationExhibition(PresentationExhibition $presExhibition): self
+    public function addNewsletter(Newsletter $newsletter): self
     {
-        if (!$this->presExhibition->contains($presExhibition)) {
-            $this->presExhibition->add($presExhibition);
-            $presExhibition->setExhibition($this);
+        if (!$this->newsletters->contains($newsletter)) {
+            $this->newsletters->add($newsletter);
+            $newsletter->setExhibition($this);
         }
 
         return $this;
     }
 
-    public function removePresentationExhibition(PresentationExhibition $presExhibition): self
+    public function removeNewsletter(Newsletter $newsletter): self
     {
-        if ($this->presExhibition->removeElement($presExhibition)) {
+        if ($this->newsletters->removeElement($newsletter)) {
             // set the owning side to null (unless already changed)
-            if ($presExhibition->getExhibition() === $this) {
-                $presExhibition->setExhibition(null);
+            if ($newsletter->getExhibition() === $this) {
+                $newsletter->setExhibition(null);
             }
         }
 

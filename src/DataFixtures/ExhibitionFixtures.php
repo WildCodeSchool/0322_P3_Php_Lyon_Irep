@@ -9,8 +9,6 @@ use DateTime;
 
 class ExhibitionFixtures extends Fixture
 {
-    public const EXHIBITION_REFERENCE = 'exhibition';
-
     public function load(ObjectManager $manager): void
     {
         $exhibition = new Exhibition();
@@ -22,6 +20,6 @@ class ExhibitionFixtures extends Fixture
         $manager->flush();
 
         // Ajout d'une référence à l'exhibition
-        $this->addReference(self::EXHIBITION_REFERENCE, $exhibition);
+        $this->addReference('exhibition', $exhibition);
     }
 }
