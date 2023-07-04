@@ -59,6 +59,15 @@ class Picture
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageCrop = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $smallImage = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mediumImage = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $largeImage = null;
+
 
     public function getId(): ?int
     {
@@ -233,6 +242,42 @@ class Picture
     public function setImageCrop(?string $imageCrop): self
     {
         $this->imageCrop = $imageCrop;
+
+        return $this;
+    }
+
+    public function getSmallImage(): ?string
+    {
+        return $this->smallImage;
+    }
+
+    public function setSmallImage(?string $smallImage): self
+    {
+        $this->smallImage = $smallImage;
+
+        return $this;
+    }
+
+    public function getMediumImage(): ?string
+    {
+        return $this->mediumImage;
+    }
+
+    public function setMediumImage(?string $mediumImage): self
+    {
+        $this->mediumImage = $mediumImage;
+
+        return $this;
+    }
+
+    public function getLargeImage(): ?string
+    {
+        return $this->largeImage;
+    }
+
+    public function setLargeImage(?string $largeImage): self
+    {
+        $this->largeImage = $largeImage;
 
         return $this;
     }
