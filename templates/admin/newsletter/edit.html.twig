@@ -1,13 +1,27 @@
-{% extends 'base.html.twig' %}
+{% extends 'adminbase.html.twig' %}
 
-{% block title %}Edit Newsletter{% endblock %}
+{% block title %}Abonnés Newsletter{% endblock %}
 
 {% block body %}
-    <h1>Edit Newsletter</h1>
+<div class="my-4 mx-auto p-2 md:p-12">
+    <h3 class="text-3xl font-bold font-title my-6 ">Modification de l'abonnement</h3>
+    <hr class="h-px my-5 bg-stone-950 border-0">
 
-    {{ include('admin/newsletter/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('home/newsletter_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_newsletter_index') }}">back to list</a>
-
-    {{ include('newsletter/_delete_form.html.twig') }}
+    <div class="flex justify-end">
+        <button
+            class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center"><a
+                <a href="{{ path('app_newsletter_index') }}">Retour à la liste</a>
+        </button>
+    </div>
+</div>
 {% endblock %}
+
+
+
+
+
+
+
+
