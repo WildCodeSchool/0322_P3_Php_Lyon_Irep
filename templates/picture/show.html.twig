@@ -30,7 +30,10 @@
     </div>
 
       <div class="container-button-picture p-2.5 flex justify-center items-center">
-        <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button" href="{{ path('app_picture_toto', {id: picture.id}) }}">Autres œuvres</a>
+        <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button" href="{{ path('app_picture_pdf', {id: picture.id}) }}">Télécharger la fiche de l'image</a>
+      </div>
+      <div class="container-button-picture p-2.5 flex justify-center items-center">
+        <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button" href="{{ path('app_picture_cropped', {id: picture.id}) }}">Redimensionner l'image</a>
       </div>
 
 <!-- The Modal -->

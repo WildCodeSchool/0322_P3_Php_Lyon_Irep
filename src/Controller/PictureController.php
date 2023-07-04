@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Picture;
 use App\Form\PictureType;
 use App\Repository\PictureRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -160,24 +161,21 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/toto', name: 'app_picture_toto', methods: ['GET'])]
-    public function generatePdfAction(Picture $picture): Response
+    #[Route('/{id}/pdf', name: 'app_picture_pdf', methods: ['GET'])]
+    public function generatePdfAction(Picture $picture, Pdf $knpSnappy): Response
     {
-        $knpSnappy = new Pdf();
 
-        $html = $this->renderView('picture/show.html.twig', [
+
+        $html = $this->renderView('pdf/generatePdf.html.twig', [
             'picture' => $picture,
         ]);
 
+
         $pdf = $knpSnappy->getOutputFromHtml($html);
 
-        return new Response(
-            $pdf,
-            200,
-            [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="toto.pdf"',
-            ]
-        );
+         return new PdfResponse(
+             $pdf,
+             'Download.pdf'
+         );
     }
 }
