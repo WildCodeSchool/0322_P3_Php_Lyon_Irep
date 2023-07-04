@@ -42,7 +42,7 @@ class Exhibition
     )]
     private ?\DateTimeInterface $end = null;
 
-    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: Newsletter::class)]
+    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: Newsletter::class, orphanRemoval: true)]
     private Collection $newsletters;
 
     public function __construct()
