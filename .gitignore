@@ -2,7 +2,7 @@
 .vscode/
 .DS_Store
 /public/uploads
-/src/**/*.exe
+*.exe
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
