@@ -44,4 +44,29 @@ class StatisticService
     {
         return $this->pageVisitRepository->count(['picture' => $picture]);
     }
+
+
+    public function getPageVisitsCountByRouteWithDates(string $routeName): array
+    {
+        return $this->pageVisitRepository->createQueryBuilder('pv')
+        ->select("DATE_FORMAT(pv.visitedAt, '%Y-%m-%d') AS date, COUNT(pv.id) AS count")
+            ->where('pv.routeName = :routeName')
+            ->setParameter('routeName', $routeName)
+            ->groupBy('date')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+    public function getPageVisitsCountByPictureWithDates(Picture $picture): array
+    {
+        return $this->pageVisitRepository->createQueryBuilder('pv')
+        ->select("DATE_FORMAT(pv.visitedAt, '%Y-%m-%d') AS date, COUNT(pv.id) AS count")
+        ->where('pv.picture = :picture')
+        ->setParameter('picture', $picture)
+        ->groupBy('pv.visitedAt')
+        ->getQuery()
+        ->getResult();
+    }
 }
