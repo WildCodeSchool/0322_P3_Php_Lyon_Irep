@@ -48,37 +48,20 @@ class StatisticService
 
     public function getPageVisitsCountByRouteWithDates(string $routeName): array
     {
-        $visits = $this->pageVisitRepository->createQueryBuilder('pv')
-            ->select("pv.visitedAt, COUNT(pv.id) AS count")
-            ->where('pv.routeName = :routeName')
-            ->setParameter('routeName', $routeName)
-            ->groupBy('pv.visitedAt')
-            ->getQuery()
-            ->getResult();
+        $visits = $this->pageVisitRepository->getPageVisitsCountByRouteWithDates($routeName);
 
-        $groupedVisits = [];
-
-        foreach ($visits as $visit) {
-            $date = $visit['visitedAt']->format('Y-m-d');
-            if (!isset($groupedVisits[$date])) {
-                $groupedVisits[$date] = 0;
-            }
-            $groupedVisits[$date] += $visit['count'];
-        }
-
-        return $groupedVisits;
+        return $this->groupVisitsByDate($visits);
     }
 
     public function getPageVisitsCountByPictureWithDates(Picture $picture): array
     {
-        $visits = $this->pageVisitRepository->createQueryBuilder('pv')
-            ->select("pv.visitedAt, COUNT(pv.id) AS count")
-            ->where('pv.picture = :picture')
-            ->setParameter('picture', $picture)
-            ->groupBy('pv.visitedAt')
-            ->getQuery()
-            ->getResult();
+        $visits = $this->pageVisitRepository->getPageVisitsCountByPictureWithDates($picture);
 
+        return $this->groupVisitsByDate($visits);
+    }
+
+    private function groupVisitsByDate(array $visits): array
+    {
         $groupedVisits = [];
 
         foreach ($visits as $visit) {

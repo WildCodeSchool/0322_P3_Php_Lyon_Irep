@@ -49,6 +49,28 @@ class PageVisitRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function getPageVisitsCountByRouteWithDates(string $routeName): array
+    {
+        return $this->createQueryBuilder('pv')
+            ->select("pv.visitedAt, COUNT(pv.id) AS count")
+            ->where('pv.routeName = :routeName')
+            ->setParameter('routeName', $routeName)
+            ->groupBy('pv.visitedAt')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getPageVisitsCountByPictureWithDates(Picture $picture): array
+    {
+        return $this->createQueryBuilder('pv')
+            ->select("pv.visitedAt, COUNT(pv.id) AS count")
+            ->where('pv.picture = :picture')
+            ->setParameter('picture', $picture)
+            ->groupBy('pv.visitedAt')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return PageVisit[] Returns an array of PageVisit objects
 //     */
