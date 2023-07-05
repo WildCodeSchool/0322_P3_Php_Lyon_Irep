@@ -1,0 +1,20 @@
+{% block title %}{% endblock %}
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ absolute_url(asset('build/css/pdf.css')) }}">
+    {% endblock %}
+      
+{% block body %}
+    {% for picture in pictures %}
+    <div class="container">
+        <div class="title">{{ picture.title }}</div>
+        <img src="{{ absolute_url(asset(picture.image)) }} ">
+        <div class="description"><span>Ref:</span> {{ picture.reference }}</div>
+        <div class="description"><span>Technique:</span> {{ picture.technic }}</div>
+        <div class="description"><span>Date de réalisation:</span> {{ picture.date|date('Y-m-d') }}</div>
+        <div class="description"><span>Format:</span> {{ picture.size }}</div>
+        <div class="description"><span>Description:</span> {{ picture.comment }}</div>
+    </div>
+    <div class="page-break"></div>
+{% endfor %}
+{% endblock %}

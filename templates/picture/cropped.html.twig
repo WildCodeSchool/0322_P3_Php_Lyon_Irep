@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Picture Cropped{% endblock %}
+
+    {% block stylesheets %}
+        {{ parent()}}
+        {{ encore_entry_link_tags('cropperjs') }}
+      {% endblock %}
+      
+      {% block javascripts %}
+          {{ parent()}}
+        {{ encore_entry_script_tags('cropperjs') }}
+      {% endblock %}
+      
+{% block body %}
+    <div>
+        <img id="image-cropped" src="{{ asset(picture.image) }}" data-id="{{ picture.id }}">
+    </div>
+    <div class="p-4">
+      <button class="bg-white" id="save-crop-button">Enregistrer la crop</button>
+    </div>
+{% endblock %}
+
+
+
+   

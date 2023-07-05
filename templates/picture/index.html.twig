@@ -22,7 +22,7 @@
 </div>
 		<div class="options flex flex-row items-stretch overflow-hidden justify-center min-w-400 max-w-1200 h-128 w-custom-width">
 			{% for picture in pictures %}
-				<div class="option relative m-2.5 min-w-60 max-w-60 overflow-hidden cursor-pointer" data-category="{{ picture.category }}" style="--optionBackground:url({{ asset(picture.image) }}) ;">
+				<div class="option relative m-2.5 min-w-60 max-w-60 overflow-hidden cursor-pointer" data-category="{{ picture.category }}" style="--optionBackground:url({{ asset(picture.imageCrop ?? picture.image) }}) ;">
 					<div class="shadow absolute bottom-0 left-0 right-0"></div>
 					<div class="label flex absolute bottom-5 left-5 right-0">
 						<a href="{{ path('app_picture_show', {id: picture.id}) }}">
@@ -46,6 +46,7 @@
 			{% endfor %}
 		</div>
 	</section>
-
-
+<div>
+	<a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button" href="{{ path('app_picture_exhibition_pdf') }}">Télécharger la fiche de l'éxposition</a>
+	</div>
 {% endblock %}
