@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page Connection{% endblock %}
+{% block title %}Page Connexion{% endblock %}
 
 {% block body %}
 <div class="min-h-screen flex items-center justify-center bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
@@ -20,11 +20,11 @@
         </div>
         <div>
             <label for="inputUsername" class="sr-only">Nom d'utilisateur</label>
-            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-grey-300 focus:border-accentcolor focus:z-10 sm:text-sm" autocomplete="username" required autofocus>
+            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-grey-300 focus:border-accentcolor focus:z-10 sm:text-sm" autocomplete="username" required autofocus>
         </div>
         <div>
             <label for="inputPassword" class="sr-only">Mot de Passe</label>
-            <input type="password" name="password" id="inputPassword" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-grey-300 focus:border-grey-300 focus:z-10 sm:text-sm" autocomplete="current-password" required>
+            <input type="password" name="password" id="inputPassword" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-grey-300 focus:border-grey-300 focus:z-10 sm:text-sm" autocomplete="current-password" required>
         </div>
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

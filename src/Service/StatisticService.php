@@ -44,4 +44,34 @@ class StatisticService
     {
         return $this->pageVisitRepository->count(['picture' => $picture]);
     }
+
+
+    public function getPageVisitsCountByRouteWithDates(string $routeName): array
+    {
+        $visits = $this->pageVisitRepository->getPageVisitsCountByRouteWithDates($routeName);
+
+        return $this->groupVisitsByDate($visits);
+    }
+
+    public function getPageVisitsCountByPictureWithDates(Picture $picture): array
+    {
+        $visits = $this->pageVisitRepository->getPageVisitsCountByPictureWithDates($picture);
+
+        return $this->groupVisitsByDate($visits);
+    }
+
+    private function groupVisitsByDate(array $visits): array
+    {
+        $groupedVisits = [];
+
+        foreach ($visits as $visit) {
+            $date = $visit['visitedAt']->format('Y-m-d');
+            if (!isset($groupedVisits[$date])) {
+                $groupedVisits[$date] = 0;
+            }
+            $groupedVisits[$date] += $visit['count'];
+        }
+
+        return $groupedVisits;
+    }
 }

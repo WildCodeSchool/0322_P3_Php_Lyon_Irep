@@ -6,6 +6,7 @@ use App\Entity\Exhibition;
 use App\Repository\ExhibitionRepository;
 use App\Repository\PictureRepository;
 use App\Service\StatisticService;
+use App\Service\DateFormatService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,27 +16,32 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class AdminController extends AbstractController
 {
     private StatisticService $statisticService;
+    private DateFormatService $dateFormatService;
 
-    public function __construct(StatisticService $statisticService)
+    public function __construct(StatisticService $statisticService, DateFormatService $dateFormatService)
     {
         $this->statisticService = $statisticService;
+        $this->dateFormatService = $dateFormatService;
     }
 
     #[Route('/admin/statistics', name: 'admin_statistics')]
     public function showStatistics(PictureRepository $pictureRepository): Response
     {
-        $homePageVisitsCount = $this->statisticService->getPageVisitsCountByRoute('app_home');
-        $galleryVisitsCount = $this->statisticService->getPageVisitsCountByRoute('app_picture_index');
+        $homePageVisitsCount = $this->dateFormatService->formatDateArray(
+            $this->statisticService->getPageVisitsCountByRouteWithDates('app_home')
+        );
+
+        $galleryVisitsCount = $this->dateFormatService->formatDateArray(
+            $this->statisticService->getPageVisitsCountByRouteWithDates('app_picture_index')
+        );
+
         $pictures = $pictureRepository->findAll();
         $picturesWithCounts = [];
         $maxViewsCount = 0;
 
         foreach ($pictures as $picture) {
-            $visitCount = $this->statisticService->getPageVisitsCountByPicture($picture);
-            $picturesWithCounts[] = [
-                'picture' => $picture,
-                'count' => $visitCount
-            ];
+            $visitCount = $this->statisticService->getPageVisitsCountByPictureWithDates($picture);
+            $picturesWithCounts[$picture->getTitle()] = $this->dateFormatService->formatDateArray($visitCount);
 
             if ($visitCount > $maxViewsCount) {
                 $maxViewsCount = $visitCount;
