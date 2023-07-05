@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Picture;
 use App\Form\PictureType;
 use App\Repository\PictureRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Knp\Snappy\Pdf;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 
@@ -98,6 +100,24 @@ class PictureController extends AbstractController
         'form' => $form,
         ]);
     }
+    #[Route('/pdf', name: 'app_picture_exhibition_pdf', methods: ['GET'])]
+    public function generatePdfExhibition(PictureRepository $pictureRepository, Pdf $knpSnappy): Response
+    {
+            set_time_limit(120);
+            $pictures = $pictureRepository->findAll();
+
+            $html = $this->renderView('pdf/generatePdfExhibition.html.twig', [
+                'pictures' => $pictures,
+            ]);
+
+
+            $pdf = $knpSnappy->getOutputFromHtml($html);
+
+            return new PdfResponse(
+                $pdf,
+                'Download.pdf'
+            );
+    }
 
 
     #[Route('/{id}', name: 'app_picture_show', methods: ['GET'])]
@@ -164,6 +184,7 @@ class PictureController extends AbstractController
             ['Content-Type' => 'application/json']
         );
     }
+
     #[Route('/{id}', name: 'app_picture_delete', methods: ['POST'])]
     public function delete(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
     {
@@ -181,5 +202,23 @@ class PictureController extends AbstractController
         return $this->render('picture/cropped.html.twig', [
             'picture' => $picture,
         ]);
+    }
+
+    #[Route('/{id}/pdf', name: 'app_picture_pdf', methods: ['GET'])]
+    public function generatePdfAction(Picture $picture, Pdf $knpSnappy): Response
+    {
+
+
+        $html = $this->renderView('pdf/generatePdf.html.twig', [
+            'picture' => $picture,
+        ]);
+
+
+        $pdf = $knpSnappy->getOutputFromHtml($html);
+
+         return new PdfResponse(
+             $pdf,
+             'Download.pdf'
+         );
     }
 }
