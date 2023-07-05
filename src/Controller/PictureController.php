@@ -100,6 +100,24 @@ class PictureController extends AbstractController
         'form' => $form,
         ]);
     }
+    #[Route('/pdf', name: 'app_picture_exhibition_pdf', methods: ['GET'])]
+    public function generatePdfExhibition(PictureRepository $pictureRepository, Pdf $knpSnappy): Response
+    {
+            set_time_limit(120);
+            $pictures = $pictureRepository->findAll();
+
+            $html = $this->renderView('pdf/generatePdfExhibition.html.twig', [
+                'pictures' => $pictures,
+            ]);
+
+
+            $pdf = $knpSnappy->getOutputFromHtml($html);
+
+            return new PdfResponse(
+                $pdf,
+                'Download.pdf'
+            );
+    }
 
 
     #[Route('/{id}', name: 'app_picture_show', methods: ['GET'])]
@@ -166,6 +184,7 @@ class PictureController extends AbstractController
             ['Content-Type' => 'application/json']
         );
     }
+
     #[Route('/{id}', name: 'app_picture_delete', methods: ['POST'])]
     public function delete(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
     {
