@@ -25,6 +25,12 @@ Encore
         // only copy files matching this pattern
         // pattern: /\.(png|jpg|jpeg)$/
     })
+    .copyFiles([
+        {
+            from: './assets/logos',
+            to: 'logos/[path][name].[hash:8].[ext]',
+        }
+    ])
     /*
      * ENTRY CONFIG
      *
@@ -34,6 +40,7 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('galery', './assets/galery.js')
     .addEntry('modal', './assets/modal.js')
+    .addEntry('statistic', './assets/statistic.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

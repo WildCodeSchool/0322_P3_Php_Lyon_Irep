@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\PresentationRepository;
 use App\Repository\NewsletterRepository;
+use App\Service\StatisticService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,13 +14,21 @@ use App\Form\NewsletterType;
 
 class HomeController extends AbstractController
 {
+    private StatisticService $statisticService;
+
+    public function __construct(StatisticService $statisticService)
+    {
+        $this->statisticService = $statisticService;
+    }
+
     #[Route('/', name: 'app_home', methods: ['GET', 'POST'])]
-    public function new(
+    public function index(
         Request $request,
         NewsletterRepository $newsletterRepository,
         PresentationRepository $presentRepository
     ): Response {
         $presentations = $presentRepository->showPresentationByDate();
+        $this->statisticService->recordPageVisit('app_home');
 
         $newsletter = new Newsletter();
         $form = $this->createForm(NewsletterType::class, $newsletter);

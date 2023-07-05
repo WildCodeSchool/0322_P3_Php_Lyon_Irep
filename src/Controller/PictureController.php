@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Picture;
 use App\Form\PictureType;
 use App\Repository\PictureRepository;
+use App\Service\StatisticService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,18 +14,24 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/picture')]
 class PictureController extends AbstractController
 {
+    private StatisticService $statisticService;
+
+    public function __construct(StatisticService $statisticService)
+    {
+        $this->statisticService = $statisticService;
+    }
+
     #[Route('/', name: 'app_picture_index', methods: ['GET'])]
     public function index(PictureRepository $pictureRepository): Response
     {
         $categories = $pictureRepository->getCategories();
+        $this->statisticService->recordPageVisit('app_picture_index');
+
         return $this->render('picture/index.html.twig', [
            'pictures' => $pictureRepository->findAll(),
            'categories' => $categories,
         ]);
     }
-
-
-
 
     #[Route('/new', name: 'app_picture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PictureRepository $pictureRepository): Response
@@ -52,6 +59,7 @@ class PictureController extends AbstractController
     #[Route('/{id}', name: 'app_picture_show', methods: ['GET'])]
     public function show(Picture $picture): Response
     {
+        $this->statisticService->recordPageVisit('app_picture_show', $picture);
         return $this->render('picture/show.html.twig', [
            'picture' => $picture,
         ]);
