@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Exhibition;
-use App\Repository\ExhibitionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,28 +16,6 @@ class AdminController extends AbstractController
 
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
-        ]);
-    }
-
-
-    #[Route('/admin/list', name: 'admin_exhibition_list')]
-    public function listExhibition(ExhibitionRepository $exhibitionRepository): Response
-    {
-        $exhibitionRepository = $exhibitionRepository->findAll();
-
-        return $this->render('admin/list.html.twig', [
-            'exhibitions' => $exhibitionRepository
-        ]);
-    }
-
-
-    #[Route('/admin/exhibition/{id}', name: 'admin_exhibition_showlist')]
-    public function showPresentationExhibition(Exhibition $exhibition): Response
-    {
-        $presExhibitions = $exhibition->getPresentationExhibitions();
-
-        return $this->render('admin/showlist.html.twig', [
-            'presentationExhibitions' => $presExhibitions,
         ]);
     }
 }
