@@ -68,6 +68,10 @@ class Picture
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $largeImage = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Exhibition $exhibition = null;
+
 
     public function getId(): ?int
     {
@@ -278,6 +282,18 @@ class Picture
     public function setLargeImage(?string $largeImage): self
     {
         $this->largeImage = $largeImage;
+
+        return $this;
+    }
+
+    public function getExhibition(): ?Exhibition
+    {
+        return $this->exhibition;
+    }
+
+    public function setExhibition(?Exhibition $exhibition): static
+    {
+        $this->exhibition = $exhibition;
 
         return $this;
     }

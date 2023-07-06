@@ -55,8 +55,8 @@ class PictureFixtures extends Fixture
                'category' => 'Usines',
                'number' => 1,
                'comment' => "Attribuée parfois à l'usine du Grand Tampon, mais c'est peu probable...",
-               'image' => 'uploads/images/Cheminee_40FI79.jpg'
-           ],
+               'image' => 'uploads/images/Cheminee_40FI79.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40FI78',
                'title' => 'Arrivée à l\'établissement du Tampon',
@@ -67,8 +67,8 @@ class PictureFixtures extends Fixture
                'category' => 'Usines',
                'number' => 2,
                'comment' => "Le chemin de l'Etablissement existe toujours aujourd'hui, à 400 mètres d'altitude...",
-               'image' => 'uploads/images/UsineBelAir_40FI78.jpg'
-           ],
+               'image' => 'uploads/images/UsineBelAir_40FI78.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40FI106',
                'title' => 'Quartier St Pierre. Etablissement de la Rivière, montagnes de l\'Entre Deux',
@@ -93,8 +93,8 @@ class PictureFixtures extends Fixture
                   vêtu d'un pantalon de toile bleue. Un vacoa est" . "
                    ici le témoin indispensable de l'usage de ses feuilles pour le " . "
                   tressage de sacs, destinés ensuite à transporter le sucre produit.",
-               'image' => 'uploads/images/AD974_40FI106.jpg'
-           ],
+               'image' => 'uploads/images/AD974_40FI106.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40FI',
                'title' => 'Boutchiana- Indien',
@@ -106,8 +106,8 @@ class PictureFixtures extends Fixture
                'number' => 1,
                'comment' => "Boutchiana est devenu le domestique personnel" . "
                 de Ch.Mortier de Trévise, et il a vieilli de 6 ans.",
-               'image' => 'uploads/images/ADR-40fi100-danse-des-noirs.jpg'
-           ],
+               'image' => 'uploads/images/ADR-40fi100-danse-des-noirs.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40FI91',
                'title' => 'Boutchiana- Casernes',
@@ -121,8 +121,8 @@ class PictureFixtures extends Fixture
                des Casernes, il tient une lance, " . "
                peut-être a-t-il une fonction de gardien? Sur sa fiche" . "
                 d'engagement, il était recensé comme tailleur",
-               'image' => 'uploads/images/FRAD974_40FI91.jpg'
-           ],
+               'image' => 'uploads/images/FRAD974_40FI91.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40FI90',
                'title' => 'Boutchiana-Casernes, de face',
@@ -136,8 +136,8 @@ class PictureFixtures extends Fixture
                 jeunesse de Boutchiana, engagé à l'adolescence." . "
                 Arrivé à bord de Yanaon, en Inde, à bord du navire" . "
                  de la famille Kerveguen, Le Canova, on le dit âgé de 17 ans",
-               'image' => 'uploads/images/FRAD974_40FI90.jpg'
-           ],
+               'image' => 'uploads/images/FRAD974_40FI90.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
         ];
         return $picturesPart1;
     }
@@ -156,8 +156,8 @@ class PictureFixtures extends Fixture
                'category' => 'Travailleurs',
                'number' => 7,
                'comment' => "Une autre petite fille de Victorine, sans doute dans la maison des Casernes.",
-               'image' => 'uploads/images/FRAD974_40FI75.jpg'
-           ],
+               'image' => 'uploads/images/FRAD974_40FI75.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40Fi74',
                'title' => 'La belle Tina',
@@ -172,8 +172,8 @@ class PictureFixtures extends Fixture
                 fille de Victorine, plus jeune. Il semble que" . "
                  les fillettes fassent leur apprentissage de domestiques" . "
                   dans la propriété des Kerveguen.",
-               'image' => 'uploads/images/FRAD974_40FI74.jpg'
-           ],
+               'image' => 'uploads/images/FRAD974_40FI74.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40Fi60',
                'title' => 'Jamali, Cafre, Gardien',
@@ -187,8 +187,8 @@ class PictureFixtures extends Fixture
                l'Habitation, mais qu'il a vraisemblablement été recruté " . "
                comme engagé. Il est armé d'une lance, et surveille " . "
                l'orée des champs, ou les abords du camp des travailleurs.",
-               'image' => 'uploads/images/Jamali.jpg'
-           ],
+               'image' => 'uploads/images/Jamali.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40FI53.2',
                'title' => 'La pli y fait pas rien, ça ! Tampon',
@@ -204,8 +204,8 @@ class PictureFixtures extends Fixture
                 créole porte un chapeau de feutre déformé, pas de " . "
                chaussures, comme la majorité des travailleurs. " . "
                Janvier est en pleine période cyclonique: est-ce le cas ici?",
-               'image' => 'uploads/images/FRAD974_40FI74.jpg'
-           ],
+               'image' => 'uploads/images/FRAD974_40FI74.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village" ],
            [
                'reference' => '40FI59',
                'title' => 'Monsieur Bourrayne dans le jardin des Casernes',
@@ -217,8 +217,8 @@ class PictureFixtures extends Fixture
                'number' => 12,
                'comment' => "La suite du commentaire est: " . "
                'Allons, Virasami, vivement mettre la racine de ce plant (?) comme à Madras!'",
-               'image' => 'uploads/images/MORTIER.de.TREVISE_Mr.Bourraye.dans.jardin.Casernes_1861.jpg'
-           ],
+               'image' => 'uploads/images/MORTIER.de.TREVISE_Mr.Bourraye.dans.jardin.Casernes_1861.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40Fi72',
                'title' => 'Chanvert descend le chemin de la Plaine, Golo est à ses côtés',
@@ -236,8 +236,8 @@ class PictureFixtures extends Fixture
                 des Cafres, et, au-delà, à Saint-Benoît. L'Etablissement de Bel-Air " . "
                 est situé au tiers du parcours," . "
                  entre La Plaine des Cafres et Saint-Pierre.",
-               'image' => 'uploads/images/AD974_40FI72-ChanvertGolo.jpg'
-           ],
+               'image' => 'uploads/images/AD974_40FI72-ChanvertGolo.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village" ],
         ];
         return $picturesPart2;
     }
@@ -252,9 +252,7 @@ class PictureFixtures extends Fixture
                'subtitle' => '',
                'date' => new DateTime('1861-6-5'),
                'technic' => 'Aquarelle',
-               'size' => '19 X 11.5',
-               'category' => 'Travailleurs',
-               'number' => 10,
+               'size' => '19 X 11.5','category' => 'Travailleurs','number' => 10,
                'comment' => "Le titre de citoyen est une fierté pour" . "
                 les affranchis de 1848 qui travaillent sur la propriété " . "
                ou dans les Etablissements K/Véguen. La pluie est" . "
@@ -265,8 +263,8 @@ class PictureFixtures extends Fixture
                  frais à la 'boutique'. Depuis 1859, le salaire" . "
                  ( démonétisés, au cours forcé de 1 franc. " . "
                  peut-être celle de Bel-Air, au Tampon.",
-               'image' => 'uploads/images/FRAD974_40FI55.jpg'
-           ],[
+               'image' => 'uploads/images/FRAD974_40FI55.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
                'reference' => '40FI76',
                'title' => 'Cafrine et son petit au Tampon',
                'subtitle' => '',
@@ -281,37 +279,37 @@ class PictureFixtures extends Fixture
                 par l'employeur, selon les termes du contrat d'engagement. " . "
                La pratique ne change guère de ce" . "
                 qui était déjà prévu avant 1848 pour les esclaves, par le 'Code noir' de 1723.",
-               'image' => 'uploads/images/MORTIERdeTREVISE_caffrine1861.jpg'
-           ],[
-           'reference' => '40Fi105bis',
-           'title' => 'Le volcan de Bourbon vu du Pas de Bellecombre',
-           'subtitle' => 'Pas de Bellecombe',
-           'date' => new DateTime('1861-08-27'),
-           'technic' => 'Aquarelle',
-           'size' => '18 X 24',
-           'category' => 'Lieux',
-           'number' => 4,
-           'comment' => "Cela ne fait guère longtemps que le passage par " . "
+               'image' => 'uploads/images/MORTIERdeTREVISE_caffrine1861.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
+               'reference' => '40Fi105bis',
+               'title' => 'Le volcan de Bourbon vu du Pas de Bellecombre',
+               'subtitle' => 'Pas de Bellecombe',
+               'date' => new DateTime('1861-08-27'),
+               'technic' => 'Aquarelle',
+               'size' => '18 X 24',
+               'category' => 'Lieux',
+               'number' => 4,
+               'comment' => "Cela ne fait guère longtemps que le passage par " . "
            le Pas de Bellecombe a été trouvé." . "
             Le lieu porte le nom du gouverneur présent au moment " . "
             de la découverte du passage, mais c'est un esclave,
             " . " Jacob, qui l'a découvert, en réalité." . "
              Bellecombe avait commandité l'expédition.",
-           'image' => 'uploads/images/FRAD974_40FI105bis.jpg'
-           ],[
-           'reference' => '40Fi108',
-           'title' => 'Mamzelle',
-           'subtitle' => '',
-           'date' => new DateTime('1866-12-11'),
-           'technic' => 'Dessin',
-           'size' => '14.5 X 19.5',
-           'category' => 'Animaux',
-           'number' => 1,
-           'comment' => "Les chevaux sont rares sur les établissements: " . "
+               'image' => 'uploads/images/FRAD974_40FI105bis.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"
+               ],[
+               'reference' => '40Fi108',
+               'title' => 'Mamzelle','subtitle' => '',
+               'date' => new DateTime('1866-12-11'),
+               'technic' => 'Dessin','size' => '14.5 X 19.5',
+               'category' => 'Animaux',
+               'number' => 1,
+               'comment' => "Les chevaux sont rares sur les établissements: " . "
            ils font l'objet de soins attentifs," . "
             et ne sont montés que par les propriétaires des Etablissements et les contremaîtres. Selle et cuirs
             " . "  peuvent être fabriqués sur place: il y eut un atelier sur l'Etablissement du Tampon.",
-           'image' => 'uploads/images/Mamsellemini_40FI108.jpg'
+               'image' => 'uploads/images/Mamsellemini_40FI108.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"
            ],[
            'reference' => '40FI73',
            'title' => 'Charrette tirée par deux boeufs, dits créoles',
@@ -324,7 +322,8 @@ class PictureFixtures extends Fixture
            'comment' => "La charrette, les boeufs, et la 'femme à bras'" . "
             au fond sont des motifs qui se retrouvent souvent dans les " . "
             collections de Mortier de Trévise.",
-           'image' => 'uploads/images/trevise-cannes_1861.jpg'
+           'image' => 'uploads/images/trevise-cannes_1861.jpg',
+           'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"
            ],[
            'reference' => '40Fi94',
            'title' => 'Coco, en équilibre sur un arbre',
@@ -337,8 +336,8 @@ class PictureFixtures extends Fixture
            'comment' => "Coco est un gros lézard, inoffensif, qui vit" . "
             dans les jardins créoles, où il est utile. Il y a une dizaine" . "
              d'espèces de lézards à La Réunion.",
-           'image' => 'uploads/images/Cheminee_40FI79.jpg'
-           ],
+           'image' => 'uploads/images/Cheminee_40FI79.jpg',
+           'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
         ];
         return $picturesPart3;
     }
@@ -353,9 +352,7 @@ class PictureFixtures extends Fixture
                'subtitle' => 'Sortie du Bras de Jean Payet',
                'date' => new DateTime('1865-02-05'),
                'technic' => 'Dessin',
-               'size' => '30 X 22.5',
-               'category' => 'Lieux',
-               'number' => 1,
+               'size' => '30 X 22.5','category' => 'Lieux','number' => 1,
                'comment' => "Le tilbury à quatre roues est tiré" . "
                 par quatre mules (importées du Poitou). " . "
                La route, encore reconnaissable aujourd'hui, " . "
@@ -363,8 +360,8 @@ class PictureFixtures extends Fixture
                (ancienne ravine du Tampon), et la ravine des Cafres." . "
                 Au sommet de ces champs, une scierie fournissait" . "
                 le bois et les planches pour les Etablissements K/Véguen.",
-               'image' => 'uploads/images/Cheminee_40FI79.jpg'
-           ],
+               'image' => 'uploads/images/Cheminee_40FI79.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village" ],
            [
                'reference' => '40Fi77',
                'title' => 'Le bassin rouge au Tampon, la ravine descend',
@@ -376,8 +373,8 @@ class PictureFixtures extends Fixture
                'number' => 2,
                'comment' => "La cascade alimente un bassin" . "
                 à proximité d'un affluent de la rivière d'Abord.",
-               'image' => 'uploads/images/FRAD974_40FI77.jpg'
-           ],
+               'image' => 'uploads/images/FRAD974_40FI77.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village" ],
            [
                'reference' => '40Fi104',
                'title' => 'Excursion au volcan de Bourbon',
@@ -391,8 +388,8 @@ class PictureFixtures extends Fixture
                 sa belle-famille sont en excursion au volcan. Il n'y avait pas de route, alors:" . "
                  il faut donc dormir en chemin dans cette caverne autrefois" . "
                  connue des noirs marrons, autrement dit fugitifs - avant l'abolition de l'esclavage de 1848.",
-               'image' => 'uploads/images/Cheminee_40FI79.jpg'
-           ],
+               'image' => 'uploads/images/Cheminee_40FI79.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village" ],
            [
                'reference' => '40FI52',
                'title' => 'La vieille (Victorine) Mme Samsi Casernes',
@@ -408,8 +405,8 @@ class PictureFixtures extends Fixture
            " Son foulard noué sur la tête est taillé dans la même toile.",
 
 
-               'image' => 'uploads/images/FRAD974_40FI52.jpg'
-           ],
+               'image' => 'uploads/images/FRAD974_40FI52.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40FI66',
                'title' => 'Elise',
@@ -420,8 +417,8 @@ class PictureFixtures extends Fixture
                'category' => 'Travailleurs',
                'number' => 6,
                'comment' => "Elise est une petite fille de Victorine, issue de sa fille Coralie",
-               'image' => 'uploads/images/MORTIERTREVISE_Elise_1861.jpg'
-           ],
+               'image' => 'uploads/images/MORTIERTREVISE_Elise_1861.jpg',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40FI80',
                'title' => 'Tampon- Une usine',
@@ -439,7 +436,8 @@ class PictureFixtures extends Fixture
                  " . "  un homme, une femme avec un bébé qui porte " . "
                  une jarre sur la tête, et un autre personnage. L'auteur note
                  " . " le nom des arbres et plantes (aloés divers, vacoas, palmiers)"
-           ,                'image' => 'uploads/images/FRAD974_40FI80.jpg'],
+           ,                'image' => 'uploads/images/FRAD974_40FI80.jpg',
+           'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
         ];
         return $picturesPart4;
     }
@@ -457,5 +455,6 @@ class PictureFixtures extends Fixture
         $picture->setNumber($data['number']);
         $picture->setComment($data['comment']);
         $picture->setImage($data['image']);
+        $picture->setExhibition($this->getReference('exhibition'));
     }
 }
