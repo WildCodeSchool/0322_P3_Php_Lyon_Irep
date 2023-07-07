@@ -16,9 +16,10 @@
     <div>
         <img id="image-cropped" src="{{ asset(picture.image) }}" data-id="{{ picture.id }}">
     </div>
-    <div class="p-4">
-      <button class="bg-white" id="save-crop-button">Enregistrer la crop</button>
-    </div>
+   
+    <div class="flex justify-center items-center">
+      <button class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" id="save-crop-button" type="button"><a href="{{ path('app_picture_index') }}">Enregistrer la crop</a></button>
+	</div>
 {% endblock %}
 
 
