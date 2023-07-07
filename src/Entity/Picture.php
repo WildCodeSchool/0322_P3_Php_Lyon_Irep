@@ -26,11 +26,6 @@ class Picture
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $subtitle = null;
 
-
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    private ?string $date = null;
-
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $technic = null;
 
@@ -57,6 +52,25 @@ class Picture
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageCrop = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $smallImage = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mediumImage = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $largeImage = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Exhibition $exhibition = null;
 
 
     public function getId(): ?int
@@ -108,22 +122,6 @@ class Picture
 
         return $this;
     }
-
-
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-
-    public function setDate(?string $date): self
-    {
-        $this->date = $date;
-
-
-        return $this;
-    }
-
 
     public function getTechnic(): ?string
     {
@@ -225,6 +223,77 @@ class Picture
     {
         $this->image = $image;
 
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+        return $this;
+    }
+
+    public function getImageCrop(): ?string
+    {
+        return $this->imageCrop;
+    }
+
+    public function setImageCrop(?string $imageCrop): self
+    {
+        $this->imageCrop = $imageCrop;
+
+        return $this;
+    }
+
+    public function getSmallImage(): ?string
+    {
+        return $this->smallImage;
+    }
+
+    public function setSmallImage(?string $smallImage): self
+    {
+        $this->smallImage = $smallImage;
+
+        return $this;
+    }
+
+    public function getMediumImage(): ?string
+    {
+        return $this->mediumImage;
+    }
+
+    public function setMediumImage(?string $mediumImage): self
+    {
+        $this->mediumImage = $mediumImage;
+
+        return $this;
+    }
+
+    public function getLargeImage(): ?string
+    {
+        return $this->largeImage;
+    }
+
+    public function setLargeImage(?string $largeImage): self
+    {
+        $this->largeImage = $largeImage;
+
+        return $this;
+    }
+
+    public function getExhibition(): ?Exhibition
+    {
+        return $this->exhibition;
+    }
+
+    public function setExhibition(?Exhibition $exhibition): static
+    {
+        $this->exhibition = $exhibition;
 
         return $this;
     }
