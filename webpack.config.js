@@ -31,6 +31,10 @@ Encore
             to: 'logos/[path][name].[hash:8].[ext]',
         }
     ])
+    .copyFiles({
+        from: './assets/css',
+        to: 'css/[path][name].[ext]',
+    })
     /*
      * ENTRY CONFIG
      *
@@ -41,6 +45,10 @@ Encore
     .addEntry('galery', './assets/galery.js')
     .addEntry('modal', './assets/modal.js')
     .addEntry('statistic', './assets/statistic.js')
+    .addEntry('cropperjs', './assets/cropper.js')
+    
+
+
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

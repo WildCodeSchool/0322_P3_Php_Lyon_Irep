@@ -2,6 +2,7 @@
 # Files in the packages/ subdirectory configure your dependencies.
 
 parameters:
+    images_directory: '%kernel.project_dir%/public/uploads/images'
 
 services:
     _defaults:
