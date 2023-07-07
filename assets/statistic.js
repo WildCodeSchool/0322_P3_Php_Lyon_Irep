@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             datasets: [{
                 label: 'Visites de la page d’accueil',
                 data: homepageData.map(data => Number(data.count)),
+                backgroundColor: '#EAD07F',
                 fill: false,
                 borderColor: '#EAD07F',
                 tension: 0.1
@@ -54,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
             datasets: [{
                 label: 'Visites de la galerie',
                 data: galleryData.map(data => Number(data.count)),
+                backgroundColor: '#EAD07F',
                 fill: false,
                 borderColor: '#EAD07F',
                 tension: 0.1
@@ -71,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
             datasets: [{
                 label: 'Visites par oeuvre',
                 data: pictureViewsCounts,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                backgroundColor: '#EAD07F',
                 borderColor: '#EAD07F',
                 borderWidth: 1
             }]
