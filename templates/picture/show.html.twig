@@ -23,14 +23,17 @@
         
         <div class="picture-info flex flex-col justify-center basis-1/2 text-white p-8 relative"  id="zoom-img">
           <h3 class="text-3xl font-bold text-white block mb-5 font-titlefont">{{ picture.title }}</h3>
-          <span class="font-subtitlefont text-sm">Date de réalisation : {{ picture.date }}</span>
+          <span class="font-subtitlefont text-sm">Date de réalisation : {{ picture.date|date('Y-m-d') }}</span>
           <span class="font-subtitlefont text-sm pb-3.5">Format : {{ picture.size }}</span>
           <p class="font-contentfont text-justify">{{ picture.comment }}</p>
         </div>
     </div>
 
       <div class="container-button-picture p-2.5 flex justify-center items-center">
-        <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-contentfont" type="button" href="{{ path('app_picture_index') }}">Autres œuvres</a>
+        <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button" href="{{ path('app_picture_pdf', {id: picture.id}) }}">Télécharger la fiche de l'image</a>
+      </div>
+      <div class="container-button-picture p-2.5 flex justify-center items-center">
+        <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button" href="{{ path('app_picture_cropped', {id: picture.id}) }}">Redimensionner l'image</a>
       </div>
 
 <!-- The Modal -->

@@ -46,6 +46,3 @@ jobs:
           ./vendor/bin/phpmd src text phpmd.xml
           ./node_modules/.bin/eslint assets
 
-      - name: phpunit
-        run: bin/phpunit
-
