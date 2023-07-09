@@ -22,7 +22,7 @@ class PresentationExhibition
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\ManyToOne(inversedBy: 'presentationExhibitions')]
+    #[ORM\ManyToOne(inversedBy: 'presExhibitions')]
     private ?Exhibition $exhibition = null;
 
     public function getId(): ?int
