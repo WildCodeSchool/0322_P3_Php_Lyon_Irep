@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Picture;
 use App\Form\PictureType;
 use App\Repository\PictureRepository;
+use App\Service\StatisticService;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -20,24 +21,26 @@ use Imagine\Image\Box;
 #[Route('/picture')]
 class PictureController extends AbstractController
 {
+    private StatisticService $statisticService;
     private PictureRepository $pictureRepository;
 
-    public function __construct(PictureRepository $pictureRepository)
+    public function __construct(StatisticService $statisticService, PictureRepository $pictureRepository)
     {
+        $this->statisticService = $statisticService;
         $this->pictureRepository = $pictureRepository;
     }
+
     #[Route('/', name: 'app_picture_index', methods: ['GET'])]
     public function index(PictureRepository $pictureRepository): Response
     {
         $categories = $pictureRepository->getCategories();
+        $this->statisticService->recordPageVisit('app_picture_index');
+
         return $this->render('picture/index.html.twig', [
             'pictures' => $pictureRepository->findAll(),
             'categories' => $categories,
         ]);
     }
-
-
-
 
     #[Route('/new', name: 'app_picture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PictureRepository $pictureRepository, SluggerInterface $slugger): Response
@@ -123,6 +126,7 @@ class PictureController extends AbstractController
     #[Route('/{id}', name: 'app_picture_show', methods: ['GET'])]
     public function show(Picture $picture): Response
     {
+        $this->statisticService->recordPageVisit('app_picture_show', $picture);
         return $this->render('picture/show.html.twig', [
             'picture' => $picture,
         ]);

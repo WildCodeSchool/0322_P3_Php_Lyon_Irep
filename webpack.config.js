@@ -25,6 +25,12 @@ Encore
         // only copy files matching this pattern
         // pattern: /\.(png|jpg|jpeg)$/
     })
+    .copyFiles([
+        {
+            from: './assets/logos',
+            to: 'logos/[path][name].[hash:8].[ext]',
+        }
+    ])
     .copyFiles({
         from: './assets/css',
         to: 'css/[path][name].[ext]',
@@ -38,6 +44,7 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('galery', './assets/galery.js')
     .addEntry('modal', './assets/modal.js')
+    .addEntry('statistic', './assets/statistic.js')
     .addEntry('cropperjs', './assets/cropper.js')
     
 
