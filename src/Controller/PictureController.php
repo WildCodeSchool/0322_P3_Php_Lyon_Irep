@@ -19,6 +19,7 @@ use Knp\Snappy\Pdf;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
@@ -153,19 +154,26 @@ class PictureController extends AbstractController
 
 
     #[Route('/{id}/edit', name: 'app_picture_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
-    {
+    #[Security('is_granted("ROLE_ADMIN")')]
+    public function edit(
+        Request $request,
+        Picture $picture,
+        PictureRepository $pictureRepository,
+        SessionInterface $session
+    ): Response {
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $pictureRepository->save($picture, true);
 
+            $previousUrl = $session->get('previous_url');
 
-            return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
+            return $previousUrl ? $this->redirect($previousUrl) :
+            $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $session->set('previous_url', $request->headers->get('referer'));
 
         return $this->render('picture/edit.html.twig', [
             'picture' => $picture,
@@ -209,14 +217,30 @@ class PictureController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_picture_delete', methods: ['POST'])]
-    public function delete(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->request->get('_token'))) {
+    #[Security('is_granted("ROLE_ADMIN")')]
+    public function delete(
+        Request $request,
+        Picture $picture,
+        PictureRepository $pictureRepository,
+        SessionInterface $session
+    ): Response {
+        if (
+            $this->isCsrfTokenValid(
+                'delete' . $picture->getId(),
+                $request->request->get('_token')
+            )
+        ) {
             $pictureRepository->remove($picture, true);
         }
 
+        $previousUrl = $session->get('previous_url');
 
-        return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
+        return $previousUrl ? $this->redirect($previousUrl) :
+        $this->redirectToRoute(
+            'app_picture_index',
+            [],
+            Response::HTTP_SEE_OTHER
+        );
     }
 
     #[Route('/{id}/cropped', name: 'app_picture_cropped', methods: ['GET'])]

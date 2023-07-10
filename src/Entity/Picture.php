@@ -55,7 +55,7 @@ class Picture
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\OneToMany(mappedBy: 'picture', targetEntity: PageVisit::class)]
+    #[ORM\OneToMany(mappedBy: 'picture', targetEntity: PageVisit::class, cascade: ["remove"])]
     private Collection $pageVisits;
 
     public function __construct()

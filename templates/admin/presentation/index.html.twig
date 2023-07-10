@@ -74,10 +74,10 @@
                     <td class="px-6 py-4 w-48">
                         <img class="h-22 w-auto rounded-lg" src="{{ asset(picture.image) }}">
                     </td>
-                    {# <td class="px-6 py-4">
+                    <td class="px-6 py-4">
                         <a class="hover:text-red-500 hover:font-bold"
-                            href="{{ path('app_presentation_edit', {'id': picture.id}) }} ">Modifier</a>
-                    </td> #}
+                            href="{{ path('app_picture_edit', {'id': picture.id}) }} ">Modifier</a>
+                    </td>
                 </tr>
                 {% else %}
                 <tr>
