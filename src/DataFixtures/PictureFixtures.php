@@ -56,6 +56,7 @@ class PictureFixtures extends Fixture
                'number' => 1,
                'comment' => "Attribuée parfois à l'usine du Grand Tampon, mais c'est peu probable...",
                'image' => 'uploads/images/Cheminee_40FI79.jpg',
+               'link' => '#Cheminée #Tampon',
                'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40FI78',
@@ -68,8 +69,8 @@ class PictureFixtures extends Fixture
                'number' => 2,
                'comment' => "Le chemin de l'Etablissement existe toujours aujourd'hui, à 400 mètres d'altitude...",
                'image' => 'uploads/images/UsineBelAir_40FI78.jpg',
-               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
-           [
+               'link' => '#Usine #Tampon',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
                'reference' => '40FI106',
                'title' => 'Quartier St Pierre. Etablissement de la Rivière, montagnes de l\'Entre Deux',
                'subtitle' => 'Établissement de la Rivière',
@@ -94,8 +95,8 @@ class PictureFixtures extends Fixture
                    ici le témoin indispensable de l'usage de ses feuilles pour le " . "
                   tressage de sacs, destinés ensuite à transporter le sucre produit.",
                'image' => 'uploads/images/AD974_40FI106.jpg',
-               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
-           [
+               'link' => '#SaintPierre #Tampon',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
                'reference' => '40FI',
                'title' => 'Boutchiana- Indien',
                'subtitle' => '',
@@ -107,8 +108,8 @@ class PictureFixtures extends Fixture
                'comment' => "Boutchiana est devenu le domestique personnel" . "
                 de Ch.Mortier de Trévise, et il a vieilli de 6 ans.",
                'image' => 'uploads/images/ADR-40fi100-danse-des-noirs.jpg',
-               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
-           [
+               'link' => '#Indien #Tampon',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
                'reference' => '40FI91',
                'title' => 'Boutchiana- Casernes',
                'subtitle' => '',
@@ -122,8 +123,7 @@ class PictureFixtures extends Fixture
                peut-être a-t-il une fonction de gardien? Sur sa fiche" . "
                 d'engagement, il était recensé comme tailleur",
                'image' => 'uploads/images/FRAD974_40FI91.jpg',
-               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
-           [
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
                'reference' => '40FI90',
                'title' => 'Boutchiana-Casernes, de face',
                'subtitle' => '',
@@ -157,6 +157,7 @@ class PictureFixtures extends Fixture
                'number' => 7,
                'comment' => "Une autre petite fille de Victorine, sans doute dans la maison des Casernes.",
                'image' => 'uploads/images/FRAD974_40FI75.jpg',
+               'link' => '#Lucie',
                'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
                'reference' => '40Fi74',
@@ -173,8 +174,8 @@ class PictureFixtures extends Fixture
                  les fillettes fassent leur apprentissage de domestiques" . "
                   dans la propriété des Kerveguen.",
                'image' => 'uploads/images/FRAD974_40FI74.jpg',
-               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
-           [
+               'link' => '#Tina',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
                'reference' => '40Fi60',
                'title' => 'Jamali, Cafre, Gardien',
                'subtitle' => '',
@@ -188,8 +189,8 @@ class PictureFixtures extends Fixture
                comme engagé. Il est armé d'une lance, et surveille " . "
                l'orée des champs, ou les abords du camp des travailleurs.",
                'image' => 'uploads/images/Jamali.jpg',
-               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
-           [
+               'link' => '#Jamali',
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
                'reference' => '40FI53.2',
                'title' => 'La pli y fait pas rien, ça ! Tampon',
                'subtitle' => '',
@@ -205,8 +206,9 @@ class PictureFixtures extends Fixture
                chaussures, comme la majorité des travailleurs. " . "
                Janvier est en pleine période cyclonique: est-ce le cas ici?",
                'image' => 'uploads/images/FRAD974_40FI74.jpg',
+               'link' => '#Tampon',
                'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village" ],
-           [
+               [
                'reference' => '40FI59',
                'title' => 'Monsieur Bourrayne dans le jardin des Casernes',
                'subtitle' => '',
@@ -218,8 +220,7 @@ class PictureFixtures extends Fixture
                'comment' => "La suite du commentaire est: " . "
                'Allons, Virasami, vivement mettre la racine de ce plant (?) comme à Madras!'",
                'image' => 'uploads/images/MORTIER.de.TREVISE_Mr.Bourraye.dans.jardin.Casernes_1861.jpg',
-               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
-           [
+               'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
                'reference' => '40Fi72',
                'title' => 'Chanvert descend le chemin de la Plaine, Golo est à ses côtés',
                'subtitle' => 'Golo et Chanvert',
@@ -264,6 +265,7 @@ class PictureFixtures extends Fixture
                  ( démonétisés, au cours forcé de 1 franc. " . "
                  peut-être celle de Bel-Air, au Tampon.",
                'image' => 'uploads/images/FRAD974_40FI55.jpg',
+               'link' => '#Chanvert #Parapluie',
                'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],[
                'reference' => '40FI76',
                'title' => 'Cafrine et son petit au Tampon',
@@ -361,6 +363,7 @@ class PictureFixtures extends Fixture
                 Au sommet de ces champs, une scierie fournissait" . "
                 le bois et les planches pour les Etablissements K/Véguen.",
                'image' => 'uploads/images/Cheminee_40FI79.jpg',
+               'link' => '#Coco #Payet',
                'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village" ],
            [
                'reference' => '40Fi77',
@@ -374,6 +377,7 @@ class PictureFixtures extends Fixture
                'comment' => "La cascade alimente un bassin" . "
                 à proximité d'un affluent de la rivière d'Abord.",
                'image' => 'uploads/images/FRAD974_40FI77.jpg',
+               'link' => '#Coco #ravine',
                'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village" ],
            [
                'reference' => '40Fi104',
@@ -389,6 +393,7 @@ class PictureFixtures extends Fixture
                  il faut donc dormir en chemin dans cette caverne autrefois" . "
                  connue des noirs marrons, autrement dit fugitifs - avant l'abolition de l'esclavage de 1848.",
                'image' => 'uploads/images/Cheminee_40FI79.jpg',
+               'link' => '#Volcan #Bourbon',
                'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village" ],
            [
                'reference' => '40FI52',
@@ -403,8 +408,6 @@ class PictureFixtures extends Fixture
                une natte, vêtue de la traditionnelle " . "
                 robe de toile bleue fournie par l'employeur." .
            " Son foulard noué sur la tête est taillé dans la même toile.",
-
-
                'image' => 'uploads/images/FRAD974_40FI52.jpg',
                'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
            [
@@ -455,6 +458,7 @@ class PictureFixtures extends Fixture
         $picture->setNumber($data['number']);
         $picture->setComment($data['comment']);
         $picture->setImage($data['image']);
+        $picture->setLink(array_key_exists('link', $data) ? $data['link'] : null);
         $picture->setExhibition($this->getReference('exhibition'));
     }
 }

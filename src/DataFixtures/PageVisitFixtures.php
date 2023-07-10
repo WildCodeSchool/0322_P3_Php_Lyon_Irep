@@ -8,6 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use DateTime;
 
 class PageVisitFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -17,19 +18,20 @@ class PageVisitFixtures extends Fixture implements DependentFixtureInterface
 
         $pictures = $manager->getRepository(Picture::class)->findAll();
 
+        new DateTime('-1 month');
+
         foreach ($pictures as $picture) {
             $numberOfVisits = $faker->numberBetween(1, 10);
 
             for ($i = 0; $i < $numberOfVisits; $i++) {
+                $visitDate = $faker->dateTimeBetween('-1 month', 'now');
+
                 $pageVisit = new PageVisit();
-                $pageVisit->setVisitedAt($faker->dateTimeBetween('-1 year', 'now'));
+                $pageVisit->setVisitedAt($visitDate);
                 $pageVisit->setPicture($picture);
 
-                if ($i < 5) {
-                    $pageVisit->setRouteName('app_home');
-                } else {
-                    $pageVisit->setRouteName('app_picture_index');
-                }
+                $route = $faker->randomElement(['app_home', 'app_home', 'app_picture_index']);
+                $pageVisit->setRouteName($route);
 
                 $manager->persist($pageVisit);
             }
