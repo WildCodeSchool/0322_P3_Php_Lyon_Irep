@@ -107,7 +107,6 @@ class PictureController extends AbstractController
         ]);
     }
 
-
     #[Route('/{id}/edit', name: 'app_picture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
     {
