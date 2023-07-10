@@ -1,0 +1,48 @@
+
+<button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+    <span class="sr-only">Open sidebar</span>
+    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+       <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+    </svg>
+ </button>
+ 
+ <aside id="default-sidebar" class="fixed top-0 left-0 z-40 h-full w-2/6 lg:w-1/6 transition-transform -translate-x-full lg:translate-x-0 font-titlefont text-sm" aria-label="Sidebar">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 pt-10">
+      
+      <h1 class=" text-center text-2xl font-bold pb-5 border-b">IREP </h1>
+
+      <ul class="space-y-5 font-medium pt-5">
+          <li>
+             <a href="{{ path('app_admin') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200">
+                <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8v10a1 1 0 0 0 1 1h4v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5h4a1 1 0 0 0 1-1V8M1 10l9-9 9 9"/></svg>
+                <span class="ml-3">Accueil</span>
+             </a>
+          </li>
+          <li>
+             <a href="{{ path('app_exhibition_index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200">
+                <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v3m5-3v3m5-3v3M1 7h7m1.506 3.429 2.065 2.065M19 7h-2M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm6 13H6v-2l5.227-5.292a1.46 1.46 0 0 1 2.065 2.065L8 16Z"/></svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">Expositions</span>
+             </a>
+          </li>
+          <li>
+             <a href="{{ path('app_newsletter_index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200">  
+               <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8M1 8a1 1 0 0 1 .4-.8l8-5.75a1 1 0 0 1 1.2 0l8 5.75a1 1 0 0 1 .4.8M1 8l8.4 6.05a1 1 0 0 0 1.2 0L19 8"/></svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">Newsletter</span>
+             </a>
+          </li>
+          <li>
+             <a href="{{ path('admin_statistics') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200">
+                <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1v14h16m0-9-3-2-3 5-3-2-3 4"/></svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">Statistiques</span>
+             </a>
+          </li>
+          <li>
+             <a href="{{ path('app_logout') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200">
+                <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">Déconnexion</span>
+             </a>
+          </li>
+       </ul>
+    </div>
+    
+ </aside>

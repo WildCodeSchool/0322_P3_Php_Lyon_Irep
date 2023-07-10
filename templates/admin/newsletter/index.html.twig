@@ -1,0 +1,53 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block title %}Newsletter{% endblock %}
+
+{% block body %}
+
+<div class="my-4 mx-auto p-2 md:p-12">
+    <h3 class="text-3xl font-bold font-title my-2 ">Abonnés newsletter</h3>
+    <hr class="h-px my-5 bg-stone-950 border-0">
+
+    <div class="relative overflow-x-auto">
+
+        {% for exhibition in exhibitions %}
+        <p class="text-2xl font-subtitlefont italic py-5">{{ exhibition.name }}</p>
+
+        <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-gray-700 font-titlefont uppercase bg-gray-100">
+                <tr>
+                    <th scope="col" class="px-6 py-3 w-3/4">Email</th>
+                    <th scope="col" class="px-6 py-3">Modifier</th>
+                    <th scope="col" class="px-6 py-3">Supprimer</th>
+                </tr>
+            </thead>
+
+            {% for newsletter in exhibition.newsletters %}
+
+            <tbody class="font-contentfont">
+                <tr class="bg-white border-b mb-10">
+                    <td class="px-6 py-4 w-3/4">{{ newsletter.email }}</td>
+
+                    <td class="px-6 py-4">
+                        <a class="hover:text-sky-600 hover:font-bold"
+                            href="{{ path('app_newsletter_edit', {'id': newsletter.id}) }}">Modifier</a>
+                    </td>
+
+                    <td class="px-6 py-4 hover:text-red-500 hover:font-bold">
+                        {{ include('admin/newsletter/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+                {% else %}
+
+                <tr>
+                    <td colspan="5">Aucun mail enregistré </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+        {% endfor %}
+
+{% endblock %}

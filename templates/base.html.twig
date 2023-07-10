@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="icon" type="image/png" href="{{ asset('build/images/favicon.png') }}"/>
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <title>
             {% block title %}IREP{% endblock %}
         </title>
@@ -22,5 +21,6 @@
         
         {% include 'includes/_navbar.html.twig' %}
         {% block body %}{% endblock %}  
+                {% include 'includes/footer.html.twig' %}
     </body>
 </html>
