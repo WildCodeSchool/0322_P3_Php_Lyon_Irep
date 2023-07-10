@@ -35,8 +35,7 @@
 			<p class="font-contentfont text-justify">{{ picture.comment }}</p>
        <div class="flex mt-5">
 	       {% if app.session.get('access_token') is null %}
-<button id="openModalTweeter" class="custom-button-picture px-4 py-2 rounded-lg mt-2 bg-accentcolor font-titlefont" onclick="window.location='{{ path('twitter_authenticate', { 'id': picture.id }) }}';"> 
- {% else %}
+<button id="authenticate" class="custom-button-picture px-4 py-2 rounded-lg mt-2 bg-accentcolor font-titlefont" data-url="{{ path('twitter_authenticate', { 'id': picture.id }) }}"> {% else %}
  <button id="openModalTweeter" class="custom-button-picture px-4 py-2 rounded-lg mt-2 bg-accentcolor font-titlefont"> 
 {% endif %}
  <div class="flex mt-1 justify-center">
