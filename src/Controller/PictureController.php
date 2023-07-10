@@ -20,14 +20,11 @@ use App\Service\CroppedService;
 class PictureController extends AbstractController
 {
     private StatisticService $statisticService;
-    private CroppedService $croppedService;
 
     public function __construct(
         StatisticService $statisticService,
-        CroppedService $croppedService
     ) {
         $this->statisticService = $statisticService;
-        $this->croppedService = $croppedService;
     }
 
     #[Route('/', name: 'app_picture_index', methods: ['GET'])]
@@ -135,9 +132,15 @@ class PictureController extends AbstractController
     }
 
     #[Route('/upload-crop', name: 'upload_crop', methods: ['POST'])]
-    public function uploadCropAction(Request $request): Response
+    public function uploadCropAction(Request $request, CroppedService $croppedService): Response
     {
-        return $this->croppedService->uploadCropAction($request);
+        $result = $croppedService->uploadCropAction($request);
+
+        return new Response(
+            json_encode($result),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/json']
+        );
     }
 
     #[Route('/{id}', name: 'app_picture_delete', methods: ['POST'])]
@@ -154,6 +157,10 @@ class PictureController extends AbstractController
     #[Route('/{id}/cropped', name: 'app_picture_cropped', methods: ['GET'])]
     public function cropped(Picture $picture): Response
     {
-        return $this->croppedService->cropped($picture);
+
+        $html =  $this->render('picture/cropped.html.twig', [
+            'picture' => $picture,
+        ]);
+        return new Response($html);
     }
 }

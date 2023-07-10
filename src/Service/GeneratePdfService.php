@@ -4,9 +4,6 @@ namespace App\Service;
 
 use App\Repository\PictureRepository;
 use Knp\Snappy\Pdf;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
 class GeneratePdfService
@@ -20,7 +17,7 @@ class GeneratePdfService
         $this->knpSnappy = $knpSnappy;
         $this->twig = $twig;
     }
-    public function generatePdfExhibition(): Response
+    public function generatePdfExhibition(): string
     {
         set_time_limit(120);
         $pictures = $this->pictureRepository->findAll();
@@ -30,16 +27,6 @@ class GeneratePdfService
         $pdf = $this->knpSnappy->getOutputFromHtml($html);
         $pdfFilePath = 'downloadPdf/Download.pdf';
         file_put_contents($pdfFilePath, $pdf);
-        $response = new BinaryFileResponse($pdfFilePath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Download.pdf');
-        return $response;
-    }
-
-    public function downloadPdf(): BinaryFileResponse
-    {
-        $pdfFilePath = 'downloadPdf/Download.pdf';
-        $response = new BinaryFileResponse($pdfFilePath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Download.pdf');
-        return $response;
+        return $pdfFilePath;
     }
 }

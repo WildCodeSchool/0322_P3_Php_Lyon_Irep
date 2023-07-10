@@ -9,27 +9,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Picture;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 #[Route('/pdf')]
 class GeneratePdfController extends AbstractController
 {
-    private GeneratePdfService $generatePdfService;
-
-    public function __construct(GeneratePdfService $generatePdfService)
-    {
-        $this->generatePdfService = $generatePdfService;
-    }
-
     #[Route('/exhibition', name: 'app_picture_exhibition_pdf', methods: ['GET'])]
-    public function generateExhibitionPdf(): Response
+    public function generatePdfAction(GeneratePdfService $generatePdfService): BinaryFileResponse
     {
-        return $this->generatePdfService->generatePdfExhibition();
+        $pdfFilePath = $generatePdfService->generatePdfExhibition();
+
+        $response = new BinaryFileResponse($pdfFilePath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Download.pdf');
+
+        return $response;
     }
 
     #[Route('/download', name: 'app_picture_download_pdf', methods: ['GET'])]
-    public function downloadPdf(): Response
+    public function downloadPdf(): BinaryFileResponse
     {
-        return $this->generatePdfService->downloadPdf();
+        $pdfFilePath = 'downloadPdf/Download.pdf';
+        $response = new BinaryFileResponse($pdfFilePath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Download.pdf');
+        return $response;
     }
 
     #[Route('/picture/{id}', name: 'app_picture_pdf', methods: ['GET'])]
