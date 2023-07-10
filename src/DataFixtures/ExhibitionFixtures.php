@@ -13,7 +13,7 @@ class ExhibitionFixtures extends Fixture
     {
         $exhibition = new Exhibition();
         $exhibition->setName("Bel'air, d'une sucrerie à la naissance d'un village");
-        $exhibition->setStart(DateTime::createFromFormat('d/m/Y', '16/09/2023'));
+        $exhibition->setStart(DateTime::createFromFormat('d/m/Y', '15/05/2023'));
         $exhibition->setEnd(DateTime::createFromFormat('d/m/Y', '17/09/2023'));
 
         $manager->persist($exhibition);
