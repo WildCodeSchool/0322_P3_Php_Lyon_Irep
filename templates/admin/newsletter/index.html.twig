@@ -11,8 +11,12 @@
     <div class="relative overflow-x-auto">
 
         {% for exhibition in exhibitions %}
-        <p class="text-2xl font-subtitlefont italic py-5">{{ exhibition.name }}</p>
-
+        
+        <div class="flex justify-between items-center">
+            <p class="text-2xl font-subtitlefont italic py-5">{{ exhibition.name }}</p> 
+            <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-fit h-fit px-4 py-2 text-center "><a href="{{ path('app_newsletter_export_csv', {'id': exhibition.id}) }}">Exporter les données</a>
+            </button>
+        </div>
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="text-gray-700 font-titlefont uppercase bg-gray-100">
                 <tr>
@@ -43,11 +47,11 @@
                     <td colspan="5">Aucun mail enregistré </td>
                 </tr>
 
-            {% endfor %}
+                {% endfor %}
             </tbody>
 
         </table>
 
         {% endfor %}
 
-{% endblock %}
+        {% endblock %}
