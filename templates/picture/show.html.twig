@@ -34,8 +34,12 @@
 				{{ picture.size }}</span>
 			<p class="font-contentfont text-justify">{{ picture.comment }}</p>
        <div class="flex mt-5">
-			<button id="openModalTweeter" class="custom-button-picture px-4 py-2 rounded-lg mt-2 bg-accentcolor font-titlefont">
-      <div class="flex mt-1 justify-center">
+	       {% if app.session.get('access_token') is null %}
+<button id="openModalTweeter" class="custom-button-picture px-4 py-2 rounded-lg mt-2 bg-accentcolor font-titlefont" onclick="window.location='{{ path('twitter_authenticate', { 'id': picture.id }) }}';"> 
+ {% else %}
+ <button id="openModalTweeter" class="custom-button-picture px-4 py-2 rounded-lg mt-2 bg-accentcolor font-titlefont"> 
+{% endif %}
+ <div class="flex mt-1 justify-center">
        <svg
 			  xmlns="http://www.w3.org/2000/svg"
 			  class="h-5 w-5 mr-2"
