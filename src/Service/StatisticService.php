@@ -45,7 +45,6 @@ class StatisticService
         return $this->pageVisitRepository->count(['picture' => $picture]);
     }
 
-
     public function getPageVisitsCountByRouteWithDates(string $routeName): array
     {
         $visits = $this->pageVisitRepository->getPageVisitsCountByRouteWithDates($routeName);

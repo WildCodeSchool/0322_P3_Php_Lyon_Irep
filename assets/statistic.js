@@ -88,3 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+document.getElementById('exhibitionSelect').addEventListener('change', function() {
+    window.location.href = this.value;
+});

@@ -11,6 +11,19 @@
 <div class="flex justify-center items-center mt-10">
     <div class="justify-center font-titlefont w-3/5">
         <h1 class="text-3xl font-bold mb-4 text-center">Statistiques</h1>
+
+        <div class="mb-4">
+            <label for="exhibitionSelect">Choisissez une exposition:</label>
+            <select id="exhibitionSelect" onchange="location = this.value;">
+                {% for exhibition in exhibitions %}
+                    <option value="{{ path('admin_statistics', {'id': exhibition.id}) }}"
+                    {% if selectedExhibition is not null and exhibition.id == selectedExhibition.id %}selected{% endif %}>
+                        {{ exhibition.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
         <div class="space-y-8">
             <canvas id="homepageChart" data-chart='{{ homePageVisitsCount|json_encode|escape('html_attr') }}'></canvas>
             <hr class="w-4/5 mx-auto border-gray-300">
