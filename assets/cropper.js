@@ -1,6 +1,6 @@
 import "./styles/cropper.scss";
 import "cropperjs/dist/cropper.css";
-import Cropper from 'cropperjs';
+import { Cropper } from 'cropperjs';
 
 const image = document.getElementById('image-cropped');
 const id = image.dataset.id;

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Picture;
 use App\Form\PictureType;
 use App\Repository\PictureRepository;
+use App\Service\StatisticService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,12 +19,14 @@ use App\Service\CroppedService;
 #[Route('/picture')]
 class PictureController extends AbstractController
 {
+    private StatisticService $statisticService;
     private CroppedService $croppedService;
 
     public function __construct(
+        StatisticService $statisticService,
         CroppedService $croppedService
     ) {
-
+        $this->statisticService = $statisticService;
         $this->croppedService = $croppedService;
     }
 
@@ -31,6 +34,8 @@ class PictureController extends AbstractController
     public function index(PictureRepository $pictureRepository): Response
     {
         $categories = $pictureRepository->getCategories();
+        $this->statisticService->recordPageVisit('app_picture_index');
+
         return $this->render('picture/index.html.twig', [
             'pictures' => $pictureRepository->findAll(),
             'categories' => $categories,
@@ -102,6 +107,7 @@ class PictureController extends AbstractController
     #[Route('/{id}', name: 'app_picture_show', methods: ['GET'])]
     public function show(Picture $picture): Response
     {
+        $this->statisticService->recordPageVisit('app_picture_show', $picture);
         return $this->render('picture/show.html.twig', [
             'picture' => $picture,
         ]);

@@ -10,7 +10,10 @@
             {{ encore_entry_script_tags('galery') }}
         {% endblock %}
 {%block body %}
-	<section class="galery flex flex-col justify-center items-center overflow-hidden h-screen transition duration-250 text-white font-subtitlefont bg-backgroundcolor">
+	<div id="loading-screen" class="fixed inset-0 w-full h-full bg-black flex justify-center items-center z-40">
+    <img src="{{ asset('build/images/loading.gif') }}" alt="Chargement..."/>
+</div>
+	<section class="galery flex flex-col justify-center items-center overflow-hidden mt-8 mb-8 pt-8 pb-8 transition duration-250 text-white font-subtitlefont bg-backgroundcolor">
 		<div class="category-buttons relative mb-5">
   <div class="buttons-container mb-0.5">
     {% for category in categories %}

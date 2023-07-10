@@ -10,8 +10,10 @@ use App\Repository\NewsletterRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\Encoder\EncoderInterface;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('admin/newsletter')]
@@ -57,5 +59,30 @@ class NewsletterController extends AbstractController
         }
 
         return $this->redirectToRoute('app_newsletter_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/export-csv', name: 'app_newsletter_export_csv', methods: ['GET'])]
+    public function exportCsv(
+        Exhibition $exhibition,
+        EncoderInterface $csvEncoder,
+        NewsletterRepository $newsletterRepository
+    ): Response {
+         $newsletters = $newsletterRepository->findBy(
+             ['exhibition' => $exhibition],
+         );
+
+        $emailsCsv = $csvEncoder->encode($newsletters, 'csv');
+
+        $fileContent = $emailsCsv;
+        $response = new Response($fileContent);
+
+        $disposition = HeaderUtils::makeDisposition(
+            HeaderUtils::DISPOSITION_ATTACHMENT,
+            'mails.csv'
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+
+        return $response;
     }
 }
