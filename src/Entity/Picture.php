@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,11 +27,6 @@ class Picture
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $subtitle = null;
-
-
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    private ?string $date = null;
-
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $technic = null;
@@ -57,6 +54,33 @@ class Picture
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
+
+    #[ORM\OneToMany(mappedBy: 'picture', targetEntity: PageVisit::class)]
+    private Collection $pageVisits;
+
+    public function __construct()
+    {
+        $this->pageVisits = new ArrayCollection();
+    }
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageCrop = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $smallImage = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mediumImage = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $largeImage = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Exhibition $exhibition = null;
 
 
     public function getId(): ?int
@@ -108,22 +132,6 @@ class Picture
 
         return $this;
     }
-
-
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-
-    public function setDate(?string $date): self
-    {
-        $this->date = $date;
-
-
-        return $this;
-    }
-
 
     public function getTechnic(): ?string
     {
@@ -225,6 +233,107 @@ class Picture
     {
         $this->image = $image;
 
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PageVisit>
+     */
+    public function getPageVisits(): Collection
+    {
+        return $this->pageVisits;
+    }
+
+    public function addPageVisit(PageVisit $pageVisit): static
+    {
+        if (!$this->pageVisits->contains($pageVisit)) {
+            $this->pageVisits->add($pageVisit);
+            $pageVisit->setPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removePageVisit(PageVisit $pageVisit): static
+    {
+        if ($this->pageVisits->removeElement($pageVisit)) {
+            // set the owning side to null (unless already changed)
+            if ($pageVisit->getPicture() === $this) {
+                $pageVisit->setPicture(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+        return $this;
+    }
+
+    public function getImageCrop(): ?string
+    {
+        return $this->imageCrop;
+    }
+
+    public function setImageCrop(?string $imageCrop): self
+    {
+        $this->imageCrop = $imageCrop;
+
+        return $this;
+    }
+
+    public function getSmallImage(): ?string
+    {
+        return $this->smallImage;
+    }
+
+    public function setSmallImage(?string $smallImage): self
+    {
+        $this->smallImage = $smallImage;
+
+        return $this;
+    }
+
+    public function getMediumImage(): ?string
+    {
+        return $this->mediumImage;
+    }
+
+    public function setMediumImage(?string $mediumImage): self
+    {
+        $this->mediumImage = $mediumImage;
+
+        return $this;
+    }
+
+    public function getLargeImage(): ?string
+    {
+        return $this->largeImage;
+    }
+
+    public function setLargeImage(?string $largeImage): self
+    {
+        $this->largeImage = $largeImage;
+
+        return $this;
+    }
+
+    public function getExhibition(): ?Exhibition
+    {
+        return $this->exhibition;
+    }
+
+    public function setExhibition(?Exhibition $exhibition): static
+    {
+        $this->exhibition = $exhibition;
 
         return $this;
     }

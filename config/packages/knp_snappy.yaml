@@ -1,0 +1,19 @@
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+        options:
+           
+            page-size: A4
+            encoding: UTF-8
+            margin-top: 15mm
+            margin-bottom: 30mm
+            margin-left: 20mm
+            margin-right: 20mm
+            footer-center: "Page [page]"
+            zoom: 0.8
+            footer-spacing: 5
+    image:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
+        options:    []

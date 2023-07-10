@@ -1,0 +1,21 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block title %}Modifier la présentation{% endblock %}
+
+{% block body %}
+<div class="my-4 mx-auto p-2 md:p-12">
+    <h3 class="text-3xl font-bold font-title my-6 ">Modification de la présentation / carrousel</h3>
+    <hr class="h-px my-5 bg-stone-950 border-0">
+
+    {{ include('admin/presentation/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {{ include('admin/presentation/_delete_form.html.twig') }}
+    <div class="flex justify-end">
+        <button
+            class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center"><a
+                <a href="{{ path('exhibition_show_presentation', {'id': exhibition.id}) }}">Retour aux présentations</a>
+        </button>
+    </div>
+</div>
+
+{% endblock %}

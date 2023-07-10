@@ -1,0 +1,25 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block title %}Statistique{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('statistic') }}
+{% endblock %}
+
+{% block body %}
+<div class="flex justify-center items-center mt-10">
+    <div class="justify-center font-titlefont w-3/5">
+        <h1 class="text-3xl font-bold mb-4 text-center">Statistiques</h1>
+        <div class="space-y-8">
+            <canvas id="homepageChart" data-chart='{{ homePageVisitsCount|json_encode|escape('html_attr') }}'></canvas>
+            <hr class="w-4/5 mx-auto border-gray-300">
+            <canvas id="galleryChart" data-chart='{{ galleryVisitsCount|json_encode|escape('html_attr') }}'></canvas>
+            <hr class="w-4/5 mx-auto border-gray-300">
+            <div class="flex justify-center">
+                <canvas id="pictureViewsChart" data-chart='{{ pictures|json_encode|escape('html_attr') }}'></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

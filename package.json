@@ -28,7 +28,9 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "chart.js": "^4.3.0",
         "colorthief": "^2.4.0",
+        "cropperjs": "^1.5.13",
         "drift-zoom": "^1.5.1",
         "flowbite": "^1.6.5"
     }
