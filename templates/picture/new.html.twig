@@ -1,16 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'adminbase.html.twig' %}
 
 {% block title %}New Picture{% endblock %}
 
 {% block body %}
     <div class="bg-zinc-200 w-3/4 my-10 mx-auto p-12">
-    <h3 class="text-3xl font-bold font-title my-6 ">Ajouter une nouvelle aquarelle</h3>
-    <hr class="h-px my-5 bg-stone-950 border-0">
-    <div class="mt-1">
+    <h3 class="text-3xl font-bold font-title my-2 ">Ajouter une nouvelle oeuvre</h3>
+     <p class="text-2xl font-subtitlefont italic">{{ exhibition.name }}</p>
+    <hr class="h-px my-5 bg-stone-950 border-0 mt-1">
         {{ include('picture/_form.html.twig') }}
-    </div>
-    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center "><a href="{{ path('app_picture_index') }}">retour sur la liste des aquarelles</a>
+    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center my-4"><a href="{{ path('app_picture_index') }}">Retour à la modification de l'exposition</a>
     </button>
-
+</div>
 </div>
 {% endblock %}
+      {% block javascripts %}
+        {{ encore_entry_script_tags('formPicture') }}
+      {% endblock %}
+

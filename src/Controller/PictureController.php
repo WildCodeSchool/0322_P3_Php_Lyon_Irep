@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Picture;
 use App\Form\PictureType;
+use App\Repository\ExhibitionRepository;
 use App\Repository\PictureRepository;
 use App\Service\StatisticService;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -43,15 +44,24 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_picture_new', methods: ['GET', 'POST'])]
+    #[Route('/new/{id}', name: 'app_picture_new', methods: ['GET', 'POST'])]
     #[Security('is_granted("ROLE_ADMIN")')]
-    public function new(Request $request, PictureRepository $pictureRepository, SluggerInterface $slugger): Response
-    {
+    public function new(
+        Request $request,
+        PictureRepository $pictureRepository,
+        SluggerInterface $slugger,
+        int $id,
+        ExhibitionRepository $exhibitionRepository
+    ): Response {
+        $exhibition = $exhibitionRepository->find($id);
         $picture = new Picture();
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('newCategory')->getData() !== null) {
+                $picture->setCategory($form->get('newCategory')->getData());
+            }
             $imageFile = $form->get('photoFile')->getData();
             if ($imageFile) {
                 $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -91,20 +101,27 @@ class PictureController extends AbstractController
                         ->save($this->getParameter('images_directory') . '/largeImage' . '/' . $largeImagePath);
                     $picture->setLargeImage($largeImagePath);
 
+                    $picture->setExhibition($exhibition);
                     $pictureRepository->save($picture, true);
                 } catch (FileException $e) {
                     die("Erreur lors du chargement de l'image !!");
                 }
             }
 
-            return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'exhibition_show_presentation',
+                ['id' => $exhibition->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('picture/new.html.twig', [
+            'exhibition' => $exhibition,
         'picture' => $picture,
         'form' => $form,
         ]);
     }
+
     #[Route('/pdf', name: 'app_picture_exhibition_pdf', methods: ['GET'])]
     public function generatePdfExhibition(PictureRepository $pictureRepository, Pdf $knpSnappy): Response
     {
