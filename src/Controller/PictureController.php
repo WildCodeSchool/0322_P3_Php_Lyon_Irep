@@ -17,6 +17,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Knp\Snappy\Pdf;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
@@ -43,6 +44,7 @@ class PictureController extends AbstractController
     }
 
     #[Route('/new', name: 'app_picture_new', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
     public function new(Request $request, PictureRepository $pictureRepository, SluggerInterface $slugger): Response
     {
         $picture = new Picture();
