@@ -132,8 +132,8 @@ class TwitterController extends AbstractController
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
         $session->set('picture_id', $id);
-        
-    
+
+
         try {
             if ($accessToken === null || $accessToken === '') {
                 return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
@@ -141,7 +141,7 @@ class TwitterController extends AbstractController
                     '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
                     'state&code_challenge=challenge&code_challenge_method=plain');
             }
-    
+
             return $this->redirectToRoute('app_picture_show', ['id' => $id]);
         } catch (ClientException $e) {
             if ($e->getCode() === 401) {
