@@ -1,7 +1,3 @@
-// Import styles and dependencies
-import "./styles/app.scss";
-import "./bootstrap";
-import "flowbite";
 
 document.querySelector('[data-collapse-toggle="navbar-hamburger"]').addEventListener('click', function() {
     const burgerMenu = document.getElementById('navbar-hamburger');
