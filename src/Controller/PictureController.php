@@ -31,10 +31,11 @@ class PictureController extends AbstractController
     }
 
     #[Route('/', name: 'app_picture_index', methods: ['GET'])]
-    public function index(PictureRepository $pictureRepository, 
-    ExhibitionRepository $exhibitionRepository, 
-    Request $request): Response
-    {
+    public function index(
+        PictureRepository $pictureRepository,
+        ExhibitionRepository $exhibitionRepository,
+        Request $request
+    ): Response {
         $exhibitionId = $request->query->get('exhibition');
         $exhibition = null;
 
