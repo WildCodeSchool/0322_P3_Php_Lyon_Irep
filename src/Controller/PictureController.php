@@ -30,21 +30,15 @@ class PictureController extends AbstractController
         $this->statisticService = $statisticService;
     }
 
-    #[Route('/', name: 'app_picture_index', methods: ['GET'])]
+    #[Route('/exhibition/{id}', name: 'app_picture_index', methods: ['GET'])]
     public function index(
         PictureRepository $pictureRepository,
         ExhibitionRepository $exhibitionRepository,
-        Request $request
+        int $id
     ): Response {
-        $exhibitionId = $request->query->get('exhibition');
-        $exhibition = null;
+        $exhibition = $exhibitionRepository->find($id);
 
-        if ($exhibitionId) {
-            $exhibition = $exhibitionRepository->find($exhibitionId);
-        }
-
-        $pictures = $exhibition ? $pictureRepository->findBy(['exhibition' => $exhibition])
-         : $pictureRepository->findAll();
+        $pictures = $pictureRepository->findBy(['exhibition' => $exhibition]);
 
         $categories = $pictureRepository->getCategoriesForExhibition($exhibition);
 
@@ -55,6 +49,7 @@ class PictureController extends AbstractController
             'categories' => $categories,
         ]);
     }
+
 
     #[Route('/new/{id}', name: 'app_picture_new', methods: ['GET', 'POST'])]
     #[Security('is_granted("ROLE_ADMIN")')]
