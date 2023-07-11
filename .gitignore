@@ -3,6 +3,7 @@
 .DS_Store
 /public/uploads
 *.exe
+public/downloadPdf/Download.pdf
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php

@@ -49,7 +49,13 @@
 			{% endfor %}
 		</div>
 	</section>
-<div class="flex justify-center items-center">
-	<a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button" href="{{ path('app_picture_exhibition_pdf') }}">Télécharger la fiche de l'éxposition</a>
-	</div>
+	
+	<div class="flex justify-center items-center">
+		{% if is_granted('ROLE_ADMIN') %}
+    <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button" href="{{ path('app_picture_exhibition_pdf') }}">Admin</a>
+	{% endif %}
+	<div class="mx-4"></div>
+    <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button" href="{{ path('app_picture_download_pdf') }}">Télécharger la fiche de l'éxposition</a>
+</div>
+
 {% endblock %}
