@@ -1,13 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'adminbase.html.twig' %}
 
-{% block title %}Edit Picture{% endblock %}
+{% block title %}Modifier une oeuvre{% endblock %}
 
 {% block body %}
-    <h1>Edit Picture</h1>
-
+    <div class="bg-zinc-200 w-3/4 my-10 mx-auto p-12">
+    <h3 class="text-3xl font-bold font-title my-2 ">Modification de l'oeuvre</h3>
+     <p class="text-2xl font-subtitlefont italic">{{ picture.title }}</p>
+    <hr class="h-px my-5 bg-stone-950 border-0 mt-1">
     {{ include('picture/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_picture_index') }}">back to list</a>
-
     {{ include('picture/_delete_form.html.twig') }}
+</div>
+    <div class="flex justify-between">
+    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center my-4"><a href="{{ path('app_picture_index') }}">Retour à la modification de l'exposition</a>
+    </button>
+</div>
+</div>
 {% endblock %}

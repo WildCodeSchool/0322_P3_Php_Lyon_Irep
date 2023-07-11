@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Picture;
 use App\Form\PictureType;
+use App\Repository\ExhibitionRepository;
 use App\Repository\PictureRepository;
 use App\Service\StatisticService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use App\Service\CroppedService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
@@ -39,14 +42,24 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_picture_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PictureRepository $pictureRepository, SluggerInterface $slugger): Response
-    {
+    #[Route('/new/{id}', name: 'app_picture_new', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN")')]
+    public function new(
+        Request $request,
+        PictureRepository $pictureRepository,
+        SluggerInterface $slugger,
+        int $id,
+        ExhibitionRepository $exhibitionRepository
+    ): Response {
+        $exhibition = $exhibitionRepository->find($id);
         $picture = new Picture();
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('newCategory')->getData() !== null) {
+                $picture->setCategory($form->get('newCategory')->getData());
+            }
             $imageFile = $form->get('photoFile')->getData();
             if ($imageFile) {
                 $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -86,16 +99,22 @@ class PictureController extends AbstractController
                         ->save($this->getParameter('images_directory') . '/largeImage' . '/' . $largeImagePath);
                     $picture->setLargeImage($largeImagePath);
 
+                    $picture->setExhibition($exhibition);
                     $pictureRepository->save($picture, true);
                 } catch (FileException $e) {
                     die("Erreur lors du chargement de l'image !!");
                 }
             }
 
-            return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'exhibition_show_presentation',
+                ['id' => $exhibition->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('picture/new.html.twig', [
+            'exhibition' => $exhibition,
         'picture' => $picture,
         'form' => $form,
         ]);
@@ -111,19 +130,26 @@ class PictureController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_picture_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
-    {
+    #[Security('is_granted("ROLE_ADMIN")')]
+    public function edit(
+        Request $request,
+        Picture $picture,
+        PictureRepository $pictureRepository,
+        SessionInterface $session
+    ): Response {
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $pictureRepository->save($picture, true);
 
+            $previousUrl = $session->get('previous_url');
 
-            return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
+            return $previousUrl ? $this->redirect($previousUrl) :
+            $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $session->set('previous_url', $request->headers->get('referer'));
 
         return $this->render('picture/edit.html.twig', [
             'picture' => $picture,
@@ -144,14 +170,30 @@ class PictureController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_picture_delete', methods: ['POST'])]
-    public function delete(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->request->get('_token'))) {
+    #[Security('is_granted("ROLE_ADMIN")')]
+    public function delete(
+        Request $request,
+        Picture $picture,
+        PictureRepository $pictureRepository,
+        SessionInterface $session
+    ): Response {
+        if (
+            $this->isCsrfTokenValid(
+                'delete' . $picture->getId(),
+                $request->request->get('_token')
+            )
+        ) {
             $pictureRepository->remove($picture, true);
         }
 
+        $previousUrl = $session->get('previous_url');
 
-        return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
+        return $previousUrl ? $this->redirect($previousUrl) :
+        $this->redirectToRoute(
+            'app_picture_index',
+            [],
+            Response::HTTP_SEE_OTHER
+        );
     }
 
     #[Route('/{id}/cropped', name: 'app_picture_cropped', methods: ['GET'])]

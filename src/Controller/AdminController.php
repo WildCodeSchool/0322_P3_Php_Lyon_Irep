@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ExhibitionRepository;
 use App\Repository\PictureRepository;
 use App\Service\StatisticService;
 use App\Service\DateFormatService;
@@ -22,9 +23,17 @@ class AdminController extends AbstractController
         $this->dateFormatService = $dateFormatService;
     }
 
-    #[Route('/admin/statistics', name: 'admin_statistics')]
-    public function showStatistics(PictureRepository $pictureRepository): Response
-    {
+    #[Route('/admin/statistics/{id}', name: 'admin_statistics')]
+    public function showStatistics(
+        PictureRepository $pictureRepository,
+        ExhibitionRepository $exhibitionRepository,
+        int $id = null
+    ): Response {
+        $exhibition = null;
+        if ($id !== null) {
+            $exhibition = $exhibitionRepository->find($id);
+        }
+
         $homePageVisitsCount = $this->dateFormatService->formatDateArray(
             $this->statisticService->getPageVisitsCountByRouteWithDates('app_home')
         );
@@ -33,7 +42,7 @@ class AdminController extends AbstractController
             $this->statisticService->getPageVisitsCountByRouteWithDates('app_picture_index')
         );
 
-        $pictures = $pictureRepository->findAll();
+        $pictures = $pictureRepository->findBy(['exhibition' => $exhibition]);
         $picturesWithCounts = [];
         $maxViewsCount = 0;
 
@@ -51,8 +60,11 @@ class AdminController extends AbstractController
             'galleryVisitsCount' => $galleryVisitsCount,
             'pictures' => $picturesWithCounts,
             'maxViewsCount' => $maxViewsCount,
+            'exhibitions' => $exhibitionRepository->findAll(),
+            'selectedExhibition' => $exhibition
         ]);
     }
+
 
     #[Route('/admin', name: 'app_admin')]
     public function index(): Response

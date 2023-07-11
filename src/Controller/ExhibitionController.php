@@ -6,6 +6,7 @@ use App\Entity\Exhibition;
 use App\Entity\Presentation;
 use App\Form\ExhibitionType;
 use App\Repository\ExhibitionRepository;
+use App\Repository\PictureRepository;
 use App\Repository\PresentationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,19 +53,26 @@ class ExhibitionController extends AbstractController
     public function showPresentation(
         int $id,
         ExhibitionRepository $exhibitionRepository,
-        PresentationRepository $presentRepository
+        PresentationRepository $presentRepository,
+        PictureRepository $pictureRepository
     ): Response {
-        $exhibition = $exhibitionRepository->findOneBy(['id' => $id]);
+        $exhibition = $exhibitionRepository->find($id);
 
-        $presentations = $presentRepository->findBy(
-            ['exhibition' => $exhibition],
-        );
+        if (!$exhibition) {
+            throw $this->createNotFoundException('L\'exposition demandée n\'existe pas.');
+        }
+
+        $presentations = $presentRepository->findBy(['exhibition' => $exhibition]);
+
+        $pictures = $pictureRepository->findBy(['exhibition' => $exhibition]);
 
         return $this->render('admin/presentation/index.html.twig', [
             'exhibition' => $exhibition,
             'presentations' => $presentations,
+            'pictures' => $pictures,
         ]);
     }
+
 
 
     #[Route('/{id}/edit', name: 'app_exhibition_edit', methods: ['GET', 'POST'])]

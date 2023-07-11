@@ -46,6 +46,7 @@ Encore
     .addEntry('modal', './assets/modal.js')
     .addEntry('statistic', './assets/statistic.js')
     .addEntry('cropperjs', './assets/cropper.js')
+    .addEntry('formPicture', './assets/formPicture.js')
     
 
 
