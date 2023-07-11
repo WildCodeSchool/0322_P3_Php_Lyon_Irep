@@ -31,7 +31,6 @@ class Presentation
     private ?string $subtitle = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'presentations')]

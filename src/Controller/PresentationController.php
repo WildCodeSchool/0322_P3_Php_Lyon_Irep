@@ -7,24 +7,51 @@ use App\Entity\Presentation;
 use App\Form\PresentationType;
 use App\Repository\PresentationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/presentation')]
 #[IsGranted('ROLE_ADMIN')]
 class PresentationController extends AbstractController
 {
     #[Route('/new/{id}', name: 'app_presentation_new', methods: ['GET', 'POST'])]
-    public function new(Exhibition $exhibition, Request $request, PresentationRepository $presentRepository): Response
-    {
+    public function new(
+        Exhibition $exhibition,
+        Request $request,
+        PresentationRepository $presentRepository,
+        SluggerInterface $slugger
+    ): Response {
         $presentation = new Presentation();
         $presentation->setExhibition($exhibition);
         $form = $this->createForm(PresentationType::class, $presentation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $presentationFile = $form->get('presentation_img')->getData();
+            if ($presentationFile) {
+                $originalImageName = pathinfo(
+                    $presentationFile->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                );
+                $safeImageName = 'uploads/presentationImg/' . $slugger->slug($originalImageName) .
+                '.' . $presentationFile->guessExtension();
+
+                try {
+                    $presentationFile->move(
+                        $this->getParameter('presentationImg_directory'),
+                        $safeImageName
+                    );
+
+                    $presentation->setImage($safeImageName);
+                } catch (FileException $e) {
+                    die("L'image n'a pas pu être téléchargée.");
+                }
+            }
+
             $presentRepository->save($presentation, true);
 
             return $this->redirectToRoute(
