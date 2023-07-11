@@ -7,17 +7,15 @@ use App\Form\PictureType;
 use App\Repository\ExhibitionRepository;
 use App\Repository\PictureRepository;
 use App\Service\StatisticService;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Knp\Snappy\Pdf;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use App\Service\CroppedService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -25,12 +23,11 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class PictureController extends AbstractController
 {
     private StatisticService $statisticService;
-    private PictureRepository $pictureRepository;
 
-    public function __construct(StatisticService $statisticService, PictureRepository $pictureRepository)
-    {
+    public function __construct(
+        StatisticService $statisticService,
+    ) {
         $this->statisticService = $statisticService;
-        $this->pictureRepository = $pictureRepository;
     }
 
     #[Route('/', name: 'app_picture_index', methods: ['GET'])]
@@ -123,26 +120,6 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/pdf', name: 'app_picture_exhibition_pdf', methods: ['GET'])]
-    public function generatePdfExhibition(PictureRepository $pictureRepository, Pdf $knpSnappy): Response
-    {
-            set_time_limit(120);
-            $pictures = $pictureRepository->findAll();
-
-            $html = $this->renderView('pdf/generatePdfExhibition.html.twig', [
-                'pictures' => $pictures,
-            ]);
-
-
-            $pdf = $knpSnappy->getOutputFromHtml($html);
-
-            return new PdfResponse(
-                $pdf,
-                'Download.pdf'
-            );
-    }
-
-
     #[Route('/{id}', name: 'app_picture_show', methods: ['GET'])]
     public function show(Picture $picture): Response
     {
@@ -151,7 +128,6 @@ class PictureController extends AbstractController
             'picture' => $picture,
         ]);
     }
-
 
     #[Route('/{id}/edit', name: 'app_picture_edit', methods: ['GET', 'POST'])]
     #[Security('is_granted("ROLE_ADMIN")')]
@@ -182,35 +158,12 @@ class PictureController extends AbstractController
     }
 
     #[Route('/upload-crop', name: 'upload_crop', methods: ['POST'])]
-    public function uploadCropAction(Request $request): Response
+    public function uploadCropAction(Request $request, CroppedService $croppedService): Response
     {
-
-        $id = json_decode($request->getContent(), true)['id'];
-
-
-        $imageData = json_decode($request->getContent(), true)['croppedImage'];
-
-
-        $filename = uniqid('crop_') . '.png';
-
-
-        $decodedImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
-
-
-        $destinationPath = $this->getParameter('kernel.project_dir') . '/public/uploads/images/' . $filename;
-        file_put_contents($destinationPath, $decodedImage);
-
-        $picture = $this->pictureRepository->find($id);
-        if (!$picture) {
-            throw new NotFoundHttpException('Image not found');
-        }
-
-        $picture->setImageCrop('uploads/images/' . $filename);
-        $this->pictureRepository->save($picture, true);
-
+        $result = $croppedService->uploadCropAction($request);
 
         return new Response(
-            json_encode(['success' => true]),
+            json_encode($result),
             Response::HTTP_OK,
             ['Content-Type' => 'application/json']
         );
@@ -246,26 +199,10 @@ class PictureController extends AbstractController
     #[Route('/{id}/cropped', name: 'app_picture_cropped', methods: ['GET'])]
     public function cropped(Picture $picture): Response
     {
-        return $this->render('picture/cropped.html.twig', [
+
+        $html =  $this->render('picture/cropped.html.twig', [
             'picture' => $picture,
         ]);
-    }
-
-    #[Route('/{id}/pdf', name: 'app_picture_pdf', methods: ['GET'])]
-    public function generatePdfAction(Picture $picture, Pdf $knpSnappy): Response
-    {
-
-
-        $html = $this->renderView('pdf/generatePdf.html.twig', [
-            'picture' => $picture,
-        ]);
-
-
-        $pdf = $knpSnappy->getOutputFromHtml($html);
-
-         return new PdfResponse(
-             $pdf,
-             'Download.pdf'
-         );
+        return new Response($html);
     }
 }

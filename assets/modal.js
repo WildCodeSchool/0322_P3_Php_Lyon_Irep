@@ -69,9 +69,20 @@ span.onclick = function() {
 
 // Modal tweeter
 
-document.getElementById("openModalTweeter").addEventListener("click", function() {
-    document.getElementById("modalTweeter").classList.remove("hidden");
-});
+const authenticateButton = document.getElementById("authenticate");
+if (authenticateButton) {
+    authenticateButton.addEventListener("click", function() {
+        const url = this.getAttribute('data-url');
+        window.location.href = url;
+    });
+}
+
+const openModalTweeterButton = document.getElementById("openModalTweeter");
+if (openModalTweeterButton) {
+    openModalTweeterButton.addEventListener("click", function() {
+        document.getElementById("modalTweeter").classList.remove("hidden");
+    });
+}
 
 document.getElementById("closeModalTweeter").addEventListener("click", function() {
     document.getElementById("modalTweeter").classList.add("hidden");
