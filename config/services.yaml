@@ -3,7 +3,8 @@
 
 parameters:
     images_directory: '%kernel.project_dir%/public/uploads/images'
-
+    presentationImg_directory: '%kernel.project_dir%/public/uploads/presentationImg'
+    
 services:
     _defaults:
         autowire: true      
