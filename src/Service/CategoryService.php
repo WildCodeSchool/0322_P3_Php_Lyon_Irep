@@ -15,7 +15,7 @@ class CategoryService
         $this->entitymanager = $entitymanager;
     }
 
-    public function getCategories(int $exhibitionId): array
+    public function getCategories(?int $exhibitionId): array
     {
         $query = $this->entitymanager->createQueryBuilder()
             ->select('p.category')
