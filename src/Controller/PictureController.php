@@ -148,8 +148,10 @@ class PictureController extends AbstractController
         PictureRepository $pictureRepository,
         SessionInterface $session
     ): Response {
-        $form = $this->createForm(PictureType::class, $picture);
-        $form->handleRequest($request);
+        $form = $this->createForm(PictureType::class, $picture, [
+            'exhibition_id' => $picture->getExhibition()->getId(),
+        ]);
+                $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $pictureRepository->save($picture, true);
