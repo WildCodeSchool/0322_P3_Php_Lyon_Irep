@@ -31,13 +31,26 @@ class PictureController extends AbstractController
     }
 
     #[Route('/', name: 'app_picture_index', methods: ['GET'])]
-    public function index(PictureRepository $pictureRepository): Response
+    public function index(PictureRepository $pictureRepository, 
+    ExhibitionRepository $exhibitionRepository, 
+    Request $request): Response
     {
-        $categories = $pictureRepository->getCategories();
+        $exhibitionId = $request->query->get('exhibition');
+        $exhibition = null;
+
+        if ($exhibitionId) {
+            $exhibition = $exhibitionRepository->find($exhibitionId);
+        }
+
+        $pictures = $exhibition ? $pictureRepository->findBy(['exhibition' => $exhibition])
+         : $pictureRepository->findAll();
+
+        $categories = $pictureRepository->getCategoriesForExhibition($exhibition);
+
         $this->statisticService->recordPageVisit('app_picture_index');
 
         return $this->render('picture/index.html.twig', [
-            'pictures' => $pictureRepository->findAll(),
+            'pictures' => $pictures,
             'categories' => $categories,
         ]);
     }
@@ -53,7 +66,9 @@ class PictureController extends AbstractController
     ): Response {
         $exhibition = $exhibitionRepository->find($id);
         $picture = new Picture();
-        $form = $this->createForm(PictureType::class, $picture);
+        $form = $this->createForm(PictureType::class, $picture, [
+            'exhibition_id' => $id,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

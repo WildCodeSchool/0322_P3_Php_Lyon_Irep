@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Exhibition;
 use App\Entity\Picture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -58,6 +59,23 @@ class PictureRepository extends ServiceEntityRepository
         $categories = array_map(fn($result) => $result['category'], $results);
 
         return $categories;
+    }
+
+    public function getCategoriesForExhibition(?Exhibition $exhibition = null): array
+    {
+        $qb = $this->createQueryBuilder('p')
+                ->select('p.category');
+
+        if ($exhibition) {
+            $qb->where('p.exhibition = :exhibition')
+               ->setParameter('exhibition', $exhibition);
+        }
+
+        $result = $qb->distinct()
+                 ->getQuery()
+                 ->getResult();
+
+        return array_column($result, 'category');
     }
 
 
