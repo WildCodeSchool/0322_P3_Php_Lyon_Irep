@@ -46,7 +46,7 @@ class PictureController extends AbstractController
 
         $categories = $pictureRepository->getCategoriesForExhibition($exhibition);
 
-        $this->statisticService->recordPageVisit('app_picture_index');
+        $this->statisticService->recordPageVisit('app_picture_index/' . $exhibition->getId());
 
         return $this->render('picture/index.html.twig', [
             'pictures' => $pictures,
