@@ -47,6 +47,7 @@ Encore
     .addEntry('statistic', './assets/statistic.js')
     .addEntry('cropperjs', './assets/cropper.js')
     .addEntry('formPicture', './assets/formPicture.js')
+    .addEntry('navbar', './assets/navbar.js')
     
 
 

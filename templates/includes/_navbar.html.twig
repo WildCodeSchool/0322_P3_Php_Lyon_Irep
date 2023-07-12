@@ -1,46 +1,30 @@
-<nav class="custom-navbar border-b-accentcolor w-full border-b-2 h-16 font-titlefont z-50 relative" >
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        {% block javascripts %}
+            {{ encore_entry_script_tags('navbar') }}
+        {% endblock %}
+
+<nav class="custom-navbar border-b-accentcolor w-full border-b-2 h-16 font-titlefont z-50 relative">
+  <div class="flex items-center justify-between p-4">
     <a href="{{ path('app_home') }}" class="flex items-center mr-6">
-      <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">IREP</span>
+      <span class="self-center text-2xl pl-4 font-semibold whitespace-nowrap text-white">IREP</span>
     </a>
-    <ul class="hidden md:flex flex-grow justify-center items-center space-x-4 ml-auto">
-  <li>
-    <a href="{{ path('app_picture_index') }}" class="relative block py-2 pl-3 pr-4 text-white rounded hover:opacity-75 {{ app.request.attributes.get('_route') == 'app_picture_index' ? 'opacity-75' : '' }}" aria-current="page">
-      Galerie
-    </a>
-  </li>
-</ul>
-
-      <div class="flex items-center">
-      <!-- Dropdown menu language -->
-      <div id="dropdownHover" class="hidden z-50 bg-white rounded-lg shadow w-auto">
-        <ul class="py-2 text-sm " aria-labelledby="dropdownHoverButton">
-          <li>
-            <a href="#" class="block px-4 py-2">EN</a>
-          </li>
-          <li>
-            <a href="#" class="block px-4 py-2">CR</a>
-          </li>
+    <ul class="hidden md:flex flex-grow justify-end items-center space-x-4 relative">
+      <li class="group relative">
+        <a href="#" class="inline-block px-4 py-2 text-white hover:text-gray-200">Listes des expositions</a>
+        <ul class="absolute right-0 opacity-0 invisible mt-2 space-y-2 text-sm bg-backgroundcolor text-white transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:visible">
+          {{ component('ExhibitionComponent') }}
         </ul>
-      </div>
- <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" class="custom-dropdown text-white focus:text-black  focus:bg-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-2 py-2.5 text-center inline-flex items-center" type="button">
-  FR
-  <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-</button>
+      </li>
+    </ul>
+    <button data-collapse-toggle="navbar-hamburger" type="button" class="md:hidden inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-hamburger" aria-expanded="false">
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+      </svg>
+    </button>
 
-
-      <!-- Hamburger menu -->
-      <button data-collapse-toggle="navbar-hamburger" type="button" class="md:hidden inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400" aria-controls="navbar-hamburger" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-      </button>
-    </div>
-
-    <div class="hidden w-56 absolute top-full right-0 mt-0" id="navbar-hamburger">
-      <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50">
-        <li>
-          <a href="{{ path('app_picture_index') }}" class="custom-bg-color-burger-menu bg-accentcolor block py-2 pl-3 pr-4 text-white rounded" aria-current="page">Galerie</a>
-        </li>
+    <div class="hidden w-56 absolute top-full right-0 mt-0 text-sm" id="navbar-hamburger">
+      <ul class="flex flex-col font-medium mt-4 rounded-lg bg-backgroundcolor">
+        {{ component('ExhibitionComponent') }}
       </ul>
     </div>
   </div>
