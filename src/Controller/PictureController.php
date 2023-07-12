@@ -154,6 +154,9 @@ class PictureController extends AbstractController
                 $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('newCategory')->getData() !== null) {
+                $picture->setCategory($form->get('newCategory')->getData());
+            }
             $pictureRepository->save($picture, true);
 
             $previousUrl = $session->get('previous_url');
