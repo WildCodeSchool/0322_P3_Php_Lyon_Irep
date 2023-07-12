@@ -51,6 +51,7 @@ class PictureController extends AbstractController
         return $this->render('picture/index.html.twig', [
             'pictures' => $pictures,
             'categories' => $categories,
+            'exhibition' => $exhibition,
         ]);
     }
 
