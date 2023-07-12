@@ -17,6 +17,6 @@ class ExhibitionComponent
 
     public function getExhibitions(): array
     {
-        return $this->exhibitionRepository->findAll();
+        return $this->exhibitionRepository->findCurrentExhibitions();
     }
 }

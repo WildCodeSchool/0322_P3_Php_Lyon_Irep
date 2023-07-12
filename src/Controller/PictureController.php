@@ -18,6 +18,7 @@ use Imagine\Image\Box;
 use App\Service\CroppedService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use DateTime;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
@@ -37,6 +38,11 @@ class PictureController extends AbstractController
         int $id
     ): Response {
         $exhibition = $exhibitionRepository->find($id);
+
+        $now = new DateTime();
+        if ($exhibition->getStart() > $now || $exhibition->getEnd() < $now) {
+            throw $this->createNotFoundException('Cette exposition n\'est pas en cours.');
+        }
 
         $pictures = $pictureRepository->findBy(['exhibition' => $exhibition]);
 

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Exhibition;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use DateTime;
 
 /**
  * @extends ServiceEntityRepository<Exhibition>
@@ -37,6 +38,15 @@ class ExhibitionRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findCurrentExhibitions(): array
+    {
+        return $this->createQueryBuilder('e')
+        ->setParameter('now', new DateTime())
+        ->andWhere('e.start <= :now and e.end >= :now')
+        ->getQuery()
+        ->getResult();
     }
 
 //    /**
