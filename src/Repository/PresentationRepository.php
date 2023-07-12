@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Exhibition;
 use App\Entity\Presentation;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -52,6 +53,16 @@ class PresentationRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findFirstByExhibition(Exhibition $exhibition): ?Presentation
+{
+    return $this->createQueryBuilder('p')
+        ->andWhere('p.exhibition = :exhibition')
+        ->setParameter('exhibition', $exhibition)
+        ->orderBy('p.id', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+}
 //    /**
 //     * @return Presentation[] Returns an array of Presentation objects
 //     */

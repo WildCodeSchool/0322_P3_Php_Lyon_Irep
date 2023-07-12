@@ -16,7 +16,7 @@
             <label for="exhibitionSelect">Choisissez une exposition:</label>
             <select id="exhibitionSelect" onchange="location = this.value;" class="rounded bg-gray-100 text-sm">
                 {% for exhibition in exhibitions %}
-                    <option value="{{ path('admin_statistics', {'id': exhibition.id}) }}"
+                    <option value="{{ path('admin_statistics', {'exhibition': exhibition.id}) }}"
                     {% if selectedExhibition is not null and exhibition.id == selectedExhibition.id %}selected{% endif %}>
                         {{ exhibition.name }}
                     </option>

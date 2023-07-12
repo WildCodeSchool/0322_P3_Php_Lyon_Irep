@@ -49,6 +49,15 @@ class ExhibitionRepository extends ServiceEntityRepository
         ->getResult();
     }
 
+    public function findFirstPresentationImage(int $exhibitionId): ?string
+{
+    $exhibition = $this->find($exhibitionId);
+    if ($exhibition && count($exhibition->getPresentations()) > 0) {
+        return $exhibition->getPresentations()[0]->getImage();
+    }
+    return null;
+}
+
 //    /**
 //     * @return Exhibition[] Returns an array of Exhibition objects
 //     */

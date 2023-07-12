@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Exhibition;
 use App\Repository\ExhibitionRepository;
 use App\Repository\PictureRepository;
 use App\Service\StatisticService;
@@ -23,17 +24,16 @@ class AdminController extends AbstractController
         $this->dateFormatService = $dateFormatService;
     }
 
-    #[Route('/admin/statistics/{id}', name: 'admin_statistics')]
+    #[Route('/admin/statistics/{exhibition}', name: 'admin_statistics')]
     public function showStatistics(
         PictureRepository $pictureRepository,
         ExhibitionRepository $exhibitionRepository,
-        int $id = null
+        Exhibition $exhibition = null
     ): Response {
-        $exhibition = null;
-        if ($id !== null) {
-            $exhibition = $exhibitionRepository->find($id);
-        } elseif ($id === null) {
-            $exhibition = $exhibitionRepository->findOneBy([]);
+
+        $exhibitions = $exhibitionRepository->findAll();
+        if ($exhibition === null && !empty($exhibitions)) {
+            $exhibition = $exhibitions[0];
         }
 
         $homePageVisitsCount = $this->dateFormatService->formatDateArray(
