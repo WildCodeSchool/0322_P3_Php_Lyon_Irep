@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Exhibition;
 use App\Entity\Picture;
 use App\Form\PictureType;
 use App\Repository\ExhibitionRepository;
@@ -34,11 +35,8 @@ class PictureController extends AbstractController
     #[Route('/exhibition/{id}', name: 'app_picture_index', methods: ['GET'])]
     public function index(
         PictureRepository $pictureRepository,
-        ExhibitionRepository $exhibitionRepository,
-        int $id
+        Exhibition $exhibition
     ): Response {
-        $exhibition = $exhibitionRepository->find($id);
-
         $now = new DateTime();
         if ($exhibition->getStart() > $now || $exhibition->getEnd() < $now) {
             throw $this->createNotFoundException('Cette exposition n\'est pas en cours.');
