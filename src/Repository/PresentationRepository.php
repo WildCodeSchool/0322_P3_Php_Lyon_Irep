@@ -52,7 +52,6 @@ class PresentationRepository extends ServiceEntityRepository
         ;
     }
 
-
 //    /**
 //     * @return Presentation[] Returns an array of Presentation objects
 //     */

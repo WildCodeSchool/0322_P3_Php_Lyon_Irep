@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Exhibition;
 use App\Repository\ExhibitionRepository;
 use App\Repository\PictureRepository;
 use App\Service\StatisticService;

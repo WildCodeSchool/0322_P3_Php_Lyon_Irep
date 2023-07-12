@@ -49,7 +49,6 @@ class ExhibitionRepository extends ServiceEntityRepository
         ->getResult();
     }
 
-
 //    /**
 //     * @return Exhibition[] Returns an array of Exhibition objects
 //     */
