@@ -7,12 +7,15 @@
     <h3 class="text-3xl font-bold font-title my-2 ">Modification de l'oeuvre</h3>
      <p class="text-2xl font-subtitlefont italic">{{ picture.title }}</p>
     <hr class="h-px my-5 bg-stone-950 border-0 mt-1">
-    {{ include('picture/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('picture/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
     {{ include('picture/_delete_form.html.twig') }}
 </div>
     <div class="flex justify-between">
-    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center my-4"><a href="{{ path('app_picture_index') }}">Retour à la modification de l'exposition</a>
+    <button class="text-white bg-accentcolor hover:bg-yellow-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center my-4"><a href="{{ path('exhibition_show_presentation', {'id': picture.exhibition.id}) }}">Retour à la modification de l'exposition</a>
     </button>
 </div>
 </div>
 {% endblock %}
+      {% block javascripts %}
+        {{ encore_entry_script_tags('formPicture') }}
+      {% endblock %}

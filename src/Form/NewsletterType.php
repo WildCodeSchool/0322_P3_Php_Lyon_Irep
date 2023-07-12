@@ -38,7 +38,10 @@ class NewsletterType extends AbstractType
                 'label_attr' => ['class' => "inline-block mt-5 mr-6 text-center"],
                 'choice_label' => 'name',
                      'multiple' => false,
-                     'expanded' => false
+                     'expanded' => false,
+                     'attr' => [
+                        'class' => 'rounded'
+                    ],
             ]);
     }
 

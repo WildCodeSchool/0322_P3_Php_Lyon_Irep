@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Picture;
+use App\Entity\Exhibition;
 
 class CategoryService
 {
@@ -14,12 +15,14 @@ class CategoryService
         $this->entitymanager = $entitymanager;
     }
 
-    public function getCategories(): array
+    public function getCategories(?int $exhibitionId): array
     {
         $query = $this->entitymanager->createQueryBuilder()
             ->select('p.category')
             ->from(Picture::class, 'p')
-            ->groupBy('p.category');
+            ->where('p.exhibition = :exhibitionId')
+            ->groupBy('p.category')
+            ->setParameter('exhibitionId', $exhibitionId);
 
         $results = $query->getQuery()->getArrayResult();
 

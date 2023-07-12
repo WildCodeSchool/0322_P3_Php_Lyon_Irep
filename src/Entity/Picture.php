@@ -32,7 +32,7 @@ class Picture
     private ?string $technic = null;
 
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $size = null;
 
 

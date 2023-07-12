@@ -23,7 +23,7 @@ class PictureType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $categories = $this->categoryService->getCategories();
+        $categories = $this->categoryService->getCategories($options['exhibition_id']);
         $builder
         ->add('reference', TextType::class, [
             'label' => 'Réference',
@@ -117,6 +117,7 @@ class PictureType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Picture::class,
+            'exhibition_id' => null,
         ]);
     }
 }
