@@ -24,16 +24,17 @@ class AdminController extends AbstractController
         $this->dateFormatService = $dateFormatService;
     }
 
-    #[Route('/admin/statistics/{exhibition}', name: 'admin_statistics')]
+    #[Route('/admin/statistics/{id}', name: 'admin_statistics')]
     public function showStatistics(
         PictureRepository $pictureRepository,
         ExhibitionRepository $exhibitionRepository,
-        Exhibition $exhibition = null
+        int $id = null
     ): Response {
-
-        $exhibitions = $exhibitionRepository->findAll();
-        if ($exhibition === null && !empty($exhibitions)) {
-            $exhibition = $exhibitions[0];
+        $exhibition = null;
+        if ($id !== null) {
+            $exhibition = $exhibitionRepository->find($id);
+        } elseif ($id === null) {
+            $exhibition = $exhibitionRepository->findOneBy([]);
         }
 
         $homePageVisitsCount = $this->dateFormatService->formatDateArray(
