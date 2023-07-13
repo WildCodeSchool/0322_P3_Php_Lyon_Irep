@@ -51,6 +51,7 @@ class PictureController extends AbstractController
         return $this->render('picture/index.html.twig', [
             'pictures' => $pictures,
             'categories' => $categories,
+            'exhibition' => $exhibition,
         ]);
     }
 
@@ -94,25 +95,25 @@ class PictureController extends AbstractController
                     $imagePath = $safeImageName;
 
 
-                    $smallImagePath =  $slugger->slug($originalImageName) . '.jpg';
+                    $smallImagePath = $slugger->slug($originalImageName) . '.jpg';
                     $imagine->open($imagePath)
                         ->thumbnail(new Box(100, 100))
                         ->save($this->getParameter('images_directory') . '/smallImage' . '/' . $smallImagePath);
-                    $picture->setSmallImage($smallImagePath);
+                    $picture->setSmallImage('uploads/images/smallImage/' . $smallImagePath);
 
 
                     $mediumImagePath =  $slugger->slug($originalImageName) . '.jpg';
                     $imagine->open($imagePath)
                         ->thumbnail(new Box(500, 500))
                         ->save($this->getParameter('images_directory') . '/mediumImage' . '/' . $mediumImagePath);
-                    $picture->setMediumImage($mediumImagePath);
+                    $picture->setMediumImage('uploads/images/mediumImage/' . $mediumImagePath);
 
 
-                    $largeImagePath =  $slugger->slug($originalImageName) . '.jpg';
+                    $largeImagePath = $slugger->slug($originalImageName) . '.jpg';
                     $imagine->open($imagePath)
                         ->thumbnail(new Box(800, 800))
                         ->save($this->getParameter('images_directory') . '/largeImage' . '/' . $largeImagePath);
-                    $picture->setLargeImage($largeImagePath);
+                    $picture->setLargeImage('uploads/images/largeImage/' . $largeImagePath);
 
                     $picture->setExhibition($exhibition);
                     $pictureRepository->save($picture, true);

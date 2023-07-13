@@ -11,27 +11,41 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Picture;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use App\Repository\ExhibitionRepository;
 
 #[Route('/pdf')]
 class GeneratePdfController extends AbstractController
 {
-    #[Route('/exhibition', name: 'app_picture_exhibition_pdf', methods: ['GET'])]
-    public function generatePdfAction(GeneratePdfService $generatePdfService): BinaryFileResponse
-    {
-        $pdfFilePath = $generatePdfService->generatePdfExhibition();
+    private ExhibitionRepository $exhibitionRepository;
 
+    public function __construct(ExhibitionRepository $exhibitionRepository)
+    {
+        $this->exhibitionRepository = $exhibitionRepository;
+    }
+    #[Route('/exhibition/{id}', name: 'app_picture_exhibition_pdf', methods: ['GET'])]
+    public function generatePdfAction(GeneratePdfService $generatePdfService, int $id): BinaryFileResponse
+    {
+
+        $exhibition = $this->exhibitionRepository->find($id);
+        $exhibitionName = $exhibition->getName();
+        $pdfFilePath = $generatePdfService->generatePdfExhibition($id, $exhibitionName);
         $response = new BinaryFileResponse($pdfFilePath);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Download.pdf');
 
         return $response;
     }
 
-    #[Route('/download', name: 'app_picture_download_pdf', methods: ['GET'])]
-    public function downloadPdf(): BinaryFileResponse
+    #[Route('/download/{exhibitionId}', name: 'app_picture_download_pdf', methods: ['GET'])]
+    public function downloadPdf(int $exhibitionId): BinaryFileResponse
     {
-        $pdfFilePath = 'downloadPdf/Download.pdf';
+        $exhibition = $this->exhibitionRepository->find($exhibitionId);
+        $exhibitionName = $exhibition->getName();
+
+        $pdfFilePath = 'downloadPdf/' . $exhibitionName . '.pdf';
+
         $response = new BinaryFileResponse($pdfFilePath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Download.pdf');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $exhibitionName . '.pdf');
+
         return $response;
     }
 
