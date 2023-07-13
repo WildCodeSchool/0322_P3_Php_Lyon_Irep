@@ -38,6 +38,7 @@ class TwitterController extends AbstractController
         $twitterUri = $_ENV['TWITTER_REDIRECT_URI'];
         $request = $this->requestStack->getCurrentRequest();
         $code = $request->get('code');
+        $id = $request->get('state');
 
         $responseData = $this->twitterService->authenticate($clientId, $clientSecret, $code, $twitterUri);
 
@@ -45,13 +46,14 @@ class TwitterController extends AbstractController
             $accessToken = $responseData['access_token'];
 
             $session->set('access_token', $accessToken);
-            $id = $session->get('picture_id');
+            $session->set('picture_id', $id);
 
             return $this->redirectToRoute('app_picture_show', ['id' => $id]);
         }
 
         return $this->render('home/index.html.twig');
     }
+
 
     #[Route('/twitter/tweet/hashtags/{id}', name: 'twitter_hashtag', methods: ['POST'])]
     public function tweetHashtags(int $id, SessionInterface $session, Request $request): Response
@@ -123,23 +125,23 @@ class TwitterController extends AbstractController
     #[Route('/twitter/authenticate/{id}', name: 'twitter_authenticate')]
     public function authenticate(SessionInterface $session, Request $request, int $id): Response
     {
-        $picture = $this->pictureRepository->find($id);
         $session = $request->getSession();
-        $accessToken = $session->get('access_token');
-        $clientId = $_ENV['TWITTER_CLIENT_ID'];
-        $twitterUri = $_ENV['TWITTER_REDIRECT_URI'];
+        $picture = $this->pictureRepository->find($id);
         if (!$picture) {
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
         $session->set('picture_id', $id);
 
+        $accessToken = $session->get('access_token');
+        $clientId = $_ENV['TWITTER_CLIENT_ID'];
+        $twitterUri = $_ENV['TWITTER_REDIRECT_URI'];
 
         try {
             if ($accessToken === null || $accessToken === '') {
                 return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
                     . $clientId . '&redirect_uri=' . $twitterUri .
                     '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
-                    'state&code_challenge=challenge&code_challenge_method=plain');
+                    $id . '&code_challenge=challenge&code_challenge_method=plain');
             }
 
             return $this->redirectToRoute('app_picture_show', ['id' => $id]);
@@ -149,7 +151,7 @@ class TwitterController extends AbstractController
                 return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
                     . $clientId . '&redirect_uri=' . $twitterUri .
                     '&scope=tweet.read%20users.read%20tweet.write%20offline.access&state=' .
-                    'state&code_challenge=challenge&code_challenge_method=plain');
+                    $id . '&code_challenge=challenge&code_challenge_method=plain');
             }
             throw $e;
         }

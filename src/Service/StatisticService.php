@@ -70,7 +70,7 @@ class StatisticService
             }
             $groupedVisits[$date] += $visit['count'];
         }
-
+        ksort($groupedVisits);
         return $groupedVisits;
     }
 }
