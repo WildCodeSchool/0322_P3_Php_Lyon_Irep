@@ -124,8 +124,8 @@ class TwitterController extends AbstractController
     public function authenticate(SessionInterface $session, Request $request, int $id): Response
     {
         $picture = $this->pictureRepository->find($id);
-        $session = $request->getSession();
         $accessToken = $session->get('access_token');
+        $session = $request->getSession();
         $clientId = $_ENV['TWITTER_CLIENT_ID'];
         $twitterUri = $_ENV['TWITTER_REDIRECT_URI'];
         if (!$picture) {
