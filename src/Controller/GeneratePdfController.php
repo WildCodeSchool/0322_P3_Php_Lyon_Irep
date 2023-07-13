@@ -25,7 +25,7 @@ class GeneratePdfController extends AbstractController
     #[Route('/exhibition/{id}', name: 'app_picture_exhibition_pdf', methods: ['GET'])]
     public function generatePdfAction(GeneratePdfService $generatePdfService, int $id): BinaryFileResponse
     {
-        // dd($id);
+
         $exhibition = $this->exhibitionRepository->find($id);
         $exhibitionName = $exhibition->getName();
         $pdfFilePath = $generatePdfService->generatePdfExhibition($id, $exhibitionName);

@@ -27,7 +27,7 @@
 		{% block content %}
 			<div class="picture-image flex justify-center items-center basis-1/2 p-5">
 				<img class="block mx-auto max-h-[35rem] w-auto h-auto rounded-md shadow-[0_0_0_10px_#F2F0F0]"
-					 data-zoom ="{{ picture.mediumImage ?? picture.largeImage ?? picture.image) }}" id="my-picture"
+					 data-zoom="{{ asset(picture.image) }}" id="my-picture"
 					 src="{{ asset(picture.image) }}"
 					 srcset="{{ asset(picture.smallImage ?? picture.image) }} 200w,
 							  {{ asset(picture.mediumImage ?? picture.image) }} 1023w,
