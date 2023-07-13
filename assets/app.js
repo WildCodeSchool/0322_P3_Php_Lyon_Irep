@@ -24,3 +24,29 @@ window.addEventListener("scroll", () => {
     }
     lastScrollTop = scrollTop;
 });
+
+// Newsletter confirmation of subscription
+
+const toast = document.getElementById('toast-success');
+let form = document.getElementById('newsletter').innerHTML;
+const url = '/';
+
+form.addEventListener('submit', function(event){ 
+    event.preventDefault();
+
+    fetch (url,{
+        method: "POST",
+    })
+
+        .then(response => {
+            if(response.status != 200 ) alert("Erreur");
+        
+
+            toast.style.display = 'block';
+
+            setTimeout(function() {
+                toast.style.display = 'none';
+            }, 5000);
+        });
+});
+
