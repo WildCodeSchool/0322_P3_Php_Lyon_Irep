@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Exhibition;
 use App\Entity\Picture;
 use App\Form\PictureType;
 use App\Repository\ExhibitionRepository;
@@ -18,6 +19,7 @@ use Imagine\Image\Box;
 use App\Service\CroppedService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use DateTime;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
@@ -30,17 +32,28 @@ class PictureController extends AbstractController
         $this->statisticService = $statisticService;
     }
 
-    #[Route('/', name: 'app_picture_index', methods: ['GET'])]
-    public function index(PictureRepository $pictureRepository): Response
-    {
-        $categories = $pictureRepository->getCategories();
-        $this->statisticService->recordPageVisit('app_picture_index');
+    #[Route('/exhibition/{id}', name: 'app_picture_index', methods: ['GET'])]
+    public function index(
+        PictureRepository $pictureRepository,
+        Exhibition $exhibition
+    ): Response {
+        $now = new DateTime();
+        if ($exhibition->getStart() > $now || $exhibition->getEnd() < $now) {
+            throw $this->createNotFoundException('Cette exposition n\'est pas en cours.');
+        }
+
+        $pictures = $pictureRepository->findBy(['exhibition' => $exhibition]);
+
+        $categories = $pictureRepository->getCategoriesForExhibition($exhibition);
+
+        $this->statisticService->recordPageVisit('app_picture_index/' . $exhibition->getId());
 
         return $this->render('picture/index.html.twig', [
-            'pictures' => $pictureRepository->findAll(),
+            'pictures' => $pictures,
             'categories' => $categories,
         ]);
     }
+
 
     #[Route('/new/{id}', name: 'app_picture_new', methods: ['GET', 'POST'])]
     #[Security('is_granted("ROLE_ADMIN")')]
@@ -53,7 +66,9 @@ class PictureController extends AbstractController
     ): Response {
         $exhibition = $exhibitionRepository->find($id);
         $picture = new Picture();
-        $form = $this->createForm(PictureType::class, $picture);
+        $form = $this->createForm(PictureType::class, $picture, [
+            'exhibition_id' => $id,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -137,10 +152,15 @@ class PictureController extends AbstractController
         PictureRepository $pictureRepository,
         SessionInterface $session
     ): Response {
-        $form = $this->createForm(PictureType::class, $picture);
-        $form->handleRequest($request);
+        $form = $this->createForm(PictureType::class, $picture, [
+            'exhibition_id' => $picture->getExhibition()->getId(),
+        ]);
+                $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('newCategory')->getData() !== null) {
+                $picture->setCategory($form->get('newCategory')->getData());
+            }
             $pictureRepository->save($picture, true);
 
             $previousUrl = $session->get('previous_url');

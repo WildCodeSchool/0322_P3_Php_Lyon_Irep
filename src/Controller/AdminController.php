@@ -32,15 +32,20 @@ class AdminController extends AbstractController
         $exhibition = null;
         if ($id !== null) {
             $exhibition = $exhibitionRepository->find($id);
+        } elseif ($id === null) {
+            $exhibition = $exhibitionRepository->findOneBy([]);
         }
 
         $homePageVisitsCount = $this->dateFormatService->formatDateArray(
             $this->statisticService->getPageVisitsCountByRouteWithDates('app_home')
         );
 
-        $galleryVisitsCount = $this->dateFormatService->formatDateArray(
-            $this->statisticService->getPageVisitsCountByRouteWithDates('app_picture_index')
-        );
+        $galleryVisitsCount = [];
+        if ($exhibition) {
+            $galleryVisitsCount = $this->dateFormatService->formatDateArray(
+                $this->statisticService->getPageVisitsCountByRouteWithDates('app_picture_index/' . $exhibition->getId())
+            );
+        }
 
         $pictures = $pictureRepository->findBy(['exhibition' => $exhibition]);
         $picturesWithCounts = [];

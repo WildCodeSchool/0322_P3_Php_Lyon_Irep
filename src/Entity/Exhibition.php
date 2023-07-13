@@ -45,10 +45,14 @@ class Exhibition
     #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: Newsletter::class, orphanRemoval: true)]
     private Collection $newsletters;
 
+    #[ORM\OneToMany(mappedBy: 'exhibition', targetEntity: Picture::class, orphanRemoval: true, cascade: ["remove"])]
+    private Collection $pictures;
+
     public function __construct()
     {
         $this->presentations = new ArrayCollection();
         $this->newsletters = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,6 +151,36 @@ class Exhibition
             // set the owning side to null (unless already changed)
             if ($newsletter->getExhibition() === $this) {
                 $newsletter->setExhibition(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setExhibition($this);
+        }
+
+        return $this;
+    }
+
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->contains($picture)) {
+            $this->pictures->removeElement($picture);
+            if ($picture->getExhibition() === $this) {
+                $picture->setExhibition(null);
             }
         }
 
