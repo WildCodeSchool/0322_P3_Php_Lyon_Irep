@@ -38,7 +38,7 @@ class TwitterController extends AbstractController
         $twitterUri = $_ENV['TWITTER_REDIRECT_URI'];
         $request = $this->requestStack->getCurrentRequest();
         $code = $request->get('code');
-        $id = $request->get('state'); // get picture id from state
+        $id = $request->get('state');
 
         $responseData = $this->twitterService->authenticate($clientId, $clientSecret, $code, $twitterUri);
 
@@ -46,7 +46,7 @@ class TwitterController extends AbstractController
             $accessToken = $responseData['access_token'];
 
             $session->set('access_token', $accessToken);
-            $session->set('picture_id', $id); // set picture id in the session
+            $session->set('picture_id', $id);
 
             return $this->redirectToRoute('app_picture_show', ['id' => $id]);
         }
@@ -130,14 +130,12 @@ class TwitterController extends AbstractController
         if (!$picture) {
             throw $this->createNotFoundException('Aucune image trouvée pour cet id : ' . $id);
         }
-        // Set the picture ID in the session first.
         $session->set('picture_id', $id);
 
         $accessToken = $session->get('access_token');
         $clientId = $_ENV['TWITTER_CLIENT_ID'];
         $twitterUri = $_ENV['TWITTER_REDIRECT_URI'];
 
-        // Check the access token after setting the picture ID.
         try {
             if ($accessToken === null || $accessToken === '') {
                 return $this->redirect('https://twitter.com/i/oauth2/authorize?response_type=code&client_id='
