@@ -2,17 +2,17 @@
 
 const toast = document.getElementById('toast-success');
 let emailInput= document.getElementById('newsletter_email');
-let form = document.getElementById('newsletter');
+const form = document.getElementById('newsletter');
 const url = '/';
 
 form.addEventListener('submit', function(event){ 
     event.preventDefault();   
-    const emailRecord = document.getElementById('newsletter_email').value;
-    const exhibitionChoice = document.getElementById('newsletter_exhibition');
-    const exhibitionId= exhibitionChoice.options[exhibitionChoice.selectedIndex].value;
-    const newsletterToken= document.getElementById('newsletter__token').value;
+    let emailRecord = document.getElementById('newsletter_email').value;
+    let exhibitionChoice = document.getElementById('newsletter_exhibition');
+    let exhibitionId= exhibitionChoice.options[exhibitionChoice.selectedIndex].value;
+    let newsletterToken= document.getElementById('newsletter__token').value;
 
-    const formData = new FormData();
+    let formData = new FormData();
     formData.append('newsletter[email]:', emailRecord);
     formData.append('newsletter[exhibition]:', exhibitionId);
     formData.append('newsletter[_token]:', newsletterToken);
