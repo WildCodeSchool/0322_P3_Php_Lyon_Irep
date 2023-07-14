@@ -64,6 +64,8 @@
                     <th scope="col" class="px-6 py-3">Sous-titre / accroche</th>
                     <th scope="col" class="px-6 py-3">Image</th>
                     <th scope="col" class="px-6 py-3">Modifier</th>
+                    <th scope="col" class="px-6 py-3">Redimensionner</th>
+
                 </tr>
             </thead>
             <tbody class="font-contentfont">
@@ -78,6 +80,10 @@
                         <a class="hover:text-red-500 hover:font-bold"
                             href="{{ path('app_picture_edit', {'id': picture.id}) }} ">Modifier</a>
                     </td>
+                    <td class="px-6 py-4">
+                        <a class="hover:text-red-500 hover:font-bold" type="button" href="{{ path('app_picture_cropped', {id: picture.id}) }}">croppé l'image</a>
+                    </td>
+
                 </tr>
                 {% else %}
                 <tr>

@@ -33,7 +33,7 @@ function handleResize() {
 }
 
 function handleResizeEvent() {
-     handleResize(); // Vérifier l'état initial lors du chargement de la page
+    handleResize(); // Vérifier l'état initial lors du chargement de la page
 
     window.addEventListener('resize', () => {
         handleResize(); // Vérifier l'état actuel
