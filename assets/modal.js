@@ -33,10 +33,9 @@ function handleResize() {
 }
 
 function handleResizeEvent() {
-    handleResize(); // Vérifier l'état initial lors du chargement de la page
+     handleResize(); // Vérifier l'état initial lors du chargement de la page
 
     window.addEventListener('resize', () => {
-        const wasZoomEnabled = isZoomEnabled; // Stocker l'état précédent
         handleResize(); // Vérifier l'état actuel
 
        
