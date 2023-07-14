@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
-
+{% block link %}<link rel="preload" as="image" href="{{ asset(picture.image) }}"
+	imagesrcset="{{ asset(picture.smallImage ?? picture.image) }} 200w,
+						  {{ asset(picture.mediumImage ?? picture.image) }} 1023w,
+						  {{ asset(picture.largeImage ?? picture.image) }} 1200w"
+						  imagesizes="50vw">{% endblock %}
 {% block title %}Picture
 {% endblock %}
 
@@ -20,9 +24,19 @@
 		</div>
 	{% endfor %}
 	<div class="picture-details flex flex-col sm:flex-row pt-16">
-		<div class="picture-image flex justify-center items-center basis-1/2 p-5">
-			<img class="block mx-auto max-h-[35rem] w-auto h-auto rounded-md shadow-[0_0_0_10px_#F2F0F0]" data-zoom="{{ asset(picture.image)}}" id="my-picture" src="{{ asset(picture.image) }}" alt="{{ picture.title }}">
-		</div>
+		{% block content %}
+			<div class="picture-image flex justify-center items-center basis-1/2 p-5">
+				<img class="block mx-auto max-h-[35rem] w-auto h-auto rounded-md shadow-[0_0_0_10px_#F2F0F0]"
+					 data-zoom="{{ asset(picture.image) }}" id="my-picture"
+					 src="{{ asset(picture.image) }}"
+					 srcset="{{ asset(picture.smallImage ?? picture.image) }} 200w,
+							  {{ asset(picture.mediumImage ?? picture.image) }} 1023w,
+							  {{ asset(picture.largeImage ?? picture.image) }} 1200w"
+							  sizes="50vw"
+							  alt="{{ picture.title }}">
+					 
+			</div>
+		{% endblock %}
 
 		<hr class=" h-auto border-accentcolor border-solid border mx-auto my-[5%] hidden sm:block">
 

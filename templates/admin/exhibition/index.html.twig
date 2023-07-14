@@ -17,6 +17,8 @@
                     <th scope="col" class="px-6 py-3">Date de fin</th>
                     <th scope="col" class="px-6 py-3">Détails</th>
                     <th scope="col" class="px-6 py-3">Modifier</th>
+                    <th scope="col" class="px-6 py-3">Catalogue</th>
+
                 </tr>
             </thead>
             <tbody class="font-contentfont">
@@ -33,6 +35,10 @@
                     <td class="px-6 py-4">
                         <a class="hover:text-red-500 hover:font-bold"
                             href="{{ path('app_exhibition_edit', {'id': exhibition.id}) }} ">Modifier</a>
+                    </td>
+                    <td class="px-6 py-4">
+                        <a class="hover:text-red-500 hover:font-bold"
+                            href="{{ path('app_picture_exhibition_pdf', {'id': exhibition.id}) }} ">Télécharger</a>
                     </td>
                 </tr>
                 {% else %}
