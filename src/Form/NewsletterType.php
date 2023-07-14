@@ -20,11 +20,11 @@ class NewsletterType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label_attr' => ['class' => 'hidden'],
-                'attr' => array(
+                'attr' => [
                     'class' => "block p-3 pl-10 w-full text-sm text-gray-900 bg-gray-50 
                                 rounded-lg border border-gray-300 sm:rounded-lg",
-                    'placeholder' => 'Saisissez votre email',
-                )
+                    'placeholder' => 'Saisissez votre email'
+                ],
             ])
 
             ->add('exhibition', EntityType::class, [
