@@ -16,7 +16,7 @@ class ExhibitionFixtures extends Fixture
 
          ['name' => "L'Ile de La Réunion en fleurs",
          'start' =>  '26/06/2023',
-         'end' =>  '30/09/2023'],
+         'end' =>  '25/09/2023'],
 
          ['name' => "Au sommet de La Réunion",
          'start' =>  '14/07/2023',
