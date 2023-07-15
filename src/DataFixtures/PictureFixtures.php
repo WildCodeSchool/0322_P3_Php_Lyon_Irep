@@ -5,9 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Picture;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class PictureFixtures extends Fixture
+class PictureFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -33,9 +34,22 @@ class PictureFixtures extends Fixture
         $picturesPart2 = $this->getPicturesPart2();
         $picturesPart3 = $this->getPicturesPart3();
         $picturesPart4 = $this->getPicturesPart4();
+        $picturesPart5 = $this->getPicturesPart5();
+        $picturesPart6 = $this->getPicturesPart6();
+        $picturesPart7 = $this->getPicturesPart7();
+        $picturesPart8 = $this->getPicturesPart8();
 
 
-        $pictures = array_merge($picturesPart1, $picturesPart2, $picturesPart3, $picturesPart4);
+        $pictures = array_merge(
+            $picturesPart1,
+            $picturesPart2,
+            $picturesPart3,
+            $picturesPart4,
+            $picturesPart5,
+            $picturesPart6,
+            $picturesPart7,
+            $picturesPart8
+        );
 
 
         return $pictures;
@@ -445,6 +459,292 @@ class PictureFixtures extends Fixture
         return $picturesPart4;
     }
 
+    private function getPicturesPart5(): array
+    {
+        $picturesPart5 = [
+           [
+               'reference' => '1F01',
+               'title' => "L'oiseau du paradis",
+               'subtitle' => "Strelitzia reginae",
+               'date' => new DateTime('2019-04-13'),
+               'technic' => 'Photographie',
+               'size' => '20 X 30','category' => 'Fleurs','number' => 1,
+               'comment' => "Cette fleur exotique est originaire d'Afrique du Sud, 
+               mais elle est également présente sur l'île de La Réunion.
+               Elle est appréciée pour ses magnifiques pétales orange vif et bleus,
+               qui ressemblent à la tête d'un oiseau.",
+               'image' => 'uploads/images/oiseauduparadis.jpg',
+               'link' => '#Fleurs #OiseauParadis',
+               'exhibition' => "L'Ile de La Réunion en fleurs" ],
+            [
+               'reference' => '1F02',
+               'title' => "La fleur de tiare",
+               'subtitle' => 'Gardenia taitensis',
+               'date' => new DateTime('2017-06-14'),
+               'technic' => 'Photographie',
+               'size' => '40 X 60','category' => 'Fleurs','number' => 2,
+               'comment' => "Cette fleur blanche au parfum envoûtant est largement
+               utilisée dans les traditions et les coutumes de l'île de La Réunion.
+               Elle est souvent portée derrière l'oreille ou utilisée
+               pour fabriquer des parfums.",
+               'image' => 'uploads/images/fleurtiare.jpg',
+               'link' => '#Fleurs #FleurTiare',
+               'exhibition' => "L'Ile de La Réunion en fleurs" ],
+            [
+                'reference' => '1F03',
+                'title' => "La fleur de frangipanier",
+                'subtitle' => "Plumeria",
+                'date' => new DateTime('2022-07-14'),
+                'technic' => 'Photographie',
+                'size' => '40 X 60','category' => 'Arbres','number' => 1,
+                'comment' => "Le frangipanier est un arbre tropical qui produit de
+                magnifiques fleurs en forme d'étoile dans une variété de couleurs,
+                notamment le blanc, le rose et le jaune. Ses fleurs délicatement
+                parfumées sont souvent utilisées dans les bouquets et les colliers
+                de fleurs.",
+                'image' => 'uploads/images/plumeria.jpg',
+                'link' => '#Arbres #Frangipanier',
+                'exhibition' => "L'Ile de La Réunion en fleurs" ],
+            [
+                'reference' => '1F04',
+                'title' => "Le flamboyant",
+                'subtitle' => "Delonix regia",
+                'date' => new DateTime('2021-11-14'),
+                'technic' => 'Photographie',
+                'size' => '50 X 70','category' => 'Arbres','number' => 2,
+                'comment' => "Le flamboyant est un arbre majestueux avec des fleurs
+                éclatantes de couleur rouge vif. Il est très présent sur l'île
+                et fleurit principalement entre novembre et janvier. Les flamboyants
+                ajoutent une explosion de couleurs à l'environnement et sont souvent
+                considérés comme l'emblème floral de La Réunion.",
+                'image' => 'uploads/images/flamboyant.jpg',
+                'link' => '#Arbres #Flamboyant',
+                'exhibition' => "L'Ile de La Réunion en fleurs" ],
+            [
+                'reference' => '1F05',
+                'title' => "L'hibiscus",
+                'subtitle' => "Hibiscus rosa-sinensis",
+                'date' => new DateTime('2021-10-26'),
+                'technic' => 'Photographie',
+                'size' => '50 X 70','category' => 'Fleurs','number' => 3,
+                'comment' => "Cette fleur tropicale est appréciée pour ses grandes 
+                fleurs voyantes et ses pétales colorés qui peuvent varier du rouge,
+                orange et rose au blanc. L'hibiscus est fréquemment utilisé dans 
+                les jardins et est également considéré comme l'un des symboles de l'île.",
+                'image' => 'uploads/images/hibiscus.jpg',
+                'link' => '#Fleurs #Hibiscus',
+                'exhibition' => "L'Ile de La Réunion en fleurs" ],
+            [
+                'reference' => '1F06',
+                'title' => "Le canna",
+                'subtitle' => "Canna indica",
+                'date' => new DateTime('2021-03-17'),
+                'technic' => 'Photographie',
+                'size' => '20 X 30','category' => 'Fleurs','number' => 4,
+                'comment' => "Le canna est une plante vivace qui produit de grandes
+                fleurs en forme de trompette dans une variété de couleurs vives,
+                notamment le rouge, le jaune et l'orange. Ses fleurs sont souvent
+                utilisées dans les arrangements floraux.",
+                'image' => 'uploads/images/canna.jpg',
+                'link' => '#Fleurs #Canna',
+                'exhibition' => "L'Ile de La Réunion en fleurs" ],
+
+        ];
+        return $picturesPart5;
+    }
+
+    private function getPicturesPart6(): array
+    {
+        $picturesPart6 = [
+
+             [
+                'reference' => '1F07',
+                'title' => "La fleur de bougainvillier",
+                'subtitle' => "Bougainvillea",
+                'date' => new DateTime('2021-02-01'),
+                'technic' => 'Photographie',
+                'size' => '50 X 70','category' => 'Arbres','number' => 3,
+                'comment' => "Bien qu'elle soit techniquement une bractée colorée et
+                non une fleur, le bougainvillier est très répandu sur l'île de La Réunion
+                et ajoute une splendeur éclatante avec ses bractées colorées dans des
+                teintes de rose, de pourpre, d'orange et de blanc.",
+                'image' => 'uploads/images/bougainvillier.jpg',
+                'link' => '#Arbres #Bougainvillier',
+                'exhibition' => "L'Ile de La Réunion en fleurs" ],
+             [
+                'reference' => '1F08',
+                'title' => "La fleur de jasmin",
+                'subtitle' => "Jasminum",
+                'date' => new DateTime('2021-04-05'),
+                'technic' => 'Photographie',
+                'size' => '40 X 60','category' => 'Fleurs','number' => 5,
+                'comment' => "Le jasmin est une plante grimpante appréciée pour ses 
+                petites fleurs blanches ou jaunes, qui dégagent un parfum envoûtant.
+                Il est souvent cultivé dans les jardins et les patios, ajoutant une
+                fragrance agréable à l'air ambiant.",
+                'image' => 'uploads/images/jasmin.jpg',
+                'link' => '#Fleurs #Jasmin',
+                'exhibition' => "L'Ile de La Réunion en fleurs" ],
+             [
+                'reference' => '1F09',
+                'title' => "La fleur de la passion",
+                'subtitle' => "Passiflora",
+                'date' => new DateTime('2022-05-04'),
+                'technic' => 'Photographie',
+                'size' => '40 X 60','category' => 'Fleurs','number' => 6,
+                'comment' => "La fleur de la passion est une fleur exotique aux 
+                couleurs vives, souvent pourpre ou violet foncé, avec des filaments
+                contrastants. Elle est le symbole du fruit de la passion et
+                est également cultivée comme plante ornementale.",
+                'image' => 'uploads/images/passiflora.jpg',
+                'link' => '#Fleurs #Passiflora',
+                'exhibition' => "L'Ile de La Réunion en fleurs" ],
+             [
+                'reference' => '1F10',
+                'title' => "La fleur de bananier",
+                'subtitle' => "",
+                'date' => new DateTime('2022-11-14'),
+                'technic' => 'Photographie',
+                'size' => '20 X 30','category' => 'Arbres','number' => 4,
+                'comment' => "Bien que le bananier soit principalement connu pour
+                ses fruits, il produit également de grandes fleurs en forme de cône
+                qui se développent au milieu de ses feuilles. Ces fleurs sont 
+                généralement de couleur blanche ou jaune et ajoutent une touche
+                exotique aux paysages de l'île.",
+                'image' => 'uploads/images/bananier.jpg',
+                'link' => '#Arbres #Bananier',
+                'exhibition' => "L'Ile de La Réunion en fleurs" ],
+             [
+                'reference' => '2S01',
+                'title' => "Le Piton de la Fournaise",
+                'subtitle' => "",
+                'date' => new DateTime('2023-01-11'),
+                'technic' => 'Photographie',
+                'size' => '75 X 100','category' => 'Volcans','number' => 1,
+                'comment' => "Le Piton de la Fournaise, sur l'île de La Réunion, est l'un
+                des volcans les plus actifs au monde. Avec ses éruptions régulières, il 
+                offre des paysages impressionnants rappelant une ambiance lunaire. 
+                Culminant à 2 632 mètres, son sommet abrite le cratère Dolomieu, d'où 
+                émergent les coulées de lave qui façonnent de nouvelles formations géologiques.
+                Les randonneurs peuvent parcourir les sentiers balisés pour admirer de près 
+                ces formations volcaniques et profiter des panoramas spectaculaires.",
+                'image' => 'uploads/images/pitonfournaise1.jpg',
+                'link' => '#Volcans #PitonFournaise',
+                'exhibition' => "Au sommet de La Réunion" ],
+
+        ];
+        return $picturesPart6;
+    }
+
+    private function getPicturesPart7(): array
+    {
+        $picturesPart7 = [
+
+             [
+                'reference' => '2S02',
+                'title' => "Le Piton de la Fournaise",
+                'subtitle' => "",
+                'date' => new DateTime('2022-02-26'),
+                'technic' => 'Photographie',
+                'size' => '40 X 60','category' => 'Volcans','number' => 2,
+                'comment' => "Le Piton de la Fournaise, est un volcan fascinant qui
+                témoigne d'une activité géologique en constante évolution. Ses éruptions
+                prévisibles sont suivies de près par les scientifiques, permettant d'assurer
+                la sécurité des visiteurs. Lors des éruptions, les coulées de lave dévalent les
+                pentes du volcan, créant de nouvelles étendues de terrain et offrant un spectacle 
+                impressionnant. C'est une expérience inoubliable pour les passionnés de volcanologie
+                et une occasion unique d'observer la puissance de la nature à l'oeuvre.",
+                'image' => 'uploads/images/pitonfournaise2.jpg',
+                'link' => '#Volcans #PitonFournaise',
+                'exhibition' => "Au sommet de La Réunion" ],
+             [
+                'reference' => '2S03',
+                'title' => "La vallée du Piton",
+                'subtitle' => "",
+                'date' => new DateTime('2020-06-20'),
+                'technic' => 'Photographie',
+                'size' => '75 X 100','category' => 'Volcans','number' => 3,
+                'comment' => "La vallée environnant le Piton de la Fournaise offre des paysages
+                enchanteurs. Les versants verdoyants sont parsemés de cascades majestueuses qui
+                se déversent dans des rivières sinueuses. La végétation luxuriante de la vallée
+                crée un contraste saisissant avec les formations volcaniques environnantes. C'est
+                un véritable havre de tranquillité où l'on peut se perdre dans la beauté naturelle
+                et profiter de la sérénité de cet écosystème préservé.",
+                'image' => 'uploads/images/prespiton.jpg',
+                'link' => '#Volcans #PitonFournaise',
+                'exhibition' => "Au sommet de La Réunion" ],
+             [
+                'reference' => '2S04',
+                'title' => "Le Piton des Neiges",
+                'subtitle' => "",
+                'date' => new DateTime('2021-11-12'),
+                'technic' => 'Photographie',
+                'size' => '20 X 30','category' => 'Volcans','number' => 4,
+                'comment' => "Le Piton des Neiges, sommet le plus élevé de l'île de La Réunion,
+                culmine à 3 071 mètres. Sa randonnée offre des vues panoramiques époustouflantes sur les
+                paysages montagneux environnants. C'est une expérience inoubliable pour les amateurs de 
+                randonnée en quête de défis et de beauté naturelle. La diversité de la flore et l'
+                atmosphère tranquille ajoutent à l'attrait de cette ascension. Au sommet, une vue imprenable
+                récompense les randonneurs avec une vue à couper le souffle sur l'île.",
+                'image' => 'uploads/images/pitondesneiges1.jpg',
+                'link' => '#Volcans #PitonNeiges',
+                'exhibition' => "Au sommet de La Réunion" ],
+             [
+                'reference' => '2S05',
+                'title' => "Le Cirque de Mafate",
+                'subtitle' => "",
+                'date' => new DateTime('2019-10-08'),
+                'technic' => 'Photographie',
+                'size' => '40 X 60','category' => 'Cirques','number' => 1,
+                'comment' => "Le Cirque de Mafate, classé au patrimoine mondial de l'UNESCO, est une 
+                destination incontournable pour les amoureux de la nature .Il offre un paysage 
+                impressionnant avec ses montagnes imposantes, ses cascades, ses ravins et ses forêts 
+                tropicales d'une biodiversité exceptionnelle. Le Cirque de Mafate est un véritable 
+                joyau naturel qui transporte les aventuriers dans un autre monde, où la nature règne en maître.",
+                'image' => 'uploads/images/mafate1.jpg',
+                'link' => '#Cirques #Mafate',
+                'exhibition' => "Au sommet de La Réunion" ],
+             [
+                'reference' => '2S06',
+                'title' => "Le Cirque de Mafate",
+                'subtitle' => "",
+                'date' => new DateTime('2019-10-08'),
+                'technic' => 'Photographie',
+                'size' => '40 X 60','category' => 'Cirques','number' => 2,
+                'comment' => "Niché au coeur de l'île, le Cirque de Mafate est un véritable sanctuaire
+                naturel, accessible uniquement à pied ou en hélicoptère. Ses montagnes escarpées et ses
+                vallées luxuriantes offrent une évasion totale. Les pittoresques villages créoles, nichés
+                au creux des montagnes, témoignent de l'histoire et de la culture de cette région.",
+                'image' => 'uploads/images/mafate2.jpg',
+                'link' => '#Cirques #Mafate',
+                'exhibition' => "Au sommet de La Réunion" ],
+
+        ];
+        return $picturesPart7;
+    }
+
+    private function getPicturesPart8(): array
+    {
+        $picturesPart8 = [
+
+            [
+                'reference' => '2S07',
+                'title' => "Le Cirque de Salazie",
+                'subtitle' => "",
+                'date' => new DateTime('2022-07-08'),
+                'technic' => 'Photographie',
+                'size' => '50 X 70','category' => 'Cirques','number' => 3,
+                'comment' => "Le Cirque de Salazie est un véritable écrin de verdure préservé. Ses
+                paysages luxuriants, ses cascades et ses villages créoles pittoresques en font une 
+                destination incontournable. Les routes panoramiques offrent des vues à couper le 
+                souffle, tandis que les sentiers de randonnée permettent d'explorer ce paradis naturel. ",
+                'image' => 'uploads/images/cascade.jpg',
+                'link' => '#Cirques #Salazie',
+                'exhibition' => "Au sommet de La Réunion" ],
+
+        ];
+        return $picturesPart8;
+    }
 
     private function setPictureData(Picture $picture, array $data): void
     {
@@ -459,6 +759,13 @@ class PictureFixtures extends Fixture
         $picture->setComment($data['comment']);
         $picture->setImage($data['image']);
         $picture->setLink(array_key_exists('link', $data) ? $data['link'] : null);
-        $picture->setExhibition($this->getReference('exhibition'));
+        $picture->setExhibition($this->getReference('exhibition_' . $data['exhibition']));
+    }
+
+    public function getDependencies()
+    {
+        return [
+          ExhibitionFixtures::class,
+        ];
     }
 }
