@@ -3,7 +3,11 @@
 {% block title %}Présentation de l'exposition{% endblock %}
 
 {% block body %}
-
+    {% for flashMessage in app.session.flashBag.get('success') %}
+        <div class="bg-green-500 text-white px-4 py-2 mb-4 rounded-md">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
 <div class="my-4 mx-auto p-12 md:p-12">
     <h3 class="text-3xl font-bold font-titlefont mt-6 mb-1 ">Présentation de l'exposition :</h3>
     <p class="text-2xl font-subtitlefont italic">{{ exhibition.name }}</p>

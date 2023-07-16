@@ -12,15 +12,17 @@
         {{ encore_entry_script_tags('cropperjs') }}
       {% endblock %}
       
-{% block body %}
-    <div>
-        <img id="image-cropped" src="{{ asset(picture.image) }}" data-id="{{ picture.id }}">
-    </div>
-   
-    <div class="flex justify-center items-center pt-4">
-      <button class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" id="save-crop-button" type="button"><a href="{{ path('app_picture_index', {id: picture.id}) }}">Enregistrer la crop</a></button>
-	</div>
-{% endblock %}
+      {% block body %}
+        <div>
+            <img id="image-cropped" src="{{ asset(picture.image) }}" data-id="{{ picture.id }}" >
+        </div>
+       
+        <div class="flex justify-center items-center pt-4">
+            <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" href="{{ path('exhibition_show_presentation', {id: picture.exhibition.id}) }}">
+                <button class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button">Enregistrer la crop</button>
+            </a>
+        </div>
+    {% endblock %}
 
 
 

@@ -20,6 +20,7 @@ use App\Service\CroppedService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use DateTime;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
@@ -136,6 +137,19 @@ class PictureController extends AbstractController
         ]);
     }
 
+    #[Route('/upload-crop', name: 'upload_crop', methods: ['POST'])]
+    public function uploadCropAction(Request $request, CroppedService $croppedService, FlashBagInterface $flashBag): Response
+    {
+        $result = $croppedService->uploadCropAction($request);
+        $flashBag->add('success', 'Le crop a été téléchargé avec succès.');
+
+        return new Response(
+            json_encode($result),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/json']
+        );
+    }
+
     #[Route('/{id}', name: 'app_picture_show', methods: ['GET'])]
     public function show(Picture $picture): Response
     {
@@ -178,17 +192,7 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/upload-crop', name: 'upload_crop', methods: ['POST'])]
-    public function uploadCropAction(Request $request, CroppedService $croppedService): Response
-    {
-        $result = $croppedService->uploadCropAction($request);
-
-        return new Response(
-            json_encode($result),
-            Response::HTTP_OK,
-            ['Content-Type' => 'application/json']
-        );
-    }
+    
 
     #[Route('/{id}', name: 'app_picture_delete', methods: ['POST'])]
     #[Security('is_granted("ROLE_ADMIN")')]
