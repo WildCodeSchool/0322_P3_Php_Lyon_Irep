@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+ {% extends 'base.html.twig' %} 
 
 {% block title %}Picture Cropped{% endblock %}
 
@@ -18,9 +18,7 @@
         </div>
        
         <div class="flex justify-center items-center pt-4">
-            <a class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" href="{{ path('exhibition_show_presentation', {id: picture.exhibition.id}) }}">
-                <button class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" type="button">Enregistrer la crop</button>
-            </a>
+            <a href= "{{ path('app_picture_intermediate', {'id': picture.id}) }}" class="custom-button-picture block md:inline-block md:w-auto md:px-4 md:py-2 rounded-lg bg-accentcolor font-titlefont" id="save-crop-button">Enregistrer la crop</a>
         </div>
     {% endblock %}
 

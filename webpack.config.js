@@ -49,6 +49,8 @@ Encore
     .addEntry('formPicture', './assets/formPicture.js')
     .addEntry('navbar', './assets/navbar.js')
     .addEntry('newsletter', './assets/newsletter.js')
+    .addEntry('intermediatePage', './assets/intermediatePage.js')
+
 
 
 
