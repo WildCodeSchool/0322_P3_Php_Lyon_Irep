@@ -138,8 +138,11 @@ class PictureController extends AbstractController
     }
 
     #[Route('/upload-crop', name: 'upload_crop', methods: ['POST'])]
-    public function uploadCropAction(Request $request, CroppedService $croppedService, FlashBagInterface $flashBag): Response
-    {
+    public function uploadCropAction(
+        Request $request,
+        CroppedService $croppedService,
+        FlashBagInterface $flashBag
+    ): Response {
         $result = $croppedService->uploadCropAction($request);
         $flashBag->add('success', 'Le crop a été téléchargé avec succès.');
 
@@ -192,7 +195,7 @@ class PictureController extends AbstractController
         ]);
     }
 
-    
+
 
     #[Route('/{id}', name: 'app_picture_delete', methods: ['POST'])]
     #[Security('is_granted("ROLE_ADMIN")')]
