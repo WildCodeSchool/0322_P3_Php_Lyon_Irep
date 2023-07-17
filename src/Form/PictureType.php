@@ -108,6 +108,8 @@ class PictureType extends AbstractType
         ->add('photoFile', FileType::class, [
             'label' => 'Image',
             'mapped' => false,
+            'label_attr' => ['class' => "block mt-2 font-contentfont font-medium"],
+            'attr' => ['class' => 'bg-gray-100 border-gray-50 text-sm rounded-lg block w-full'],
             'required' => false,
         ])
         ;
