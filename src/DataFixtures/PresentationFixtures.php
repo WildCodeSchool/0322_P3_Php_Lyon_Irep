@@ -10,25 +10,27 @@ use Doctrine\Persistence\ObjectManager;
 class PresentationFixtures extends Fixture implements DependentFixtureInterface
 {
     public const PRESENTATIONS = [
-        ['title' => "LE TAMPON",
-         'subtitle' =>  "Journées Européennes du Patrimoine 2023.",
-         'image' =>  "build/images/carousel1.png",
+
+         ['title' => "BEL AIR, D'UNE SUCRERIE A LA NAISSANCE D'UN VILLAGE",
+         'subtitle' =>  "Parcourez les oeuvres de la Galerie.",
+         'image' =>  "uploads/presentationImg/carousel2.png",
          'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
 
-         ['title' => "BEL AIR, D'UNE SUCRERIE A LA NAISSANCE D'UN VILLAGE.",
-         'subtitle' =>  "Visitez la galerie et parcourez les oeuvres.",
-         'image' =>  "build/images/carousel2.png",
+         ['title' => "BEL AIR, D'UNE SUCRERIE A LA NAISSANCE D'UN VILLAGE",
+         'subtitle' =>  "Des aquarelles à découvrir...",
+         'image' =>  "uploads/presentationImg/carousel1.png",
          'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
 
-         ['title' => "HIPPOLYTE CHARLES NAPOLEON MORTIER.",
-         'subtitle' =>  "Duc de Trévise.",
-         'image' =>  "build/images/carousel3.png",
-         'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
+         ['title' => "L'ILE DE LA REUNION EN FLEURS",
+         'subtitle' =>  "Découvrez la beauté florale de l'île à travers des photographies uniques.",
+         'image' =>  'uploads/presentationImg/flamboyant.jpg',
+         'exhibition' => "L'Ile de La Réunion en fleurs"],
 
-         ['title' => "ILE DE LA REUNION EXPOSITIONS PATRIMOINE",
-         'subtitle' => "Une association au service de l'histoire de l'Ile.",
-         'image' =>  "build/images/carousel3.png",
-         'exhibition' => "Bel'air, d'une sucrerie à la naissance d'un village"],
+         ['title' => "AU SOMMET DE LA REUNION",
+         'subtitle' => "Un voyage captivant à travers ses paysages vertigineux.",
+         'image' =>  'uploads/presentationImg/prespiton.jpg',
+         'exhibition' => "Au sommet de La Réunion"],
+
         ];
 
     public function load(ObjectManager $manager): void
@@ -38,7 +40,7 @@ class PresentationFixtures extends Fixture implements DependentFixtureInterface
             $presentation ->setTitle($presentationData['title']);
             $presentation ->setSubtitle($presentationData['subtitle']);
             $presentation ->setImage($presentationData['image']);
-            $presentation->setExhibition($this->getReference('exhibition'));
+            $presentation->setExhibition($this->getReference('exhibition_' . $presentationData['exhibition']));
             $manager->persist($presentation);
         }
 

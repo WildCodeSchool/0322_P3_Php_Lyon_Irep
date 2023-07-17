@@ -25,8 +25,8 @@ class Presentation
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank]
     #[Assert\Length(
-        max:55,
-        maxMessage:"Le titre est trop long. Veuillez limiter votre saisie à 55 caractères."
+        max:75,
+        maxMessage:"Le titre est trop long. Veuillez limiter votre saisie à 75 caractères."
     )]
     private ?string $subtitle = null;
 
