@@ -25,7 +25,7 @@
 	{% endfor %}
 	<div class="picture-details flex flex-col sm:flex-row pt-16 ml-4 mr-4">
 		{% block content %}
-			<div class="picture-image flex justify-center items-center basis-1/2 p-5">
+			<div class="picture-image flex justify-center items-center basis-1/2 p-5 mr-4">
 				<img class="block mx-auto max-h-[35rem] w-auto h-auto rounded-md shadow-[0_0_0_10px_#F2F0F0]"
 					 data-zoom="{{ asset(picture.image) }}" id="my-picture"
 					 src="{{ asset(picture.image) }}"
