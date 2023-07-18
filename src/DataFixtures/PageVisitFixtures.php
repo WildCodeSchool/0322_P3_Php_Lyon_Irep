@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Exhibition;
 use App\Entity\PageVisit;
 use App\Entity\Picture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -17,6 +18,7 @@ class PageVisitFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create();
 
         $pictures = $manager->getRepository(Picture::class)->findAll();
+        $exhibitions = $manager->getRepository(Exhibition::class)->findAll();
 
         new DateTime('-1 month');
 
@@ -37,11 +39,30 @@ class PageVisitFixtures extends Fixture implements DependentFixtureInterface
             }
         }
 
+        foreach ($exhibitions as $exhibition) {
+            $numberOfVisits = $faker->numberBetween(1, 100);
+
+            for ($i = 0; $i < $numberOfVisits; $i++) {
+                $visitDate = $faker->dateTimeBetween('-1 month', 'now');
+
+                $pageVisit = new PageVisit();
+                $pageVisit->setVisitedAt($visitDate);
+
+                $pageVisit->setPicture(null);
+
+                $route = 'app_picture_index/' . $exhibition->getId();
+                $pageVisit->setRouteName($route);
+
+                $manager->persist($pageVisit);
+            }
+        }
+
+
         $manager->flush();
     }
 
     public function getDependencies(): array
     {
-        return [PictureFixtures::class];
+        return [PictureFixtures::class, ExhibitionFixtures::class];
     }
 }

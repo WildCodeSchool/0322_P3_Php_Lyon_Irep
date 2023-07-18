@@ -24,7 +24,7 @@
             </div>
             <div class="absolute flex justify-start top-3/4 -translate-y-1/2 ml-16 mt-8 md:w-80">
                 <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-200">DECOUVRIR</p>
-                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-300"><a href="#">+</a></p>
+                <p class="p-3 text-white md:font-bold md:text-1xl md:p-4 bg-yellow-300"><a href={{ path('app_picture_index', {'id': presentation.exhibition.id}) }}>+</a></p>
             </div>
         </div>
         {% endfor %}     

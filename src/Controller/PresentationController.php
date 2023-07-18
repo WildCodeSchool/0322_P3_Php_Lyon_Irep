@@ -6,13 +6,12 @@ use App\Entity\Exhibition;
 use App\Entity\Presentation;
 use App\Form\PresentationType;
 use App\Repository\PresentationRepository;
+use App\Service\UploadService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/presentation')]
 #[IsGranted('ROLE_ADMIN')]
@@ -23,7 +22,7 @@ class PresentationController extends AbstractController
         Exhibition $exhibition,
         Request $request,
         PresentationRepository $presentRepository,
-        SluggerInterface $slugger
+        UploadService $uploadService
     ): Response {
         $presentation = new Presentation();
         $presentation->setExhibition($exhibition);
@@ -31,27 +30,12 @@ class PresentationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $presentationFile = $form->get('presentation_img')->getData();
-            if ($presentationFile) {
-                $originalImageName = pathinfo(
-                    $presentationFile->getClientOriginalName(),
-                    PATHINFO_FILENAME
-                );
-                $safeImageName = 'uploads/presentationImg/' . $slugger->slug($originalImageName) .
-                '.' . $presentationFile->guessExtension();
+            $safeFileName = $uploadService->uploadImg(
+                $form->get('presentation_img')->getData(),
+                $this->getParameter('presentationImg_directory')
+            );
 
-                try {
-                    $presentationFile->move(
-                        $this->getParameter('presentationImg_directory'),
-                        $safeImageName
-                    );
-
-                    $presentation->setImage($safeImageName);
-                } catch (FileException $e) {
-                    die("L'image n'a pas pu être téléchargée.");
-                }
-            }
-
+            $presentation->setImage($safeFileName);
             $presentRepository->save($presentation, true);
 
             return $this->redirectToRoute(
@@ -73,12 +57,19 @@ class PresentationController extends AbstractController
     public function edit(
         Request $request,
         Presentation $presentation,
-        PresentationRepository $presentRepository
+        PresentationRepository $presentRepository,
+        UploadService $uploadService
     ): Response {
         $form = $this->createForm(PresentationType::class, $presentation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $safeFileName = $uploadService->uploadImg(
+                $form->get('presentation_img')->getData(),
+                $this->getParameter('presentationImg_directory')
+            );
+
+            $presentation->setImage($safeFileName);
             $presentRepository->save($presentation, true);
 
             return $this->redirectToRoute(
@@ -99,7 +90,7 @@ class PresentationController extends AbstractController
     public function delete(
         Request $request,
         Presentation $presentation,
-        PresentationRepository $presentRepository
+        PresentationRepository $presentRepository,
     ): Response {
         if ($this->isCsrfTokenValid('delete' . $presentation->getId(), $request->request->get('_token'))) {
             $presentRepository->remove($presentation, true);
