@@ -19,17 +19,22 @@ use App\Service\ImagineService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use DateTime;
+use App\Service\DeleteImageService;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
 {
     private StatisticService $statisticService;
+    private DeleteImageService $deleteImageService;
+
 
 
     public function __construct(
         StatisticService $statisticService,
+        DeleteImageService $imageService,
     ) {
         $this->statisticService = $statisticService;
+        $this->deleteImageService = $imageService;
     }
 
     #[Route('/exhibition/{id}', name: 'app_picture_index', methods: ['GET'])]
@@ -197,49 +202,10 @@ class PictureController extends AbstractController
         ]);
     }
 
-    private function deleteImageVersions(Picture $picture): void
+    public function deleteImageVersions(Picture $picture): void
     {
-            $imagesDirectory = $this->getParameter('images_directory');
-
-
-            $smallImage = $picture->getSmallImage();
-            $smallImage = substr($smallImage, strlen("uploads/images/"));
-        if ($smallImage) {
-            $smallImagePath = $imagesDirectory . '/' . $smallImage;
-            $smallImagePath = str_replace('/', '\\', $smallImagePath);
-            if (file_exists($smallImagePath)) {
-                unlink($smallImagePath);
-            }
-        }
-
-
-            $mediumImage = $picture->getMediumImage();
-            $mediumImage = substr($mediumImage, strlen("uploads/images/"));
-
-        if ($mediumImage) {
-            $mediumImagePath = $imagesDirectory . '/' . $mediumImage;
-            $mediumImagePath = str_replace('/', '\\', $mediumImagePath);
-            if (file_exists($mediumImagePath)) {
-                unlink($mediumImagePath);
-            }
-        }
-
-
-            $largeImage = $picture->getLargeImage();
-            $largeImage = substr($largeImage, strlen("uploads/images/"));
-
-        if ($largeImage) {
-            $largeImagePath = $imagesDirectory . '/' . $largeImage;
-            $largeImagePath = str_replace('/', '\\', $largeImagePath);
-            if (file_exists($largeImagePath)) {
-                unlink($largeImagePath);
-            }
-        }
-
-
-            $picture->setSmallImage(null);
-            $picture->setMediumImage(null);
-            $picture->setLargeImage(null);
+        $imagesDirectory = $this->getParameter('images_directory');
+        $this->deleteImageService->deleteImageVersions($picture, $imagesDirectory);
     }
 
 
