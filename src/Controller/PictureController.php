@@ -14,9 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
 use App\Service\CroppedService;
+use App\Service\ImagineService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use DateTime;
@@ -25,6 +24,7 @@ use DateTime;
 class PictureController extends AbstractController
 {
     private StatisticService $statisticService;
+
 
     public function __construct(
         StatisticService $statisticService,
@@ -55,9 +55,6 @@ class PictureController extends AbstractController
         ]);
     }
 
-
-
-
     #[Route('/new/{id}', name: 'app_picture_new', methods: ['GET', 'POST'])]
     #[Security('is_granted("ROLE_ADMIN")')]
     public function new(
@@ -65,7 +62,8 @@ class PictureController extends AbstractController
         PictureRepository $pictureRepository,
         SluggerInterface $slugger,
         int $id,
-        ExhibitionRepository $exhibitionRepository
+        ExhibitionRepository $exhibitionRepository,
+        ImagineService $imagineService
     ): Response {
         $exhibition = $exhibitionRepository->find($id);
         $picture = new Picture();
@@ -81,8 +79,8 @@ class PictureController extends AbstractController
             $imageFile = $form->get('photoFile')->getData();
             if ($imageFile) {
                 $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeImageName = 'uploads/images/' . $slugger->slug($originalImageName) . '.' .
-                $imageFile->guessExtension();
+                $safeImageName = 'uploads/images/' . $slugger->slug($originalImageName) .
+                 '.' . $imageFile->guessExtension();
 
                 try {
                     $imageFile->move(
@@ -90,33 +88,16 @@ class PictureController extends AbstractController
                         $safeImageName
                     );
 
+                    $imagePaths = $imagineService->processImage(
+                        $safeImageName,
+                        $originalImageName,
+                        $this->getParameter('images_directory')
+                    );
+
                     $picture->setImage($safeImageName);
-
-
-                    $imagine = new Imagine();
-                    $imagePath = $safeImageName;
-
-
-                    $smallImagePath = $slugger->slug($originalImageName) . '.jpg';
-                    $imagine->open($imagePath)
-                        ->thumbnail(new Box(100, 100))
-                        ->save($this->getParameter('images_directory') . '/smallImage' . '/' . $smallImagePath);
-                    $picture->setSmallImage('uploads/images/smallImage/' . $smallImagePath);
-
-
-                    $mediumImagePath =  $slugger->slug($originalImageName) . '.jpg';
-                    $imagine->open($imagePath)
-                        ->thumbnail(new Box(500, 500))
-                        ->save($this->getParameter('images_directory') . '/mediumImage' . '/' . $mediumImagePath);
-                    $picture->setMediumImage('uploads/images/mediumImage/' . $mediumImagePath);
-
-
-                    $largeImagePath = $slugger->slug($originalImageName) . '.jpg';
-                    $imagine->open($imagePath)
-                        ->thumbnail(new Box(800, 800))
-                        ->save($this->getParameter('images_directory') . '/largeImage' . '/' . $largeImagePath);
-                    $picture->setLargeImage('uploads/images/largeImage/' . $largeImagePath);
-
+                    $picture->setSmallImage($imagePaths['small']);
+                    $picture->setMediumImage($imagePaths['medium']);
+                    $picture->setLargeImage($imagePaths['large']);
                     $picture->setExhibition($exhibition);
                     $pictureRepository->save($picture, true);
                 } catch (FileException $e) {
@@ -133,8 +114,8 @@ class PictureController extends AbstractController
 
         return $this->render('picture/new.html.twig', [
             'exhibition' => $exhibition,
-        'picture' => $picture,
-        'form' => $form,
+            'picture' => $picture,
+            'form' => $form,
         ]);
     }
 
