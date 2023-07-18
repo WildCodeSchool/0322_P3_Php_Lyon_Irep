@@ -34,7 +34,7 @@ class NewsletterType extends AbstractType
                         ->setParameter('now', new DateTime())
                         ->andWhere('e.start <= :now and e.end >= :now');
                 },
-                'label' => 'Exposition choisie:',
+                'label' => 'Exposition choisie :',
                 'label_attr' => ['class' => "inline-block mt-5 mr-6 text-center"],
                 'choice_label' => 'name',
                      'multiple' => false,

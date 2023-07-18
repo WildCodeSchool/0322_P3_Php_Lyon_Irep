@@ -13,7 +13,7 @@
         <h1 class="text-3xl font-bold mb-4 text-center">Statistiques</h1>
 
         <div class="mb-4 mt-2 text-center">
-            <label for="exhibitionSelect">Choisissez une exposition:</label>
+            <label for="exhibitionSelect">Choisissez une exposition :</label>
             <select id="exhibitionSelect" onchange="location = this.value;" class="rounded bg-gray-100 text-sm">
                 {% for exhibition in exhibitions %}
                     <option value="{{ path('admin_statistics', {'id': exhibition.id}) }}"
