@@ -16,19 +16,19 @@ class ImagineService
 
     public function processImage(string $imagePath, string $originalImageName, string $imagesDirectory): array
     {
-    // Code pour générer la version small en format JPG
+
         $smallImagePath = $this->generateImagePath($originalImageName, 'small', 'jpg');
         $this->imagine->open($imagePath)
         ->thumbnail(new Box(100, 100))
         ->save($imagesDirectory . '/smallImage/' . $smallImagePath);
 
-    // Code pour générer la version medium en format JPG
+
         $mediumImagePath = $this->generateImagePath($originalImageName, 'medium', 'jpg');
         $this->imagine->open($imagePath)
         ->thumbnail(new Box(500, 500))
         ->save($imagesDirectory . '/mediumImage/' . $mediumImagePath);
 
-    // Code pour générer la version large en format JPG
+
         $largeImagePath = $this->generateImagePath($originalImageName, 'large', 'jpg');
         $this->imagine->open($imagePath)
         ->thumbnail(new Box(800, 800))

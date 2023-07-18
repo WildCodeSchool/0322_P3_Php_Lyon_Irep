@@ -136,17 +136,51 @@ class PictureController extends AbstractController
         Request $request,
         Picture $picture,
         PictureRepository $pictureRepository,
-        SessionInterface $session
+        SessionInterface $session,
+        SluggerInterface $slugger,
+        ImagineService $imagineService
     ): Response {
         $form = $this->createForm(PictureType::class, $picture, [
             'exhibition_id' => $picture->getExhibition()->getId(),
         ]);
-                $form->handleRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('newCategory')->getData() !== null) {
                 $picture->setCategory($form->get('newCategory')->getData());
             }
+
+            $imageFile = $form->get('photoFile')->getData();
+            if ($imageFile) {
+                $this->deleteImageVersions($picture);
+
+
+                $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeImageName = 'uploads/images/'
+                 . $slugger->slug($originalImageName)
+                  . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $safeImageName
+                    );
+
+                    $imagePaths = $imagineService->processImage(
+                        $safeImageName,
+                        $originalImageName,
+                        $this->getParameter('images_directory')
+                    );
+
+                    $picture->setImage($safeImageName);
+                    $picture->setSmallImage($imagePaths['small']);
+                    $picture->setMediumImage($imagePaths['medium']);
+                    $picture->setLargeImage($imagePaths['large']);
+                } catch (FileException $e) {
+                    die("Erreur lors du chargement de la nouvelle image !!");
+                }
+            }
+
             $pictureRepository->save($picture, true);
 
             $previousUrl = $session->get('previous_url');
@@ -163,8 +197,53 @@ class PictureController extends AbstractController
         ]);
     }
 
+    private function deleteImageVersions(Picture $picture): void
+    {
+            $imagesDirectory = $this->getParameter('images_directory');
 
-    #[Route('/intermediate/{id}', name: 'app_picture_intermediate', methods: ['GET'])]
+
+            $smallImage = $picture->getSmallImage();
+            $smallImage = substr($smallImage, strlen("uploads/images/"));
+        if ($smallImage) {
+            $smallImagePath = $imagesDirectory . '/' . $smallImage;
+            $smallImagePath = str_replace('/', '\\', $smallImagePath);
+            if (file_exists($smallImagePath)) {
+                unlink($smallImagePath);
+            }
+        }
+
+
+            $mediumImage = $picture->getMediumImage();
+            $mediumImage = substr($mediumImage, strlen("uploads/images/"));
+
+        if ($mediumImage) {
+            $mediumImagePath = $imagesDirectory . '/' . $mediumImage;
+            $mediumImagePath = str_replace('/', '\\', $mediumImagePath);
+            if (file_exists($mediumImagePath)) {
+                unlink($mediumImagePath);
+            }
+        }
+
+
+            $largeImage = $picture->getLargeImage();
+            $largeImage = substr($largeImage, strlen("uploads/images/"));
+
+        if ($largeImage) {
+            $largeImagePath = $imagesDirectory . '/' . $largeImage;
+            $largeImagePath = str_replace('/', '\\', $largeImagePath);
+            if (file_exists($largeImagePath)) {
+                unlink($largeImagePath);
+            }
+        }
+
+
+            $picture->setSmallImage(null);
+            $picture->setMediumImage(null);
+            $picture->setLargeImage(null);
+    }
+
+
+        #[Route('/intermediate/{id}', name: 'app_picture_intermediate', methods: ['GET'])]
     public function intermediatePage(int $id, PictureRepository $pictureRepository): Response
     {
         $picture = $pictureRepository->find($id);
