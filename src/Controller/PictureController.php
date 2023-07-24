@@ -14,22 +14,27 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
 use App\Service\CroppedService;
+use App\Service\ImagineService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use DateTime;
+use App\Service\DeleteImageService;
 
 #[Route('/picture')]
 class PictureController extends AbstractController
 {
     private StatisticService $statisticService;
+    private DeleteImageService $deleteImageService;
+
+
 
     public function __construct(
         StatisticService $statisticService,
+        DeleteImageService $imageService,
     ) {
         $this->statisticService = $statisticService;
+        $this->deleteImageService = $imageService;
     }
 
     #[Route('/exhibition/{id}', name: 'app_picture_index', methods: ['GET'])]
@@ -55,7 +60,6 @@ class PictureController extends AbstractController
         ]);
     }
 
-
     #[Route('/new/{id}', name: 'app_picture_new', methods: ['GET', 'POST'])]
     #[Security('is_granted("ROLE_ADMIN")')]
     public function new(
@@ -63,7 +67,8 @@ class PictureController extends AbstractController
         PictureRepository $pictureRepository,
         SluggerInterface $slugger,
         int $id,
-        ExhibitionRepository $exhibitionRepository
+        ExhibitionRepository $exhibitionRepository,
+        ImagineService $imagineService
     ): Response {
         $exhibition = $exhibitionRepository->find($id);
         $picture = new Picture();
@@ -79,8 +84,8 @@ class PictureController extends AbstractController
             $imageFile = $form->get('photoFile')->getData();
             if ($imageFile) {
                 $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeImageName = 'uploads/images/' . $slugger->slug($originalImageName) . '.' .
-                $imageFile->guessExtension();
+                $safeImageName = 'uploads/images/' . $slugger->slug($originalImageName) .
+                 '.' . $imageFile->guessExtension();
 
                 try {
                     $imageFile->move(
@@ -88,33 +93,16 @@ class PictureController extends AbstractController
                         $safeImageName
                     );
 
+                    $imagePaths = $imagineService->processImage(
+                        $safeImageName,
+                        $originalImageName,
+                        $this->getParameter('images_directory')
+                    );
+
                     $picture->setImage($safeImageName);
-
-
-                    $imagine = new Imagine();
-                    $imagePath = $safeImageName;
-
-
-                    $smallImagePath = $slugger->slug($originalImageName) . '.jpg';
-                    $imagine->open($imagePath)
-                        ->thumbnail(new Box(100, 100))
-                        ->save($this->getParameter('images_directory') . '/smallImage' . '/' . $smallImagePath);
-                    $picture->setSmallImage('uploads/images/smallImage/' . $smallImagePath);
-
-
-                    $mediumImagePath =  $slugger->slug($originalImageName) . '.jpg';
-                    $imagine->open($imagePath)
-                        ->thumbnail(new Box(500, 500))
-                        ->save($this->getParameter('images_directory') . '/mediumImage' . '/' . $mediumImagePath);
-                    $picture->setMediumImage('uploads/images/mediumImage/' . $mediumImagePath);
-
-
-                    $largeImagePath = $slugger->slug($originalImageName) . '.jpg';
-                    $imagine->open($imagePath)
-                        ->thumbnail(new Box(800, 800))
-                        ->save($this->getParameter('images_directory') . '/largeImage' . '/' . $largeImagePath);
-                    $picture->setLargeImage('uploads/images/largeImage/' . $largeImagePath);
-
+                    $picture->setSmallImage($imagePaths['small']);
+                    $picture->setMediumImage($imagePaths['medium']);
+                    $picture->setLargeImage($imagePaths['large']);
                     $picture->setExhibition($exhibition);
                     $pictureRepository->save($picture, true);
                 } catch (FileException $e) {
@@ -131,10 +119,12 @@ class PictureController extends AbstractController
 
         return $this->render('picture/new.html.twig', [
             'exhibition' => $exhibition,
-        'picture' => $picture,
-        'form' => $form,
+            'picture' => $picture,
+            'form' => $form,
         ]);
     }
+
+
 
     #[Route('/{id}', name: 'app_picture_show', methods: ['GET'])]
     public function show(Picture $picture): Response
@@ -151,17 +141,51 @@ class PictureController extends AbstractController
         Request $request,
         Picture $picture,
         PictureRepository $pictureRepository,
-        SessionInterface $session
+        SessionInterface $session,
+        SluggerInterface $slugger,
+        ImagineService $imagineService
     ): Response {
         $form = $this->createForm(PictureType::class, $picture, [
             'exhibition_id' => $picture->getExhibition()->getId(),
         ]);
-                $form->handleRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('newCategory')->getData() !== null) {
                 $picture->setCategory($form->get('newCategory')->getData());
             }
+
+            $imageFile = $form->get('photoFile')->getData();
+            if ($imageFile) {
+                $this->deleteImageVersions($picture);
+
+
+                $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeImageName = 'uploads/images/'
+                 . $slugger->slug($originalImageName)
+                  . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $safeImageName
+                    );
+
+                    $imagePaths = $imagineService->processImage(
+                        $safeImageName,
+                        $originalImageName,
+                        $this->getParameter('images_directory')
+                    );
+
+                    $picture->setImage($safeImageName);
+                    $picture->setSmallImage($imagePaths['small']);
+                    $picture->setMediumImage($imagePaths['medium']);
+                    $picture->setLargeImage($imagePaths['large']);
+                } catch (FileException $e) {
+                    die("Erreur lors du chargement de la nouvelle image !!");
+                }
+            }
+
             $pictureRepository->save($picture, true);
 
             $previousUrl = $session->get('previous_url');
@@ -178,9 +202,34 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/upload-crop', name: 'upload_crop', methods: ['POST'])]
-    public function uploadCropAction(Request $request, CroppedService $croppedService): Response
+    public function deleteImageVersions(Picture $picture): void
     {
+        $imagesDirectory = $this->getParameter('images_directory');
+        $this->deleteImageService->deleteImageVersions($picture, $imagesDirectory);
+    }
+
+
+        #[Route('/intermediate/{id}', name: 'app_picture_intermediate', methods: ['GET'])]
+    public function intermediatePage(int $id, PictureRepository $pictureRepository): Response
+    {
+        $picture = $pictureRepository->find($id);
+
+        if (!$picture) {
+            throw $this->createNotFoundException('Picture not found');
+        }
+
+        $exhibitionId = $picture->getExhibition()->getId();
+
+        return $this->render('picture/cropDone.html.twig', [
+        'imageId' => $exhibitionId,
+        ]);
+    }
+
+    #[Route('/upload-crop', name: 'upload_crop', methods: ['POST'])]
+    public function uploadCropAction(
+        Request $request,
+        CroppedService $croppedService
+    ): Response {
         $result = $croppedService->uploadCropAction($request);
 
         return new Response(
@@ -216,6 +265,9 @@ class PictureController extends AbstractController
             Response::HTTP_SEE_OTHER
         );
     }
+
+
+
 
     #[Route('/{id}/cropped', name: 'app_picture_cropped', methods: ['GET'])]
     public function cropped(Picture $picture): Response
