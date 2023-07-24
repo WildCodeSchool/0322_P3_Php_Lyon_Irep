@@ -1,7 +1,7 @@
 knp_snappy:
     pdf:
         enabled:    true
-        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+        binary:     "/usr/local/bin/wkhtmltopdf"
         options:
            
             page-size: A4
@@ -15,5 +15,5 @@ knp_snappy:
             footer-spacing: 5
     image:
         enabled:    true
-        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
+        binary:     "/usr/local/bin/wkhtmltoimage"
         options:    []

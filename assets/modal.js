@@ -53,7 +53,7 @@ let img = document.getElementById("my-picture");
 let modalImg = document.getElementById("img-modal");
 let captionText = document.getElementById("caption");
 img.onclick = function(){
-    modal.style.display = "block";
+    modal.style.display = "flex";
     modalImg.src = this.src;
     captionText.innerHTML = this.alt;
 }
