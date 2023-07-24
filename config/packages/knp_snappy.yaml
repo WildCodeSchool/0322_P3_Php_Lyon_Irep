@@ -1,7 +1,7 @@
 knp_snappy:
     pdf:
         enabled:    true
-        binary:     "/usr/local/bin/wkhtmltopdf"
+        binary:     "%env(WKHTMLTOPDF_PATH)%"
         options:
            
             page-size: A4
@@ -15,5 +15,5 @@ knp_snappy:
             footer-spacing: 5
     image:
         enabled:    true
-        binary:     "/usr/local/bin/wkhtmltoimage"
+        binary:     "%env(WKHTMLTOIMAGE_PATH)%"
         options:    []
